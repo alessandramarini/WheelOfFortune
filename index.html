@@ -6,7 +6,6 @@
     <title>⚽ Betting Exchange Room - Zero to Hero</title>
     
     <link rel="icon" type="image/jpeg" href="logo-tondo.jpeg">
-    <link rel="preload" href="La-Ruota-della-Fortuna-2-1024x576.webp" as="image">
     <link rel="preload" href="logo-tondo.jpeg" as="image">
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -18,9 +17,11 @@
         body { 
             background-color: #1A1A1A; 
             margin: 0; padding: 0;
-            overflow-x: hidden;
+            overflow: hidden;
             -webkit-tap-highlight-color: transparent;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            height: 100vh;
+            width: 100vw;
         }
         
         #loading-screen {
@@ -30,8 +31,8 @@
         }
         
         .loader {
-            width: 50px; height: 50px; border: 4px solid #333; 
-            border-top-color: #FFB805; border-radius: 50%; 
+            width: 40px; height: 40px; border: 4px solid #333; 
+            border-top-color: #00D166; border-radius: 50%; 
             animation: spin 0.8s infinite linear;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
@@ -44,12 +45,31 @@
         
         input[type="text"] { font-size: 16px !important; }
         button { touch-action: manipulation; }
+
+        .viewport-container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        @media (min-width: 1024px) {
+            .main-content { overflow: hidden; }
+        }
     </style>
 </head>
 <body>
     <div id="loading-screen">
         <div class="loader mb-4"></div>
-        <p style="color: #FFB805; font-weight: bold; letter-spacing: 2px;">CARICAMENTO EXCHANGE...</p>
+        <p style="color: #00D166; font-weight: bold; letter-spacing: 2px; font-size: 12px;">CARICAMENTO ROOM...</p>
     </div>
 
     <div id="root"></div>
@@ -57,7 +77,6 @@
     <script type="text/babel">
         const { useState, useEffect, useRef, Fragment } = React;
 
-        // --- COMPONENTE ICONE ---
         const Icon = ({ name, size = 24, className = "" }) => {
             const icons = {
                 Settings: <path d="M12.22 2h-.44a2 2 0 0 0-2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2a2 2 0 0 0-2-2h-.44a2 2 0 0 0-2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2a2 2 0 0 0-2-2h-.44a2 2 0 0 0-2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2a2 2 0 0 0-2-2" />,
@@ -68,7 +87,8 @@
                 CheckCircle: <Fragment><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></Fragment>,
                 AlertCircle: <Fragment><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></Fragment>,
                 ChevronDown: <polyline points="6 9 12 15 18 9" />,
-                SettingsIcon: <Fragment><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.1a2 2 0 0 1-1-1.72v-.51a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V2Z" /><circle cx="12" cy="12" r="3" /></Fragment>
+                SettingsIcon: <Fragment><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.1a2 2 0 0 1-1-1.72v-.51a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V2Z" /><circle cx="12" cy="12" r="3" /></Fragment>,
+                TelegramBall: <Fragment><circle cx="12" cy="12" r="10" fill="#fff" stroke="#333" strokeWidth="0.5"/><path d="M12 2a10 10 0 0 0-10 10 10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2zm0 2c1.3 0 2.5.3 3.6.8L12 8.4l-3.6-3.6C9.5 4.3 10.7 4 12 4zM4.8 15.6l3.6-3.6 3.6 3.6-3.6 3.6c-.5-.5-1-1-1.5-1.5-.7-.7-1.4-1.4-2.1-2.1zM19.2 8.4l-3.6 3.6-3.6-3.6 3.6-3.6c.5.5 1 1 1.5 1.5.7.7 1.4 1.4 2.1 2.1zm-3.6 7.2l3.6-3.6c.5.5 1 1 1.5 1.5.2.2.4.5.5.8-1.1 2.2-3.1 3.9-5.6 4.8l0-3.5zM12 20c-1.3 0-2.5-.3-3.6-.8l3.6-3.6 3.6 3.6C14.5 19.7 13.3 20 12 20z" fill="#333" /></Fragment>
             };
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
@@ -77,228 +97,62 @@
             );
         };
 
-        const COLORS = { primary: '#1A1A1A', secondary: '#FFB805', backBlue: '#2E9DDF', layPink: '#F48EAD', text: '#FFFFFF', boardBg: '#0F2027' };
+        const COLORS = { primary: '#1A1A1A', secondary: '#FFB805', greenCorp: '#00D166', backBlue: '#2E9DDF', layPink: '#F48EAD', text: '#FFFFFF', boardBg: '#0F2027' };
 
-        // --- DIZIONARIO 30 GIORNI (DETTAGLIATO E TRADOTTO) ---
         const phrasesDictionary = [
-            {
-                id: 1,
-                en: { topic: "WHAT IS IT", phrase: "BETTING EXCHANGE", explanation: "Lesson: Peer-to-peer betting. Example: You match your €10 back bet against another user's lay bet at the same odds." },
-                it: { topic: "COS È", phrase: "BETTING EXCHANGE", explanation: "Lezione: Scommesse peer-to-peer. Esempio: La tua puntata di 10€ viene abbinata alla bancata di un altro utente alla stessa quota." },
-                es: { topic: "QUÉ ES", phrase: "BETTING EXCHANGE", explanation: "Lección: Apuestas peer-to-peer. Ejemplo: Tu apuesta de 10€ a favor se iguala con la apuesta en contra de otro usuario." },
-                pt: { topic: "O QUE É", phrase: "BETTING EXCHANGE", explanation: "Lição: Apostas peer-to-peer. Exemplo: A sua aposta de 10€ a favor é correspondida com a aposta contra de outro utilizador." }
-            },
-            {
-                id: 2,
-                en: { topic: "BACKING", phrase: "BACK A SELECTION", explanation: "Lesson: Betting for an event to happen. Example: Backing a team at 2.00 with €10 means you win €10 if they win." },
-                it: { topic: "PUNTARE", phrase: "PUNTARE UNA QUOTA", explanation: "Lezione: Scommettere che un evento accada. Esempio: Puntare 10€ a quota 2.00 significa vincere 10€ se la squadra vince." },
-                es: { topic: "APOSTAR A FAVOR", phrase: "APUESTA A FAVOR", explanation: "Lección: Apostar a que algo ocurre. Ejemplo: Apostar 10€ a cuota 2.00 significa ganar 10€ si el equipo vence." },
-                pt: { topic: "APOSTAR A FAVOR", phrase: "APOSTAR A FAVOR", explanation: "Lição: Apostar que algo acontece. Exemplo: Apostar 10€ a odd 2.00 significa ganhar 10€ se a equipa vencer." }
-            },
-            {
-                id: 3,
-                en: { topic: "LAYING", phrase: "LAY A BET", explanation: "Lesson: Betting against an event. Example: Laying a Draw means you win if either home or away team wins." },
-                it: { topic: "BANCARE", phrase: "BANCARE UNA QUOTA", explanation: "Lezione: Scommettere contro un evento. Esempio: Bancare il Pareggio significa vincere se vince la squadra in casa o quella fuori." },
-                es: { topic: "APOSTAR EN CONTRA", phrase: "APUESTA EN CONTRA", explanation: "Lección: Apostar contra un evento. Ejemplo: Apostar contra el Empate significa ganar si vence el local o el visitante." },
-                pt: { topic: "APOSTAR CONTRA", phrase: "APOSTAR CONTRA", explanation: "Lição: Apostar contra um evento. Exemplo: Apostar contra o Empate significa ganhar se vencer o visitado ou o visitante." }
-            },
-            {
-                id: 4,
-                en: { topic: "MATCHING", phrase: "MATCHED BET", explanation: "Lesson: When back and lay orders meet. Example: You request odds of 3.00, someone else accepts them. The bet is now live." },
-                it: { topic: "ABBINAMENTO", phrase: "SCOMMESSA ABBINATA", explanation: "Lezione: Quando l'ordine Punta e Banca si incontrano. Esempio: Chiedi quota 3.00, qualcuno la accetta. La scommessa è attiva." },
-                es: { topic: "IGUALACIÓN", phrase: "APUESTA IGUALADA", explanation: "Lección: Cuando las órdenes se encuentran. Ejemplo: Pides cuota 3.00, alguien la acepta. La apuesta está activa." },
-                pt: { topic: "CORRESPONDÊNCIA", phrase: "APOSTA CORRESPONDIDA", explanation: "Lição: Quando as ordens se encontram. Exemplo: Pede odd 3.00, alguém aceita. A aposta está ativa." }
-            },
-            {
-                id: 5,
-                en: { topic: "LIQUIDITY", phrase: "MARKET LIQUIDITY", explanation: "Lesson: Money available in the market. Example: High liquidity means you can match large bets instantly without price slippage." },
-                it: { topic: "LIQUIDITÀ", phrase: "LIQUIDITA DI MERCATO", explanation: "Lezione: Denaro disponibile nel mercato. Esempio: Alta liquidità significa abbinare scommesse grandi istantaneamente senza sbalzi." },
-                es: { topic: "LIQUIDEZ", phrase: "LIQUIDEZ DEL MERCADO", explanation: "Lección: Dinero disponible. Ejemplo: Alta liquidez significa igualar apuestas grandes al instante sin cambios de precio." },
-                pt: { topic: "LIQUIDEZ", phrase: "LIQUIDEZ DO MERCADO", explanation: "Lição: Dinheiro disponível. Exemplo: Alta liquidez significa corresponder apostas grandes sem mudanças de preço." }
-            },
-            {
-                id: 6,
-                en: { topic: "LIABILITY", phrase: "POTENTIAL RISK", explanation: "Lesson: Money you lose if a lay bet wins. Example: Laying €10 @ 3.00 creates a €20 liability. You risk €20 to win €10." },
-                it: { topic: "RESPONSABILITÀ", phrase: "RISCHIO POTENZIALE", explanation: "Lezione: Soldi persi se la bancata perde. Esempio: Bancare 10€ a quota 3.00 crea 20€ di responsabilità. Rischi 20€ per vincerne 10€." },
-                es: { topic: "RESPONSABILIDAD", phrase: "RIESGO POTENCIAL", explanation: "Lección: Dinero perdido si el lay falla. Ejemplo: Apostar en contra 10€ a 3.00 crea 20€ de riesgo. Arriesgas 20€ para ganar 10€." },
-                pt: { topic: "RESPONSABILIDADE", phrase: "RISCO POTENCIAL", explanation: "Lição: Dinheiro perdido se o lay falhar. Exemplo: Apostar contra 10€ a 3.00 cria 20€ de risco. Arrisca 20€ para ganhar 10€." }
-            },
-            {
-                id: 7,
-                en: { topic: "TICK SIZE", phrase: "PRICE MOVEMENT", explanation: "Lesson: Minimum price increment. Example: Between 2.00 and 3.00, the tick is 0.02. You can bet at 2.02, 2.04, etc." },
-                it: { topic: "TICK SIZE", phrase: "MOVIMENTO PREZZI", explanation: "Lezione: Incremento minimo di quota. Esempio: Tra quota 2.00 e 3.00 il tick è 0.02. Puoi scommettere a 2.02, 2.04, etc." },
-                es: { topic: "TICK SIZE", phrase: "MOVIMIENTO PRECIOS", explanation: "Lección: Incremento mínimo. Ejemplo: Entre cuota 2.00 y 3.00 el tick es 0.02. Puedes apostar a 2.02, 2.04, etc." },
-                pt: { topic: "TICK SIZE", phrase: "MOVIMENTO PREÇOS", explanation: "Lição: Incremento mínimo. Exemplo: Entre odd 2.00 e 3.00 o tick é 0.02. Pode apostar a 2.02, 2.04, etc." }
-            },
-            {
-                id: 8,
-                en: { topic: "COMMISSION", phrase: "EXCHANGE FEE", explanation: "Lesson: Fee on net winnings. Example: With 5% commission, if you win €100, you pay €5 and keep €95." },
-                it: { topic: "COMMISSIONE", phrase: "TASSA EXCHANGE", explanation: "Lezione: Trattenuta sulle vincite nette. Esempio: Con commissione al 5%, se vinci 100€ paghi 5€ e incassi 95€." },
-                es: { topic: "COMISIÓN", phrase: "TASA EXCHANGE", explanation: "Lección: Tasa sobre beneficios. Ejemplo: Con comisión del 5%, si ganas 100€ pagas 5€ y recibes 95€." },
-                pt: { topic: "COMISSÃO", phrase: "TAXA EXCHANGE", explanation: "Lição: Taxa sobre lucros. Exemplo: Com comissão de 5%, se ganhar 100€ paga 5€ e recebe 95€." }
-            },
-            {
-                id: 9,
-                en: { topic: "VOID BET", phrase: "CANCELED BET", explanation: "Lesson: Canceled matches. Example: If a game is called off, stakes are usually returned to both backers and layers." },
-                it: { topic: "SCOMMESSA NULLA", phrase: "PARTITA ANNULLATA", explanation: "Lezione: Match annullati. Esempio: Se una partita viene sospesa, le puntate vengono solitamente rimborsate a tutti." },
-                es: { topic: "APUESTA NULA", phrase: "PARTIDO ANULADO", explanation: "Lección: Partidos cancelados. Ejemplo: Si un partido se suspende, el dinero suele devolverse a todos." },
-                pt: { topic: "APOSTA NULA", phrase: "JOGO ANULADO", explanation: "Lição: Jogos cancelados. Exemplo: Se um jogo for suspenso, o dinheiro costuma ser devolvido a todos." }
-            },
-            {
-                id: 10,
-                en: { topic: "CASH OUT", phrase: "EARLY EXIT", explanation: "Lesson: Lock in profit or loss. Example: Backed @ 2.00, odds drop to 1.50. Exit now to guarantee profit regardless of final score." },
-                it: { topic: "CASH OUT", phrase: "USCITA ANTICIPATA", explanation: "Lezione: Blocca profitto o perdita. Esempio: Punti a 2.00, la quota scende a 1.50. Esci ora per un profitto certo." },
-                es: { topic: "CERRAR APUESTA", phrase: "SALIDA TEMPRANA", explanation: "Lección: Asegurar beneficio. Ejemplo: Apuestas a 2.00, la cuota baja a 1.50. Cierras para beneficio garantizado." },
-                pt: { topic: "ENCERRAR APOSTA", phrase: "SAÍDA ANTECIPADA", explanation: "Lição: Garantir lucro. Exemplo: Aposta a 2.00, a odd desce para 1.50. Encerra para lucro garantido." }
-            },
-            {
-                id: 11,
-                en: { topic: "BACK TO LAY", phrase: "BASIC TRADING", explanation: "Lesson: Back high, lay low. Example: Back @ 4.00 pre-game, lay @ 2.00 when leading to secure profit." },
-                it: { topic: "BACK TO LAY", phrase: "TRADING BASE", explanation: "Lezione: Punta alto, banca basso. Esempio: Punti a 4.00 prima del match, banchi a 2.00 in vantaggio per il profitto." },
-                es: { topic: "BACK TO LAY", phrase: "TRADING BÁSICO", explanation: "Lección: Apostar alto, cerrar bajo. Ejemplo: Apuestas a 4.00 y cierras a 2.00 cuando tu equipo lidera." },
-                pt: { topic: "BACK TO LAY", phrase: "TRADING BÁSICO", explanation: "Lição: Apostar alto, fechar baixo. Exemplo: Aposta a 4.00 e fecha a 2.00 quando a equipa lidera." }
-            },
-            {
-                id: 12,
-                en: { topic: "LAY TO BACK", phrase: "REVERSE TRADE", explanation: "Lesson: Lay low, back high. Example: Lay @ 1.50, back @ 3.00 if the underdog scores first." },
-                it: { topic: "LAY TO BACK", phrase: "TRADING INVERSO", explanation: "Lezione: Banca basso, punta alto. Esempio: Banchi a 1.50, punti a 3.00 se la squadra sfavorita segna per prima." },
-                es: { topic: "LAY TO BACK", phrase: "TRADING INVERSO", explanation: "Lección: Lay bajo, back alto. Ejemplo: Lay a 1.50 y back a 3.00 si el no favorito marca primero." },
-                pt: { topic: "LAY TO BACK", phrase: "TRADING INVERSO", explanation: "Lição: Lay baixo, back alto. Exemplo: Lay a 1.50 e back a 3.00 se o não favorito marcar primeiro." }
-            },
-            {
-                id: 13,
-                en: { topic: "GREEN BOOK", phrase: "TOTAL PROFIT", explanation: "Lesson: All outcomes are positive. Example: After hedging, your screen shows +€5 on Home, Draw, and Away." },
-                it: { topic: "GREEN BOOK", phrase: "PROFITTO TOTALE", explanation: "Lezione: Tutti gli esiti sono positivi. Esempio: Dopo la copertura, vincerai +5€ su Casa, Pareggio o Fuori." },
-                es: { topic: "LIBRO VERDE", phrase: "BENEFICIO TOTAL", explanation: "Lección: Ganancia asegurada. Ejemplo: Tras cubrirte, verás +5€ en todas las opciones posibles." },
-                pt: { topic: "LIVRO VERDE", phrase: "LUCRO TOTAL", explanation: "Lição: Lucro assegurado. Exemplo: Após a cobertura, verá +5€ em todas as opções possíveis." }
-            },
-            {
-                id: 14,
-                en: { topic: "RED BOOK", phrase: "HEDGED LOSS", explanation: "Lesson: Minimize loss across all. Example: Instead of losing €50 on one result, you lose €5 on any outcome." },
-                it: { topic: "RED BOOK", phrase: "PERDITA COPERTA", explanation: "Lezione: Minimizza perdite ovunque. Esempio: Invece di perdere 50€ su un risultato, ne perdi 5€ su qualsiasi esito." },
-                es: { topic: "LIBRO ROJO", phrase: "PÉRDIDA MÍNIMA", explanation: "Lección: Minimizar pérdidas. Ejemplo: En lugar de perder 50€ en un resultado, pierdes 5€ gane quien gane." },
-                pt: { topic: "LIVRO VERMELHO", phrase: "PERDA MÍNIMA", explanation: "Lição: Minimizar perdas. Exemplo: Em vez de perder 50€ num resultado, perde 5€ ganhe quem ganhar." }
-            },
-            {
-                id: 15,
-                en: { topic: "STOP LOSS", phrase: "RISK MANAGEMENT", explanation: "Lesson: Exit point to limit loss. Example: Exit your back bet if odds hit 3.00 to prevent losing your full stake." },
-                it: { topic: "STOP LOSS", phrase: "GESTIONE RISCHIO", explanation: "Lezione: Punto d'uscita per perdite. Esempio: Esci dalla puntata se la quota tocca 3.00 per non perdere tutto." },
-                es: { topic: "STOP LOSS", phrase: "GESTIÓN RIESGO", explanation: "Lección: Salida para limitar pérdida. Ejemplo: Sales si la cuota llega a 3.00 para proteger tu capital." },
-                pt: { topic: "STOP LOSS", phrase: "GESTÃO DE RISCO", explanation: "Lição: Saída para limitar perda. Exemplo: Sai se a odd chegar a 3.00 para proteger o seu capital." }
-            },
-            {
-                id: 16,
-                en: { topic: "IN PLAY", phrase: "LIVE TRADING", explanation: "Lesson: Betting during the event. Example: Speed is key. Odds change every second as the clock ticks down." },
-                it: { topic: "IN PLAY", phrase: "TRADING LIVE", explanation: "Lezione: Scommettere durante l'evento. Esempio: La velocità è tutto. Le quote cambiano ogni secondo col tempo." },
-                es: { topic: "EN VIVO", phrase: "TRADING EN VIVO", explanation: "Lección: Operar en directo. Ejemplo: La rapidez es clave. Las cuotas varían cada segundo con el reloj." },
-                pt: { topic: "AO VIVO", phrase: "TRADING AO VIVO", explanation: "Lição: Operar em direto. Exemplo: A rapidez é chave. As odds mudam a cada segundo com o relógio." }
-            },
-            {
-                id: 17,
-                en: { topic: "PRE MATCH", phrase: "STABLE MARKETS", explanation: "Lesson: Trading before start. Example: Buying at 2.00 and selling at 1.98 due to team news 1 hour before kickoff." },
-                it: { topic: "PRE MATCH", phrase: "MERCATI STABILI", explanation: "Lezione: Trading prima dell'inizio. Esempio: Punti a 2.00 e banchi a 1.98 per news sulle formazioni." },
-                es: { topic: "PRE PARTIDO", phrase: "MERCADOS ESTABLES", explanation: "Lección: Trading antes del inicio. Ejemplo: Compras a 2.00 y vendes a 1.98 por noticias de alineación." },
-                pt: { topic: "PRÉ JOGO", phrase: "MERCADOS ESTÁVEIS", explanation: "Lição: Trading antes do início. Exemplo: Compra a 2.00 e vende a 1.98 por notícias de última hora." }
-            },
-            {
-                id: 18,
-                en: { topic: "DUTCHING", phrase: "MULTI SELECTION", explanation: "Lesson: Betting on multiple winners. Example: Backing 3 horses so you win the same amount if any of them win." },
-                it: { topic: "DUTCHING", phrase: "SELEZIONE MULTIPLA", explanation: "Lezione: Scommettere su più vincenti. Esempio: Punti 3 cavalli diversi per vincere lo stesso importo se vince uno dei 3." },
-                es: { topic: "DUTCHING", phrase: "MULTI SELECCIÓN", explanation: "Lección: Apostar a varios ganadores. Ejemplo: Apuestas a 3 caballos para ganar lo mismo gane cual gane." },
-                pt: { topic: "DUTCHING", phrase: "MULTI SELEÇÃO", explanation: "Lição: Apostar em vários vencedores. Exemplo: Aposta em 3 cavalos para ganhar o mesmo vença qual vencer." }
-            },
-            {
-                id: 19,
-                en: { topic: "SCALPING", phrase: "QUICK PROFITS", explanation: "Lesson: Catching 1-tick moves. Example: Backing at 1.52 and laying at 1.50 dozens of times in a stable market." },
-                it: { topic: "SCALPING", phrase: "PROFITTI RAPIDI", explanation: "Lezione: Catturare sbalzi di 1 tick. Esempio: Punti a 1.52 e banchi a 1.50 decine di volte in un mercato stabile." },
-                es: { topic: "SCALPING", phrase: "PROVECHO RÁPIDO", explanation: "Lección: Ganar 1 solo tick. Ejemplo: Apuestas a 1.52 y cierras a 1.50 repetidamente en un mercado quieto." },
-                pt: { topic: "SCALPING", phrase: "LUCRO RÁPIDO", explanation: "Lição: Ganhar 1 só tick. Exemplo: Aposta a 1.52 e fecha a 1.50 repetidamente num mercado estável." }
-            },
-            {
-                id: 20,
-                en: { topic: "SWING TRADING", phrase: "BIG MOVES", explanation: "Lesson: Profiting from trend shifts. Example: Backing a team 2 hours before the game and laying it after a 10-tick drop." },
-                it: { topic: "SWING TRADING", phrase: "GRANDI SBALZI", explanation: "Lezione: Sfruttare i trend. Esempio: Punti una squadra 2 ore prima e banchi dopo un calo di 10 tick." },
-                es: { topic: "SWING TRADING", phrase: "GRANDES GIROS", explanation: "Lección: Aprovechar tendencias. Ejemplo: Apuestas 2 horas antes y cierras tras una bajada de 10 ticks." },
-                pt: { topic: "SWING TRADING", phrase: "GRANDES GIROS", explanation: "Lição: Aproveitar tendências. Exemplo: Aposta 2 horas antes e fecha após uma descida de 10 ticks." }
-            },
-            {
-                id: 21,
-                en: { topic: "HEDGING", phrase: "LOCKING PROFIT", explanation: "Lesson: Manual balancing. Example: Calculating the exact lay stake to have equal green numbers on all selections." },
-                it: { topic: "HEDGING", phrase: "BLOCCA PROFITTO", explanation: "Lezione: Bilanciamento manuale. Esempio: Calcolare l'esatta bancata per avere numeri verdi uguali su tutto." },
-                es: { topic: "HEDGING", phrase: "FIJAR BENEFICIO", explanation: "Lección: Equilibrio manual. Ejemplo: Calcular el lay exacto para tener beneficios iguales en todo." },
-                pt: { topic: "HEDGING", phrase: "FIXAR LUCRO", explanation: "Lição: Equilíbrio manual. Exemplo: Calcular o lay exato para ter lucros iguais em tudo." }
-            },
-            {
-                id: 22,
-                en: { topic: "DRIP FEEDING", phrase: "ORDER ENTRY", explanation: "Lesson: Placing small bets over time. Example: Instead of €500 at once, you place €50 every minute to not spook the market." },
-                it: { topic: "DRIP FEEDING", phrase: "INGRESSO ORDINI", explanation: "Lezione: Piazzare piccoli ordini nel tempo. Esempio: Invece di 500€ subito, metti 50€ ogni minuto per non allertare il mercato." },
-                es: { topic: "DRIP FEEDING", phrase: "ENTRADA ÓRDENES", explanation: "Lección: Órdenes pequeñas. Ejemplo: En lugar de 500€ de golpe, pones 50€ cada minuto para no asustar al mercado." },
-                pt: { topic: "DRIP FEEDING", phrase: "ENTRADA ORDENS", explanation: "Lição: Ordens pequenas. Exemplo: Em vez de 500€ de uma vez, coloca 50€ a cada minuto para não assustar o mercado." }
-            },
-            {
-                id: 23,
-                en: { topic: "WOM", phrase: "WEIGHT OF MONEY", explanation: "Lesson: Seeing where money is pressing. Example: €20k on Back side vs €2k on Lay side pushes the odds down." },
-                it: { topic: "WOM", phrase: "PESO DEL DENARO", explanation: "Lezione: Vedere dove preme il denaro. Esempio: 20k€ in Punta contro 2k€ in Banca spingono la quota verso il basso." },
-                es: { topic: "WOM", phrase: "PESO DEL DINERO", explanation: "Lección: Ver la presión del dinero. Ejemplo: 20k€ en Back vs 2k€ en Lay empujan la cuota hacia abajo." },
-                pt: { topic: "WOM", phrase: "PESO DO DINHEIRO", explanation: "Lição: Ver a pressão do dinheiro. Exemplo: 20k€ em Back vs 2k€ em Lay empurram a odd para baixo." }
-            },
-            {
-                id: 24,
-                en: { topic: "FILL RATE", phrase: "EXECUTION SPEED", explanation: "Lesson: How fast bets get matched. Example: In Premier League, bets match in milliseconds. In small leagues, it might take minutes." },
-                it: { topic: "FILL RATE", phrase: "VELOCITÀ ORDINI", explanation: "Lezione: Quanto è rapido l'abbinamento. Esempio: In Premier League abbinamenti in millisecondi. In leghe minori può volerci tempo." },
-                es: { topic: "TASA LLENADO", phrase: "RAPIDEZ EJECUCIÓN", explanation: "Lección: Velocidad de igualación. Ejemplo: En Premier League es instantáneo. En ligas pequeñas puede tardar minutos." },
-                pt: { topic: "TAXA EXECUÇÃO", phrase: "RAPIDEZ EXECUÇÃO", explanation: "Lição: Velocidade de correspondência. Exemplo: Na Premier League é instantâneo. Em ligas pequenas pode demorar minutos." }
-            },
-            {
-                id: 25,
-                en: { topic: "CROSS MATCH", phrase: "ENGINE LOGIC", explanation: "Lesson: Matching across markets. Example: Laying Under 2.5 is mathematically matched against someone backing Over 2.5." },
-                it: { topic: "CROSS MATCH", phrase: "LOGICA MOTORE", explanation: "Lezione: Abbinamento tra mercati. Esempio: Bancare Under 2.5 viene abbinato matematicamente a chi punta Over 2.5." },
-                es: { topic: "CROSS MATCH", phrase: "LÓGICA MOTOR", explanation: "Lección: Cruce de mercados. Ejemplo: Lay al Under 2.5 se iguala matemáticamente con el Back al Over 2.5." },
-                pt: { topic: "CROSS MATCH", phrase: "LÓGICA MOTOR", explanation: "Lição: Cruzamento de mercados. Exemplo: Lay ao Under 2.5 é correspondido matematicamente com Back ao Over 2.5." }
-            },
-            {
-                id: 26,
-                en: { topic: "VALUE BET", phrase: "MATH EDGE", explanation: "Lesson: Odds higher than reality. Example: If true probability is 50% (2.00) but exchange offers 2.10, you have an edge." },
-                it: { topic: "VALUE BET", phrase: "VANTAGGIO MATEMATICO", explanation: "Lezione: Quote più alte della realtà. Esempio: Se la probabilità reale è 50% (2.00) ma l'exchange offre 2.10, hai vantaggio." },
-                es: { topic: "VALOR", phrase: "VENTAJA MATEMÁTICA", explanation: "Lección: Cuota superior a realidad. Ejemplo: Si la probabilidad es 50% (2.00) y ofrecen 2.10, tienes ventaja." },
-                pt: { topic: "VALOR", phrase: "VANTAGEM MATEMÁTICA", explanation: "Lição: Odd superior à realidade. Exemplo: Se a probabilidade é 50% (2.00) e oferecem 2.10, tem vantagem." }
-            },
-            {
-                id: 27,
-                en: { topic: "OVERROUND", phrase: "BOOKIE MARGIN", explanation: "Lesson: Market efficiency. Example: Bookies have 110% overround (expensive). Exchanges are near 100% (cheaper)." },
-                it: { topic: "OVERROUND", phrase: "MARGINO BANCO", explanation: "Lezione: Efficienza del mercato. Esempio: I bookie hanno 110% (caro). Gli Exchange sono vicini al 100% (conveniente)." },
-                es: { topic: "OVERROUND", phrase: "MARGEN CASA", explanation: "Lección: Eficiencia. Ejemplo: Casas clásicas al 110% (caro). Exchanges cerca del 100% (barato)." },
-                pt: { topic: "OVERROUND", phrase: "MARGEM CASA", explanation: "Lição: Eficiência. Exemplo: Casas clássicas a 110% (caro). Exchanges perto de 100% (barato)." }
-            },
-            {
-                id: 28,
-                en: { topic: "ARBITRAGE", phrase: "RISK FREE", explanation: "Lesson: Guaranteed profit from price gaps. Example: Backing @ 2.10 on Bookie, Laying @ 2.00 on Exchange." },
-                it: { topic: "ARBITRAGGIO", phrase: "SENZA RISCHIO", explanation: "Lezione: Profitto certo da differenze di prezzo. Esempio: Punti a 2.10 su Bookie, Banchi a 2.00 su Exchange." },
-                es: { topic: "ARBITRAJE", phrase: "SIN RIESGO", explanation: "Lección: Ganancia segura por precio. Ejemplo: Back a 2.10 en Casa, Lay a 2.00 en Exchange." },
-                pt: { topic: "ARBITRAGEM", phrase: "SEM RISCO", explanation: "Lição: Lucro seguro por preço. Exemplo: Back a 2.10 em Casa, Lay a 2.00 em Exchange." }
-            },
-            {
-                id: 29,
-                en: { topic: "TRADING PLAN", phrase: "PREPARATION", explanation: "Lesson: Rules before betting. Example: Deciding to risk only 2% of bank and exit at minute 70 no matter what." },
-                it: { topic: "PIANO TRADING", phrase: "PREPARAZIONE", explanation: "Lezione: Regole prima di iniziare. Esempio: Decidere di rischiare solo il 2% della cassa ed uscire al minuto 70." },
-                es: { topic: "PLAN TRADING", phrase: "PREPARACIÓN", explanation: "Lección: Reglas previas. Ejemplo: Decidir arriesgar solo el 2% y salir en el minuto 70 pase lo que pase." },
-                pt: { topic: "PLANO TRADING", phrase: "PREPARAÇÃO", explanation: "Lição: Regras prévias. Exemplo: Decidir arriscar apenas 2% e sair ao minuto 70 aconteça o que acontecer." }
-            },
-            {
-                id: 30,
-                en: { topic: "DISCIPLINE", phrase: "THE SECRET", explanation: "Lesson: Staying consistent. Example: Accepting a loss without chasing it. You are now a master of the Exchange!" },
-                it: { topic: "DISCIPLINA", phrase: "IL SEGRETO", explanation: "Lezione: Essere costanti. Esempio: Accettare una perdita senza rincorrerla. Ora sei un Maestro dell'Exchange!" },
-                es: { topic: "DISCIPLINA", phrase: "EL SECRETO", explanation: "Lección: Ser constante. Ejemplo: Aceptar una pérdida sin perseguirla. ¡Ya eres un Maestro del Exchange!" },
-                pt: { topic: "DISCIPLINA", phrase: "O SEGREDO", explanation: "Lição: Ser constante. Exemplo: Aceitar uma perda sem a perseguir. Já é um Mestre do Exchange!" }
-            }
+            { id: 1, en: { topic: "EXCHANGE BASICS", phrase: "BETTING EXCHANGE" }, it: { topic: "BASI EXCHANGE", phrase: "BETTING EXCHANGE" }, es: { topic: "BASES EXCHANGE", phrase: "BETTING EXCHANGE" }, pt: { topic: "BASES EXCHANGE", phrase: "BETTING EXCHANGE" }, explanation_key: "ex1" },
+            { id: 2, en: { topic: "BACK ACTION", phrase: "BACK A SELECTION" }, it: { topic: "AZIONE PUNTA", phrase: "PUNTARE UNA QUOTA" }, es: { topic: "ACCIÓN BACK", phrase: "APUESTA A FAVOR" }, pt: { topic: "AÇÃO BACK", phrase: "APOSTAR A FAVOR" }, explanation_key: "ex2" },
+            { id: 3, en: { topic: "LAY ACTION", phrase: "LAY A BET" }, it: { topic: "AZIONE BANCA", phrase: "BANCARE UNA QUOTA" }, es: { topic: "ACCIÓN LAY", phrase: "APUESTA EN CONTRA" }, pt: { topic: "AÇÃO LAY", phrase: "APOSTAR CONTRA" }, explanation_key: "ex3" },
+            { id: 4, en: { topic: "THE MATCH", phrase: "MATCHED BET" }, it: { topic: "ABBINAMENTO", phrase: "SCOMMESSA ABBINATA" }, es: { topic: "IGUALACIÓN", phrase: "APUESTA IGUALADA" }, pt: { topic: "CORRESPONDÊNCIA", phrase: "APOSTA CORRESPONDIDA" }, explanation_key: "ex4" },
+            { id: 5, en: { topic: "MONEY FLOW", phrase: "MARKET LIQUIDITY" }, it: { topic: "LIQUIDITÀ", phrase: "LIQUIDITA DI MERCATO" }, es: { topic: "LIQUIDEZ", phrase: "LIQUIDEZ DEL MERCADO" }, pt: { topic: "LIQUIDEZ", phrase: "LIQUIDEZ DO MERCADO" }, explanation_key: "ex5" },
+            { id: 6, en: { topic: "RISK CONTROL", phrase: "LIABILITY" }, it: { topic: "RESPONSABILITÀ", phrase: "RESPONSABILITA" }, es: { topic: "RESPONSABILIDAD", phrase: "RIESGO POTENCIAL" }, pt: { topic: "RESPONSABILIDADE", phrase: "RISCO POTENCIAL" }, explanation_key: "ex6" },
+            { id: 7, en: { topic: "STEPS", phrase: "TICK SIZE" }, it: { topic: "SCATTO QUOTA", phrase: "TICK SIZE" }, es: { topic: "PASO CUOTA", phrase: "TAMAÑO DEL TICK" }, pt: { topic: "SALTO ODD", phrase: "TAMANHO DO TICK" }, explanation_key: "ex7" },
+            { id: 8, en: { topic: "FEES", phrase: "COMMISSION" }, it: { topic: "COMMISSIONE", phrase: "TASSA EXCHANGE" }, es: { topic: "TARIFAS", phrase: "COMISION" }, pt: { topic: "TAXAS", phrase: "COMISSAO" }, explanation_key: "ex8" },
+            { id: 9, en: { topic: "SAFETY", phrase: "VOID BET" }, it: { topic: "SCOMMESSA NULLA", phrase: "SCOMMESSA ANNULLATA" }, es: { topic: "APUESTA NULA", phrase: "APUESTA ANULADA" }, pt: { topic: "APOSTA NULA", phrase: "APOSTA ANULADA" }, explanation_key: "ex9" },
+            { id: 10, en: { topic: "CONTROL", phrase: "CASH OUT" }, it: { topic: "CASH OUT", phrase: "USCITA ANTICIPATA" }, es: { topic: "CERRAR APUESTA", phrase: "SALIDA TEMPRANA" }, pt: { topic: "ENCERRAR APOSTA", phrase: "SAÍDA ANTECIPADA" }, explanation_key: "ex10" },
+            { id: 11, en: { topic: "TRADING 101", phrase: "BACK TO LAY" }, it: { topic: "TRADING BASE", phrase: "BACK TO LAY" }, es: { topic: "TRADING BÁSICO", phrase: "BACK TO LAY" }, pt: { topic: "TRADING BÁSICO", phrase: "BACK TO LAY" }, explanation_key: "ex11" },
+            { id: 12, en: { topic: "TRADING 102", phrase: "LAY TO BACK" }, it: { topic: "TRADING INVERSO", phrase: "LAY TO BACK" }, es: { topic: "TRADING INVERSO", phrase: "LAY TO BACK" }, pt: { topic: "TRADING INVERSO", phrase: "LAY TO BACK" }, explanation_key: "ex12" },
+            { id: 13, en: { topic: "WINNING", phrase: "GREEN BOOK" }, it: { topic: "PROFITTO CERTO", phrase: "GREEN BOOK" }, es: { topic: "GANANCIA", phrase: "LIBRO VERDE" }, pt: { topic: "LUCRO", phrase: "LIVRO VERDE" }, explanation_key: "ex13" },
+            { id: 14, en: { topic: "LOSS MGMT", phrase: "RED BOOK" }, it: { topic: "PERDITA COPERTA", phrase: "RED BOOK" }, es: { topic: "PÉRDIDA MÍNIMA", phrase: "LIBRO ROJO" }, pt: { topic: "PERDA MÍNIMA", phrase: "LIVRO VERMELHO" }, explanation_key: "ex14" },
+            { id: 15, en: { topic: "RISK MGMT", phrase: "STOP LOSS" }, it: { topic: "STOP LOSS", phrase: "GESTIONE RISCHIO" }, es: { topic: "STOP LOSS", phrase: "GESTIÓN RIESGO" }, pt: { topic: "STOP LOSS", phrase: "GESTÃO DE RISCO" }, explanation_key: "ex15" },
+            { id: 16, en: { topic: "LIVE ACTION", phrase: "IN PLAY" }, it: { topic: "TRADING LIVE", phrase: "IN PLAY" }, es: { topic: "TRADING EN VIVO", phrase: "EN VIVO" }, pt: { topic: "TRADING AO VIVO", phrase: "AO VIVO" }, explanation_key: "ex16" },
+            { id: 17, en: { topic: "PLANNING", phrase: "PRE MATCH" }, it: { topic: "MERCATI STABILI", phrase: "PRE MATCH" }, es: { topic: "MERCADOS ESTABLES", phrase: "PRE PARTIDO" }, pt: { topic: "MERCADOS ESTÁVEIS", phrase: "PRÉ JOGO" }, explanation_key: "ex17" },
+            { id: 18, en: { topic: "STRATEGY", phrase: "DUTCHING" }, it: { topic: "MULTI SELEZIONE", phrase: "DUTCHING" }, es: { topic: "MULTI SELECCIÓN", phrase: "DUTCHING" }, pt: { topic: "MULTI SELEÇÃO", phrase: "DUTCHING" }, explanation_key: "ex18" },
+            { id: 19, en: { topic: "SPEED", phrase: "SCALPING" }, it: { topic: "PROFITTI RAPIDI", phrase: "SCALPING" }, es: { topic: "PROVECHO RÁPIDO", phrase: "SCALPING" }, pt: { topic: "LUCRO RÁPIDO", phrase: "SCALPING" }, explanation_key: "ex19" },
+            { id: 20, en: { topic: "MARKET FLOW", phrase: "SWING TRADING" }, it: { topic: "GRANDI SBALZI", phrase: "SWING TRADING" }, es: { topic: "GRANDES GIROS", phrase: "SWING TRADING" }, pt: { topic: "GRANDES GIROS", phrase: "SWING TRADING" }, explanation_key: "ex20" },
+            { id: 21, en: { topic: "HEDGING", phrase: "LOCKING PROFIT" }, it: { topic: "COPERTURA", phrase: "HEDGING" }, es: { topic: "FIJAR BENEFICIO", phrase: "HEDGING" }, pt: { topic: "FIXAR LUCRO", phrase: "HEDGING" }, explanation_key: "ex21" },
+            { id: 22, en: { topic: "ENTRY", phrase: "DRIP FEEDING" }, it: { topic: "INGRESSO ORDINI", phrase: "DRIP FEEDING" }, es: { topic: "ENTRADA ÓRDENES", phrase: "DRIP FEEDING" }, pt: { topic: "ENTRADA ORDENS", phrase: "DRIP FEEDING" }, explanation_key: "ex22" },
+            { id: 23, en: { topic: "PRESSURE", phrase: "WEIGHT OF MONEY" }, it: { topic: "PESO DEL DENARO", phrase: "WOM" }, es: { topic: "PESO DEL DINERO", phrase: "WOM" }, pt: { topic: "PESO DO DINHEIRO", phrase: "WOM" }, explanation_key: "ex23" },
+            { id: 24, en: { topic: "EXECUTION", phrase: "FILL RATE" }, it: { topic: "VELOCITÀ ORDINI", phrase: "FILL RATE" }, es: { topic: "RAPIDEZ EJECUCIÓN", phrase: "TASA LLENADO" }, pt: { topic: "RAPIDEZ EXECUÇÃO", phrase: "TAXA EXECUÇÃO" }, explanation_key: "ex24" },
+            { id: 25, en: { topic: "ALGORITHM", phrase: "CROSS MATCHING" }, it: { topic: "LOGICA MOTORE", phrase: "CROSS MATCHING" }, es: { topic: "LÓGICA MOTOR", phrase: "CROSS MATCHING" }, pt: { topic: "LÓGICA MOTOR", phrase: "CROSS MATCHING" }, explanation_key: "ex25" },
+            { id: 26, en: { topic: "THE EDGE", phrase: "VALUE BET" }, it: { topic: "VANTAGGIO", phrase: "VALUE BET" }, es: { topic: "VENTAJA", phrase: "VALOR" }, pt: { topic: "VANTAGEM", phrase: "VALOR" }, explanation_key: "ex26" },
+            { id: 27, en: { topic: "EFFICIENCY", phrase: "OVERROUND" }, it: { topic: "MARGINO BANCO", phrase: "OVERROUND" }, es: { topic: "EFICIENCIA", phrase: "OVERROUND" }, pt: { topic: "EFICIÊNCIA", phrase: "OVERROUND" }, explanation_key: "ex27" },
+            { id: 28, en: { topic: "ARBITRAGE", phrase: "RISK FREE" }, it: { topic: "SENZA RISCHIO", phrase: "ARBITRAGGIO" }, es: { topic: "SIN RIESGO", phrase: "ARBITRAJE" }, pt: { topic: "SEM RISCO", phrase: "ARBITRAGEM" }, explanation_key: "ex28" },
+            { id: 29, en: { topic: "METHOD", phrase: "TRADING PLAN" }, it: { topic: "PREPARAZIONE", phrase: "PIANO TRADING" }, es: { topic: "PREPARACIÓN", phrase: "PLAN TRADING" }, pt: { topic: "PREPARAÇÃO", phrase: "PLANO TRADING" }, explanation_key: "ex29" },
+            { id: 30, en: { topic: "THE SECRET", phrase: "DISCIPLINE" }, it: { topic: "IL SEGRETO", phrase: "DISCIPLINA" }, es: { topic: "EL SECRETO", phrase: "DISCIPLINA" }, pt: { topic: "O SEGREDO", phrase: "DISCIPLINA" }, explanation_key: "ex30" }
         ];
 
-        // --- TRADUZIONI UI ---
+        const explanations = {
+            it: {
+                ex1: "Lezione: Piattaforma peer-to-peer. Esempio: Invece del banco, la tua scommessa di 10€ è abbinata a quella di un altro utente.",
+                ex2: "Lezione: Scommettere che accada. Esempio: Puntando 10€ sul Milan a quota 2.00 significa vincere 10€ netti se vince.",
+                ex3: "Lezione: Scommettere che NON accada. Esempio: Bancando il Pareggio, vinci se vince o la Squadra A o la Squadra B.",
+                ex6: "Lezione: Soldi a rischio nella bancata. Esempio: Bancare 10€ a quota 3.00 crea 20€ di responsabilità. Rischi 20€ per vincerne 10€.",
+                ex15: "Lezione: Punto d'uscita per perdite. Esempio: Esci dalla puntata se la quota tocca 3.00 per non perdere tutto il capitale.",
+                ex30: "Lezione: Essere costanti. Esempio: Accettare una perdita senza rincorrerla. Ora sei un Maestro dell'Exchange!"
+            },
+            en: {
+                ex1: "Lesson: Peer-to-peer betting. Example: You match your €10 back bet against another user's lay bet at the same odds.",
+                ex15: "Lesson: Exit point to limit loss. Example: Exit your back bet if odds hit 3.00 to prevent losing your full stake.",
+                ex30: "Lesson: Staying consistent. Example: Accepting a loss without chasing it. You are now a master of the Exchange!"
+            }
+        };
+
         const uiTranslations = {
-            en: { title: "BETTING EXCHANGE ROOM", tagline: "Zero to Hero: 30 Days Course!", players1: "1 Player", players2: "2 Players", selectLesson: "Select Daily Topic", startGame: "Start Lesson", spinWheel: "Spin", buyVowel: "Vowel (250)", solve: "Solve", turnPrefix: "Player", turnSuffix: "'s Turn", bankrupt: "BANKRUPT!", loseTurn: "MISS TURN", consonantPrompt: "Odds Consonant:", vowelPrompt: "Choose Vowel", solvePrompt: "Solution:", submit: "Send", cancel: "Cancel", correct: "Correct!", wrong: "Wrong!", concept: "Lesson Recap:", nextRound: "Next Lesson", gameOver: "Graduated!", winner: "Top Trader", playAgain: "Restart", day: "Day", wheelValues: { BANKRUPT: "BANKRUPT", LOSE_TURN: "MISS TURN" } },
-            it: { title: "BETTING EXCHANGE ROOM", tagline: "Zero to Hero: Corso in 30 Giorni!", players1: "1 Giocatore", players2: "2 Giocatori", selectLesson: "Seleziona Tema del Giorno", startGame: "Inizia Lezione", spinWheel: "Gira", buyVowel: "Vocale (250)", solve: "Risolvi", turnPrefix: "Tocca a P", turnSuffix: "!", bankrupt: "BANCAROTTA!", loseTurn: "PASSO", consonantPrompt: "Consonante a Quota:", vowelPrompt: "Scegli Vocale", solvePrompt: "Soluzione:", submit: "Invia", cancel: "Annulla", correct: "Esatto!", wrong: "Sbagliato!", concept: "Recap Lezione:", nextRound: "Prossima Lezione", gameOver: "Diplomato!", winner: "Top Trader", playAgain: "Ricomincia", day: "Giorno", wheelValues: { BANKRUPT: "BANCAROTTA", LOSE_TURN: "PASSO" } },
-            es: { title: "BETTING EXCHANGE ROOM", tagline: "Zero to Hero: ¡Curso de 30 Días!", players1: "1 Jugador", players2: "2 Jugadores", selectLesson: "Elegir Tema del Día", startGame: "Iniciar Lección", spinWheel: "Girar", buyVowel: "Vocal (250)", solve: "Resolver", turnPrefix: "Turno de P", turnSuffix: "", bankrupt: "¡BANCARROTA!", loseTurn: "¡PASO!", consonantPrompt: "Consonante a Cuota:", vowelPrompt: "Elegir Vocal", solvePrompt: "Solución:", submit: "Enviar", cancel: "Cancelar", correct: "¡Correcto!", wrong: "¡Incorrecto!", concept: "Recap Lección:", nextRound: "Siguiente Tema", gameOver: "¡Graduado!", winner: "Top Trader", playAgain: "Reiniciar", day: "Día", wheelValues: { BANKRUPT: "BANCARROTA", LOSE_TURN: "PASO" } },
-            pt: { title: "BETTING EXCHANGE ROOM", tagline: "Zero to Hero: Curso de 30 Dias!", players1: "1 Jogador", players2: "2 Jogadores", selectLesson: "Selecionar Tema do Dia", startGame: "Iniciar Lição", spinWheel: "Girar", buyVowel: "Vogal (250)", solve: "Resolver", turnPrefix: "Vez do P", turnSuffix: "", bankrupt: "FALÊNCIA!", loseTurn: "PASSO", consonantPrompt: "Consonante para Cota:", vowelPrompt: "Escolha Vogal", solvePrompt: "Solução:", submit: "Enviar", cancel: "Cancelar", correct: "Correto!", wrong: "Errado!", concept: "Recap Lição:", nextRound: "Próxima Lição", gameOver: "Diplomado!", winner: "Top Trader", playAgain: "Reiniciar", day: "Dia", wheelValues: { BANKRUPT: "FALÊNCIA", LOSE_TURN: "PASSO" } }
+            en: { title: "BETTING EXCHANGE ROOM", tagline: "Zero to Hero Course!", players1: "1 Player", players2: "2 Players", selectLesson: "Lesson", startGame: "Spin the Wheel", spinWheel: "Spin", buyVowel: "Vowel (250)", solve: "Solve", turnPrefix: "Turn for Player ", turnSuffix: "", bankrupt: "BANKRUPT!", loseTurn: "MISS TURN", consonantPrompt: "Consonant @ Odds:", vowelPrompt: "Choose Vowel", solvePrompt: "Solution:", submit: "Send", cancel: "Cancel", correct: "Correct!", wrong: "Wrong!", concept: "Recap:", nextRound: "Next Lesson", gameOver: "Graduated!", winner: "Top Trader", playAgain: "Restart", day: "", wheelValues: { BANKRUPT: "BANKRUPT", LOSE_TURN: "LOSE TURN" } },
+            it: { title: "BETTING EXCHANGE ROOM", tagline: "Corso Zero to Hero!", players1: "1 Giocatore", players2: "2 Giocatori", selectLesson: "Lezione", startGame: "Gira la ruota", spinWheel: "Gira", buyVowel: "Vocale (250)", solve: "Risolvi", turnPrefix: "Tocca al giocatore numero ", turnSuffix: "", bankrupt: "BANCAROTTA!", loseTurn: "PASSO", consonantPrompt: "Consonante a Quota:", vowelPrompt: "Scegli Vocale", solvePrompt: "Soluzione:", submit: "Invia", cancel: "Annulla", correct: "Esatto!", wrong: "Sbagliato!", concept: "Recap:", nextRound: "Prossima Lezione", gameOver: "Diplomato!", winner: "Top Trader", playAgain: "Ricomincia", day: "", wheelValues: { BANKRUPT: "BANCAROTTA", LOSE_TURN: "PASSO" } },
+            es: { title: "BETTING EXCHANGE ROOM", tagline: "¡Curso Zero to Hero!", players1: "1 Jugador", players2: "2 Jugadores", selectLesson: "Lección", startGame: "Gira la rueda", spinWheel: "Girar", buyVowel: "Vocal (250)", solve: "Resolver", turnPrefix: "Turno del jugador número ", turnSuffix: "", bankrupt: "¡BANCARROTA!", loseTurn: "¡PASO!", consonantPrompt: "Consonante a Cuota:", vowelPrompt: "Elegir Vocal", solvePrompt: "Solución:", submit: "Enviar", cancel: "Cancelar", correct: "¡Correcto!", wrong: "¡Incorrecto!", concept: "Recap:", nextRound: "Siguiente Tema", gameOver: "¡Graduado!", winner: "Top Trader", playAgain: "Reiniciar", day: "", wheelValues: { BANKRUPT: "BANCARROTA", LOSE_TURN: "PASO" } },
+            pt: { title: "BETTING EXCHANGE ROOM", tagline: "Curso Zero to Hero!", players1: "1 Jogador", players2: "2 Jogadores", selectLesson: "Lição", startGame: "Gira a roda", spinWheel: "Girar", buyVowel: "Vogal (250)", solve: "Resolver", turnPrefix: "Vez do jogador número ", turnSuffix: "", bankrupt: "FALÊNCIA!", loseTurn: "PASSO!", consonantPrompt: "Consoante @ Cota:", vowelPrompt: "Escolha Vogal", solvePrompt: "Solução:", submit: "Enviar", cancel: "Cancelar", correct: "Correto!", wrong: "Errado!", concept: "Recap:", nextRound: "Próxima Lição", gameOver: "Diplomado!", winner: "Top Trader", playAgain: "Reiniciar", day: "", wheelValues: { BANKRUPT: "FALÊNCIA", LOSE_TURN: "PASSO" } }
         };
 
         const WHEEL_SEGMENTS = [
@@ -311,7 +165,7 @@
             { type: 'value', val: '2.50', multiplier: 250, color: COLORS.layPink, textColor: '#000000' },
             { type: 'LOSE_TURN', val: '0', multiplier: 0, color: '#FFFFFF', textColor: '#000000' },
             { type: 'value', val: '4.00', multiplier: 400, color: COLORS.backBlue, textColor: '#FFFFFF' },
-            { type: 'value', val: '10.0', multiplier: 1000, color: COLORS.layPink, textColor: '#000000' },
+            { type: 'value', val: '7.15', multiplier: 715, color: COLORS.layPink, textColor: '#000000' },
             { type: 'value', val: '1.80', multiplier: 180, color: COLORS.backBlue, textColor: '#FFFFFF' },
             { type: 'value', val: '6.00', multiplier: 600, color: COLORS.layPink, textColor: '#000000' }
         ];
@@ -360,7 +214,7 @@
                     osc.type = 'triangle';
                     osc.frequency.setValueAtTime(300, audioCtxRef.current.currentTime);
                     osc.frequency.exponentialRampToValueAtTime(50, audioCtxRef.current.currentTime + 0.05);
-                    gain.gain.setValueAtTime(0.2, audioCtxRef.current.currentTime);
+                    gain.gain.setValueAtTime(0.15, audioCtxRef.current.currentTime);
                     gain.gain.exponentialRampToValueAtTime(0.01, audioCtxRef.current.currentTime + 0.05);
                     osc.connect(gain); gain.connect(audioCtxRef.current.destination);
                     osc.start(); osc.stop(audioCtxRef.current.currentTime + 0.05);
@@ -378,7 +232,8 @@
             const startRound = (index) => {
                 if (index >= phrasesDictionary.length) return setGameState('GAME_OVER');
                 const data = phrasesDictionary[index];
-                setPhraseData({ topic: data[lang].topic, phrase: data[lang].phrase, explanation: data[lang].explanation, day: index + 1, originalData: data });
+                const expl = explanations[lang]?.[data.explanation_key] || explanations['en']?.[data.explanation_key] || data[lang].topic;
+                setPhraseData({ topic: data[lang].topic, phrase: data[lang].phrase, explanation: expl, day: index + 1, originalData: data });
                 setGuessedLetters([]); setTurnPhase('IDLE'); setSpinValue(null);
             };
 
@@ -458,176 +313,190 @@
             };
 
             return (
-                <div className="min-h-screen flex flex-col">
-                    <header className="px-4 py-3 flex justify-between items-center border-b border-white/10 bg-black/60 backdrop-blur-md sticky top-0 z-50">
+                <div className="viewport-container bg-[#1A1A1A]">
+                    <header className="px-4 py-2 flex justify-between items-center border-b border-white/10 bg-black/60 backdrop-blur-md sticky top-0 z-50 h-[50px] sm:h-[60px]">
                         <div className="flex items-center gap-3">
-                            <img src="logo-tondo.jpeg" className="w-8 h-8 md:w-10 md:h-10 rounded-full" onError={e=>e.target.style.display='none'} />
-                            <span className="text-[#FFB805] font-black text-sm sm:text-base md:text-lg tracking-widest uppercase line-clamp-1">{ui.title}</span>
+                            <img src="logo-tondo.jpeg" className="w-7 h-7 sm:w-9 sm:h-9 rounded-full object-cover shadow-[0_0_10px_rgba(0,209,102,0.3)]" />
+                            <span className="text-[#00D166] font-black text-xs sm:text-base tracking-widest uppercase">BETTING EXCHANGE ROOM</span>
                         </div>
                         {gameState !== 'SETUP' && (
-                            <button onClick={() => setGameState('SETUP')} className="text-white/70 hover:text-white p-2 rounded-full bg-white/5"><Icon name="SettingsIcon" size={20}/></button>
+                            <button onClick={() => setGameState('SETUP')} className="text-white/70 hover:text-white p-1 rounded-full bg-white/5"><Icon name="SettingsIcon" size={18}/></button>
                         )}
                     </header>
 
-                    <main className="flex-1 flex flex-col items-center w-full max-w-7xl mx-auto pb-6 px-2 sm:px-4">
+                    <main className="main-content px-2 h-full">
                         {gameState === 'SETUP' && (
-                            <div className="flex flex-col items-center justify-center min-h-[70vh] w-full max-w-lg text-white p-6 sm:p-8 rounded-3xl bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl animate-pop-in mx-auto my-6 relative overflow-hidden">
-                                <img src="La-Ruota-della-Fortuna-2-1024x576.webp" className="w-full h-auto rounded-2xl border-4 border-[#2E9DDF] mb-6" />
-                                <p className="text-center font-bold mb-6 text-white/90">{ui.tagline}</p>
-                                <div className="flex gap-4 mb-8">
+                            <div className="flex flex-col items-center justify-center h-full w-full max-w-lg text-white p-4 sm:p-8 rounded-3xl bg-white/5 backdrop-blur-md border border-white/10 animate-pop-in mx-auto relative overflow-hidden my-auto max-h-[85vh]">
+                                <div className="absolute top-[-50px] left-[-50px] w-40 h-40 bg-green-500/20 rounded-full blur-[80px]"></div>
+                                <div className="absolute bottom-[-50px] right-[-50px] w-40 h-40 bg-blue-500/20 rounded-full blur-[80px]"></div>
+                                
+                                <div className="mb-4 text-[#00D166] flex justify-center"><Icon name="TelegramBall" size={60} className="drop-shadow-lg"/></div>
+                                
+                                <p className="text-center font-bold mb-4 text-white/90 text-sm sm:text-base">{ui.tagline}</p>
+                                
+                                <div className="flex gap-3 mb-6">
                                     {Object.keys(flagImages).map(l => (
-                                        <button key={l} onClick={()=>setLang(l)} className={`w-12 h-12 rounded-full overflow-hidden border-2 transition-all ${lang===l?'border-[#FFB805] scale-110 shadow-lg':'opacity-50 hover:opacity-100'}`}>
+                                        <button key={l} onClick={()=>setLang(l)} className={`w-10 h-10 rounded-full overflow-hidden border-2 transition-all ${lang===l?'border-[#00D166] scale-110 shadow-lg':'opacity-40 hover:opacity-100'}`}>
                                             <img src={flagImages[l]} className="w-full h-full object-cover"/>
                                         </button>
                                     ))}
                                 </div>
-                                <div className="flex gap-3 w-full mb-6">
-                                    <button onClick={()=>setNumPlayers(1)} className={`flex-1 p-4 rounded-2xl flex flex-col items-center gap-2 ${numPlayers===1?'bg-[#2E9DDF] border-2 border-blue-300':'bg-black/40'}`}><Icon name="User"/>{ui.players1}</button>
-                                    <button onClick={()=>setNumPlayers(2)} className={`flex-1 p-4 rounded-2xl flex flex-col items-center gap-2 ${numPlayers===2?'bg-[#2E9DDF] border-2 border-blue-300':'bg-black/40'}`}><Icon name="Users"/>{ui.players2}</button>
+                                <div className="flex gap-2 w-full mb-4">
+                                    <button onClick={()=>setNumPlayers(1)} className={`flex-1 p-3 rounded-xl flex flex-col items-center gap-1 text-xs ${numPlayers===1?'bg-[#2E9DDF] border-2 border-blue-300':'bg-black/40'}`}><Icon name="User" size={16}/>{ui.players1}</button>
+                                    <button onClick={()=>setNumPlayers(2)} className={`flex-1 p-3 rounded-xl flex flex-col items-center gap-1 text-xs ${numPlayers===2?'bg-[#2E9DDF] border-2 border-blue-300':'bg-black/40'}`}><Icon name="Users" size={16}/>{ui.players2}</button>
                                 </div>
-                                <div className="w-full mb-8">
-                                    <label className="block text-[10px] uppercase font-black mb-2 opacity-70 tracking-widest">{ui.selectLesson}</label>
+                                <div className="w-full mb-6 text-center">
+                                    <label className="block text-[8px] uppercase font-black mb-1 opacity-70 tracking-widest">{ui.selectLesson}</label>
                                     <div className="relative">
-                                        <select value={startTopicIndex} onChange={e=>setStartTopicIndex(Number(e.target.value))} className="w-full p-4 pr-10 rounded-2xl bg-black/60 border-2 border-white/10 text-white font-bold outline-none appearance-none cursor-pointer text-sm">
-                                            {phrasesDictionary.map((p,i)=><option key={i} value={i}>{ui.day} {i+1}: {p[lang].topic}</option>)}
+                                        <select value={startTopicIndex} onChange={e=>setStartTopicIndex(Number(e.target.value))} className="w-full p-3 pr-10 rounded-xl bg-black/60 border-2 border-white/10 text-white font-bold outline-none appearance-none cursor-pointer text-xs">
+                                            {phrasesDictionary.map((p,i)=><option key={i} value={i}>{i+1} - {p[lang].topic}</option>)}
                                         </select>
-                                        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none opacity-50"><Icon name="ChevronDown"/></div>
+                                        <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none opacity-50"><Icon name="ChevronDown" size={16}/></div>
                                     </div>
                                 </div>
-                                <button onClick={startGame} className="w-full sm:w-auto px-10 py-5 bg-[#FFB805] text-black rounded-full font-black text-xl flex items-center justify-center gap-2 active:scale-95 shadow-xl"><Icon name="Play"/>{ui.startGame}</button>
+                                <button onClick={startGame} className="w-full sm:w-auto px-10 py-4 bg-[#FFB805] text-black rounded-full font-black text-lg flex items-center justify-center gap-2 active:scale-95 shadow-xl transition-all hover:scale-105"><Icon name="Play" size={20}/>{ui.startGame}</button>
                             </div>
                         )}
 
                         {(gameState === 'PLAYING' || gameState === 'SOLVED') && (
-                            <div className="w-full flex flex-col items-center overflow-hidden">
-                                <div className="flex justify-center gap-2 w-full mt-4 max-w-sm">
-                                    {[...Array(numPlayers)].map((_, i) => (
-                                        <div key={i} className={`flex-1 p-3 rounded-2xl border-2 text-center transition-all ${currentPlayer===i && gameState==='PLAYING'?'border-[#FFB805] bg-[#FFB805]/10 scale-105 shadow-md':'opacity-50'}`}>
-                                            <div className="text-[10px] font-black uppercase text-white/60">{ui.player} {i+1}</div>
-                                            <div className="text-2xl font-black text-white">{scores[i]}</div>
-                                        </div>
-                                    ))}
-                                </div>
-
-                                <div className="relative w-full max-w-5xl my-6 p-6 sm:p-10 pt-14 rounded-[2rem] border-[10px] border-gray-400 bg-[#0F2027] flex flex-col items-center shadow-2xl overflow-hidden">
-                                    <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-[#FFB805] text-black px-6 py-1.5 rounded-b-2xl font-black text-xs sm:text-lg shadow-lg z-10 tracking-widest">{ui.day} {phraseData.day}: {phraseData.topic}</div>
-                                    <div className="flex flex-wrap justify-center gap-y-4 gap-x-8 sm:gap-x-12">
-                                        {phraseData.phrase.split(' ').map((w, wi)=>(
-                                            <div key={wi} className="flex gap-1.5 sm:gap-2.5">
-                                                {w.split('').map((c, ci)=>(
-                                                    <div key={ci} className={`w-7 h-10 sm:w-10 sm:h-14 md:w-12 md:h-16 flex items-center justify-center text-xl sm:text-3xl md:text-4xl font-black uppercase rounded bg-white border-2 border-gray-300 transition-all ${guessedLetters.includes(c)?'text-black':'text-transparent'}`}>{c}</div>
-                                                ))}
-                                            </div>
-                                        ))}
+                            <div className="w-full flex flex-col lg:flex-row gap-2 lg:gap-4 lg:h-full lg:max-h-full py-1 sm:py-2">
+                                
+                                <div className="lg:w-1/3 flex flex-col items-center justify-center gap-1.5 py-1 lg:h-full">
+                                    <div className="relative w-full max-w-[180px] sm:max-w-[240px] lg:max-w-[360px] aspect-square">
+                                        <svg viewBox="0 0 400 400" className="w-full h-full overflow-visible drop-shadow-2xl">
+                                            <circle cx="200" cy="200" r="195" fill="#111" stroke="#ccc" strokeWidth="6" />
+                                            <g ref={wheelRef} style={{ transformOrigin: '200px 200px', willChange: 'transform' }}>
+                                                {WHEEL_SEGMENTS.map((s, i)=>{
+                                                    const rot = i * (360/WHEEL_SEGMENTS.length) - 90;
+                                                    const label = s.type==='value'?s.val:(ui.wheelValues[s.type]||s.type);
+                                                    const isVal = s.type==='value';
+                                                    const textStroke = s.textColor === '#FFFFFF' ? '#000' : '#fff';
+                                                    const textStrokeWidth = isVal ? '1.2' : '0.5';
+                                                    return (
+                                                        <g key={i} transform={`rotate(${rot}, 200, 200)`}>
+                                                            <path d="M 200 200 L 383.5 150.8 A 190 190 0 0 1 383.5 249.2 Z" fill={s.color} stroke="rgba(0,0,0,0.2)"/>
+                                                            <text x={label.length>9?'378':'365'} y="200" textAnchor="end" dominantBaseline="central" fill={s.textColor} fontSize={isVal?'32': (label.length > 9 ? '12' : '15')} fontWeight="900" stroke={textStroke} strokeWidth={textStrokeWidth} paintOrder="stroke fill" letterSpacing={isVal?"0":"1"}>{label}</text>
+                                                            <circle cx="373.8" cy="246.5" r="3.5" fill="#eee" stroke="#333" strokeWidth="0.5"/>
+                                                        </g>
+                                                    )
+                                                })}
+                                                <circle cx="200" cy="200" r="30" fill="#FFB805" stroke="#333" strokeWidth="2" />
+                                                <image href="logo-tondo.jpeg" x="172" y="172" width="56" height="56" clipPath="circle(28px at 28px 28px)" />
+                                            </g>
+                                            <g style={{ transformOrigin: '200px 10px' }}>
+                                                <path d="M 188 5 L 212 5 L 200 40 Z" fill="#EF4444" stroke="#7F1D1D" strokeWidth="2" />
+                                            </g>
+                                        </svg>
                                     </div>
-                                </div>
 
-                                {gameState==='PLAYING' && (
-                                    <div className="flex flex-col lg:flex-row items-center gap-6 w-full max-w-5xl mb-4 px-2">
-                                        <div className="relative w-full max-w-[280px] sm:max-w-[360px] md:max-w-[420px] aspect-square">
-                                            <svg viewBox="0 0 400 400" className="w-full h-full overflow-visible drop-shadow-2xl">
-                                                <circle cx="200" cy="200" r="195" fill="#111" stroke="#ccc" strokeWidth="8" />
-                                                <g ref={wheelRef} style={{ transformOrigin: '200px 200px', willChange: 'transform' }}>
-                                                    {WHEEL_SEGMENTS.map((s, i)=>{
-                                                        const rot = i * (360/WHEEL_SEGMENTS.length) - 90;
-                                                        const label = s.type==='value'?s.val:(ui.wheelValues[s.type]||s.type);
-                                                        const isValue = s.type==='value';
-                                                        const strokeWidthVal = isValue?'1.5':'0.5';
-                                                        const xPos = label.length > 9 ? '378' : (label.length > 5 ? '372' : '365');
-                                                        const fontSizeVal = isValue ? '36' : (label.length > 9 ? '14' : '16');
-                                                        return (
-                                                            <g key={i} transform={`rotate(${rot}, 200, 200)`}>
-                                                                <path d="M 200 200 L 383.5 150.8 A 190 190 0 0 1 383.5 249.2 Z" fill={s.color} stroke="rgba(0,0,0,0.2)"/>
-                                                                <text x={xPos} y="200" textAnchor="end" dominantBaseline="central" fill={s.textColor} fontSize={fontSizeVal} fontWeight="900" stroke={s.textColor==='#FFFFFF'?'#000':'#fff'} strokeWidth={strokeWidthVal} paintOrder="stroke fill" letterSpacing={isValue?"0":"1"}>{label}</text>
-                                                                <circle cx="373.8" cy="246.5" r="4" fill="#eee" stroke="#333" strokeWidth="0.5"/>
-                                                            </g>
-                                                        )
-                                                    })}
-                                                    <circle cx="200" cy="200" r="35" fill="#FFB805" stroke="#333" strokeWidth="3" />
-                                                    <image href="logo-tondo.jpeg" x="168" y="168" width="64" height="64" clipPath="circle(32px at 32px 32px)" />
-                                                </g>
-                                                <g style={{ transformOrigin: '200px 10px' }}>
-                                                    <path d="M 185 5 L 215 5 L 200 45 Z" fill="#EF4444" stroke="#7F1D1D" strokeWidth="2" />
-                                                </g>
-                                            </svg>
-                                        </div>
-
-                                        <div className="w-full lg:w-1/3 bg-[#1A1A1A] p-6 rounded-2xl border border-white/10 text-center relative overflow-hidden flex flex-col justify-center min-h-[180px] sm:min-h-[220px] shadow-xl">
+                                    {gameState==='PLAYING' && (
+                                        <div className="w-full max-w-sm bg-[#1A1A1A] p-2 rounded-xl border border-white/10 text-center relative overflow-hidden shadow-lg min-h-[110px] flex flex-col justify-center">
                                             {turnPhase === 'IDLE' ? (
-                                                <div className="flex flex-col gap-3 animate-fade-in-up">
-                                                    <h3 className="font-black text-[#FFB805] uppercase tracking-widest text-sm">{ui.turnPrefix} {currentPlayer+1}{ui.turnSuffix}</h3>
-                                                    <button onClick={spinWheel} className="w-full py-4 bg-[#FFB805] text-black rounded-2xl font-black text-xl active:scale-95 shadow-md uppercase">{ui.spinWheel}</button>
+                                                <div className="flex flex-col gap-1.5 animate-fade-in-up">
+                                                    <h3 className="font-black text-[#FFB805] uppercase tracking-widest text-[9px]">{ui.turnPrefix}{currentPlayer+1}{ui.turnSuffix}</h3>
+                                                    <button onClick={spinWheel} className="w-full py-1.5 bg-[#FFB805] text-black rounded-lg font-black text-sm active:scale-95 uppercase">{ui.spinWheel}</button>
                                                     <div className="flex gap-2">
-                                                        <button onClick={()=>scores[currentPlayer]>=250 && (setScores(s=>{const n=[...s]; n[currentPlayer]-=250; return n;}), setTurnPhase('WAITING_VOWEL'), showTemporaryModal("-250",'info'))} disabled={scores[currentPlayer]<250} className={`flex-1 py-3 rounded-xl font-bold text-xs ${scores[currentPlayer]>=250?'bg-[#2E9DDF] text-white shadow-md':'bg-white/5 opacity-30 cursor-not-allowed'}`}>{ui.buyVowel}</button>
-                                                        <button onClick={()=>setTurnPhase('SOLVING')} className="flex-1 py-3 bg-purple-600 rounded-xl font-bold text-xs text-white shadow-md">{ui.solve}</button>
+                                                        <button onClick={()=>scores[currentPlayer]>=250 && (setScores(s=>{const n=[...s]; n[currentPlayer]-=250; return n;}), setTurnPhase('WAITING_VOWEL'), showTemporaryModal("-250",'info'))} disabled={scores[currentPlayer]<250} className={`flex-1 py-1.5 rounded-lg font-bold text-[8px] ${scores[currentPlayer]>=250?'bg-[#2E9DDF] text-white':'bg-white/5 opacity-30'}`}>{ui.buyVowel}</button>
+                                                        <button onClick={()=>setTurnPhase('SOLVING')} className="flex-1 py-1.5 bg-purple-600 rounded-lg font-bold text-[8px] text-white">{ui.solve}</button>
                                                     </div>
                                                 </div>
                                             ) : (
                                                 <div className="flex flex-col items-center justify-center h-full">
-                                                    {turnPhase==='SPINNING' && <div className="text-2xl font-black text-[#FFB805] animate-pulse tracking-widest">GIRANDO...</div>}
+                                                    {turnPhase==='SPINNING' && <div className="text-xs font-black text-[#FFB805] animate-pulse">GIRANDO...</div>}
                                                     {turnPhase==='WAITING_CONSONANT' && spinValue && (
                                                         <div className="animate-fade-in-up">
-                                                            <div className="text-[10px] opacity-60 uppercase mb-1">{ui.consonantPrompt}</div>
-                                                            <div className="text-5xl font-black" style={{color: spinValue.color}}>{spinValue.val}</div>
+                                                            <div className="text-[7px] opacity-60 uppercase mb-0.5">{ui.consonantPrompt}</div>
+                                                            <div className="text-2xl font-black" style={{color: spinValue.color}}>{spinValue.val}</div>
                                                         </div>
                                                     )}
-                                                    {turnPhase==='WAITING_VOWEL' && <div className="text-xl font-black text-[#2E9DDF] uppercase animate-fade-in-up">{ui.vowelPrompt}</div>}
+                                                    {turnPhase==='WAITING_VOWEL' && <div className="text-sm font-black text-[#2E9DDF] uppercase animate-fade-in-up">{ui.vowelPrompt}</div>}
                                                     {turnPhase==='SOLVING' && (
-                                                        <div className="w-full animate-fade-in-up flex flex-col gap-3">
-                                                            <input type="text" value={solveInput} onChange={e=>setSolveInput(e.target.value)} placeholder={ui.solvePrompt} className="w-full p-4 rounded-xl bg-white/5 border-2 border-white/20 text-white text-center font-black uppercase outline-none focus:border-[#FFB805]" />
+                                                        <div className="w-full animate-fade-in-up flex flex-col gap-1.5">
+                                                            <input type="text" value={solveInput} onChange={e=>setSolveInput(e.target.value)} placeholder={ui.solvePrompt} className="w-full p-1 rounded-lg bg-white/5 border border-white/20 text-white text-center font-black uppercase outline-none focus:border-[#FFB805] text-xs" />
                                                             <div className="flex gap-2">
-                                                                <button onClick={()=>setTurnPhase('IDLE')} className="flex-1 py-3 bg-red-500/20 text-red-400 rounded-xl font-bold text-sm">{ui.cancel}</button>
-                                                                <button onClick={handleSolveSubmit} className="flex-1 py-3 bg-[#00D166] text-black rounded-xl font-bold text-sm">{ui.submit}</button>
+                                                                <button onClick={()=>setTurnPhase('IDLE')} className="flex-1 py-1 bg-red-500/20 text-red-400 rounded-lg font-bold text-[8px]">{ui.cancel}</button>
+                                                                <button onClick={handleSolveSubmit} className="flex-1 py-1 bg-[#00D166] text-black rounded-lg font-bold text-[8px]">{ui.submit}</button>
                                                             </div>
                                                         </div>
                                                     )}
                                                 </div>
                                             )}
                                             {modalMessage && (
-                                                <div className="absolute inset-0 z-50 bg-black/90 flex flex-col items-center justify-center p-4 animate-pop-in">
-                                                    <Icon name={modalMessage.type==='success'?'CheckCircle':'AlertCircle'} size={50} className={modalMessage.type==='success'?'text-green-500':'text-red-500'} />
-                                                    <div className="text-xl font-black uppercase text-center mt-2 text-white">{modalMessage.text}</div>
+                                                <div className="absolute inset-0 z-50 bg-black/90 flex flex-col items-center justify-center p-2 animate-pop-in">
+                                                    <Icon name={modalMessage.type==='success'?'CheckCircle':'AlertCircle'} size={24} className={modalMessage.type==='success'?'text-green-500':'text-red-500'} />
+                                                    <div className="text-[10px] font-black uppercase text-center mt-1 text-white">{modalMessage.text}</div>
                                                 </div>
                                             )}
                                         </div>
-                                    </div>
-                                )}
+                                    )}
+                                </div>
 
-                                {gameState==='PLAYING' && (
-                                    <div className="w-full max-w-3xl bg-white/5 p-2 sm:p-4 rounded-2xl sm:rounded-[2rem] border border-white/10 mt-2 mb-8">
-                                        <div className="flex flex-wrap justify-center gap-1 sm:gap-2">
-                                            {'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map(l => {
-                                                const isV = ['A','E','I','O','U'].includes(l);
-                                                const disabled = guessedLetters.includes(l) || turnPhase==='IDLE' || turnPhase==='SPINNING' || (turnPhase==='WAITING_CONSONANT' && isV) || (turnPhase==='WAITING_VOWEL' && !isV);
-                                                return (
-                                                    <button key={l} disabled={disabled} onClick={()=>handleLetterClick(l)} className={`flex-grow-0 basis-[11.5%] sm:basis-0 sm:min-w-[44px] min-h-[44px] sm:min-h-[50px] rounded-lg sm:rounded-xl font-black text-base sm:text-xl transition-all ${disabled?'opacity-10':'bg-white/10 hover:bg-[#FFB805] hover:text-black shadow-lg active:scale-90'}`}>{l}</button>
-                                                )
-                                            })}
-                                        </div>
-                                    </div>
-                                )}
-
-                                {gameState==='SOLVED' && (
-                                    <div className="w-full max-w-4xl bg-gradient-to-br from-[#0F2027] to-black p-6 sm:p-10 rounded-2xl sm:rounded-[3rem] border border-green-500/30 shadow-2xl animate-pop-in mt-2 mb-8">
-                                        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 border-b border-white/10 pb-6 mb-6">
-                                            <div className="flex items-center gap-3 text-[#00D166]">
-                                                <Icon name="CheckCircle" size={40}/>
-                                                <h2 className="text-2xl sm:text-3xl font-black text-white uppercase">{ui.correct}</h2>
+                                <div className="lg:w-2/3 flex flex-col justify-between py-1 lg:h-full overflow-hidden">
+                                    <div className="flex justify-center gap-2 w-full max-w-xs mx-auto mb-1">
+                                        {[...Array(numPlayers)].map((_, i) => (
+                                            <div key={i} className={`flex-1 p-1 rounded-xl border-2 text-center transition-all ${currentPlayer===i && gameState==='PLAYING'?'border-[#FFB805] bg-[#FFB805]/10 scale-105':'opacity-30'}`}>
+                                                <div className="text-[7px] font-black uppercase text-white/60">{ui.player} {i+1}</div>
+                                                <div className="text-base font-black text-white">{scores[i]}</div>
                                             </div>
-                                            <button onClick={handleNextRound} className="w-full sm:w-auto px-10 py-4 bg-[#FFB805] text-black rounded-full font-black text-xl flex items-center justify-center gap-2 shadow-xl active:scale-95"><Icon name="Play"/>{ui.nextRound}</button>
-                                        </div>
-                                        <h3 className="text-[#FFB805] font-black uppercase text-xs tracking-widest mb-2">{ui.concept}</h3>
-                                        <p className="text-white text-lg md:text-2xl leading-relaxed font-medium">{phraseData.explanation}</p>
+                                        ))}
                                     </div>
-                                )}
+
+                                    {/* Etichetta Topic separata dal Tabellone per evitare sovrapposizioni */}
+                                    <div className="flex flex-col items-center gap-1.5 w-full mb-1">
+                                        <div className="bg-black/80 px-4 py-1 rounded-full font-black text-[9px] sm:text-xs shadow-md border border-white/10 flex gap-2">
+                                            <span className="text-[#00D166]">{phraseData.day}</span>
+                                            <span className="text-[#FFB805] uppercase tracking-widest">{phraseData.topic}</span>
+                                        </div>
+                                        <div className="relative w-full p-2 sm:p-4 rounded-[1.2rem] border-[4px] border-gray-400 bg-[#0F2027] flex flex-col items-center shadow-xl overflow-hidden min-h-[100px] sm:min-h-[140px] justify-center">
+                                            <div className="flex flex-wrap justify-center gap-y-2 gap-x-4 sm:gap-x-6">
+                                                {phraseData.phrase.split(' ').map((w, wi)=>(
+                                                    <div key={wi} className="flex gap-1">
+                                                        {w.split('').map((c, ci)=>(
+                                                            <div key={ci} className={`w-5 h-7 sm:w-7 sm:h-10 md:w-9 md:h-12 flex items-center justify-center text-xs sm:text-lg font-black uppercase rounded bg-white border border-gray-300 transition-all shadow-sm ${guessedLetters.includes(c)?'text-black':'text-transparent'}`}>{c}</div>
+                                                        ))}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {gameState==='PLAYING' && (
+                                        <div className="w-full bg-white/5 p-1.5 rounded-xl border border-white/10 mb-1">
+                                            <div className="flex flex-wrap justify-center gap-1">
+                                                {'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map(l => {
+                                                    const isV = ['A','E','I','O','U'].includes(l);
+                                                    const disabled = turnPhase==='IDLE' || turnPhase==='SPINNING' || (turnPhase==='WAITING_CONSONANT' && isV) || (turnPhase==='WAITING_VOWEL' && !isV);
+                                                    const isGuessed = guessedLetters.includes(l);
+                                                    return (
+                                                        <button key={l} disabled={disabled || isGuessed} onClick={()=>handleLetterClick(l)} className={`flex-grow-0 basis-[11.5%] lg:basis-[7.5%] h-8 sm:h-10 rounded-lg font-black text-[10px] sm:text-sm transition-all ${isGuessed?'bg-black/50 text-white/10':'bg-white/10 hover:bg-[#FFB805] hover:text-black shadow active:scale-90'} ${disabled?'opacity-20':'opacity-100'}`}>{l}</button>
+                                                    )
+                                                })}
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {gameState==='SOLVED' && (
+                                        <div className="w-full bg-gradient-to-br from-[#0F2027] to-black p-3 rounded-[1.2rem] border border-green-500/30 shadow-xl animate-pop-in mb-2 overflow-y-auto max-h-[120px]">
+                                            <div className="flex items-center justify-between gap-2 mb-1">
+                                                <div className="flex items-center gap-1 text-[#00D166]">
+                                                    <Icon name="CheckCircle" size={18}/>
+                                                    <h2 className="text-xs font-black text-white uppercase">{ui.correct}</h2>
+                                                </div>
+                                                <button onClick={handleNextRound} className="px-4 py-1.5 bg-[#FFB805] text-black rounded-full font-black text-[9px] flex items-center justify-center gap-1 shadow-md active:scale-95 transition-transform hover:scale-105"><Icon name="Play" size={12}/>{ui.nextRound}</button>
+                                            </div>
+                                            <h3 className="text-[#FFB805] font-black uppercase text-[7px] tracking-widest mb-0.5">{ui.concept}</h3>
+                                            <p className="text-white text-[10px] sm:text-[11px] leading-tight opacity-90">{phraseData.explanation}</p>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         )}
 
                         {gameState === 'GAME_OVER' && (
-                            <div className="text-center text-white py-12 px-6 bg-white/5 rounded-3xl backdrop-blur-xl border border-white/10 mt-auto mb-auto animate-pop-in w-full max-w-md shadow-2xl">
-                                <h2 className="text-4xl font-black text-[#FFB805] mb-8">{ui.gameOver}</h2>
-                                <p className="text-2xl font-bold mb-8">🏆 {ui.winner}</p>
-                                <button onClick={()=>setGameState('SETUP')} className="w-full py-4 bg-[#2E9DDF] rounded-full font-black text-xl flex items-center justify-center gap-2 active:scale-95 shadow-lg"><Icon name="RotateCcw"/>{ui.playAgain}</button>
+                            <div className="text-center text-white py-6 px-6 bg-white/5 rounded-3xl backdrop-blur-xl border border-white/10 mt-auto mb-auto animate-pop-in w-full max-w-sm shadow-2xl">
+                                <h2 className="text-xl font-black text-[#FFB805] mb-4">{ui.gameOver}</h2>
+                                <p className="text-base font-bold mb-4">🏆 {ui.winner}</p>
+                                <button onClick={()=>setGameState('SETUP')} className="w-full py-2 bg-[#2E9DDF] rounded-full font-black text-sm flex items-center justify-center gap-2 active:scale-95 shadow-lg"><Icon name="RotateCcw" size={16}/>{ui.playAgain}</button>
                             </div>
                         )}
                     </main>
