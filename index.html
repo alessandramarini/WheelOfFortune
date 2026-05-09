@@ -49,17 +49,15 @@
 
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes popIn { 0% { opacity: 0; transform: scale(0.9); } 60% { transform: scale(1.02); } 100% { opacity: 1; transform: scale(1); } }
-        @keyframes pulse-gentle { 0%, 100% { transform: scale(1); box-shadow: 0 4px 0 #990000; } 50% { transform: scale(1.05); box-shadow: 0 4px 15px rgba(239,68,68,0.5); } }
         @keyframes flipIn { 0% { transform: rotateY(90deg) scale(1.1); opacity: 0; } 100% { transform: rotateY(0deg) scale(1); opacity: 1; } }
         @keyframes confettiFall { 0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; } 100% { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
 
         .animate-fade-in-up { animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         .animate-pop-in { animation: popIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        .animate-pulse-button { animation: pulse-gentle 2s infinite ease-in-out; }
         .animate-flip-in { animation: flipIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
         .animate-confetti { animation: confettiFall linear forwards; }
         
-        /* Nuove Animazioni e Stili per la Lezione Sbloccata Memorable */
+        /* Animazioni per la Lezione Sbloccata */
         @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
         .animate-float { animation: float 3.5s ease-in-out infinite; }
         
@@ -70,7 +68,7 @@
             animation: shine 3s linear infinite; 
         }
 
-        /* Stili Tipografici Dinamici per le keywords della Lezione */
+        /* Stili Tipografici Dinamici */
         .lesson-content b { 
             color: #FFB805; 
             font-weight: 900; 
@@ -93,7 +91,7 @@
             white-space: nowrap;
         }
         
-        /* Compatibilità Cross-Browser per evitare sfarfallii in 3D su vecchi Safari/iOS */
+        /* Compatibilità Cross-Browser per evitare sfarfallii in 3D */
         .backface-hidden {
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
@@ -106,16 +104,6 @@
         .viewport-container {
             height: 100vh; height: 100dvh;
             display: flex; flex-direction: column; overflow: hidden;
-        }
-
-        .slot-button {
-            background: linear-gradient(135deg, #ef4444, #991b1b);
-            transition: transform 0.1s;
-        }
-        .slot-button:active {
-            transform: translateY(4px) scale(0.95) !important;
-            box-shadow: 0 0 0 #660000 !important;
-            animation: none;
         }
 
         /* Scrollbar custom */
@@ -208,7 +196,7 @@
         const uiTranslations = {
             en: { title: "ACADEMY", players1: "1 Player", players2: "2 Players", selectLesson: "Start From", startGame: "Start Journey", spinWheel: "Spin the wheel", buyVowel: "Vowel (250)", hint: "Hint (100)", solve: "SOLVE", turnPrefix: "Turn: P", turnSuffix: "", bankrupt: "BANKRUPT!", loseTurn: "MISS TURN", consonantPrompt: "Consonant for:", vowelPrompt: "Choose Vowel", solvePrompt: "Your Solution:", submit: "Verify", cancel: "Cancel", correct: "Awesome!", wrong: "Nope!", concept: "Lesson:", nextRound: "Next Lesson", gameOver: "Graduated!", winner: "Top Trader", playAgain: "Restart Academy", day: "", wheelValues: { BANKRUPT: "BANKRUPT", LOSE_TURN: "LOSE TURN" }, lessonUnlocked: "LESSON UNLOCKED", rankTitle: "Rank", progress: "Progress", noHints: "No hints available" },
             it: { title: "ACADEMY", players1: "1 Giocatore", players2: "2 Giocatori", selectLesson: "Parti da", startGame: "Inizia Viaggio", spinWheel: "Gira la ruota", buyVowel: "Vocale (250)", hint: "Aiuto (100)", solve: "RISOLVI", turnPrefix: "Turno: G", turnSuffix: "", bankrupt: "BANCAROTTA!", loseTurn: "SALTA TURNO", consonantPrompt: "Consonante a:", vowelPrompt: "Scegli Vocale", solvePrompt: "La tua soluzione:", submit: "Verifica", cancel: "Annulla", correct: "Esatto!", wrong: "Sbagliato!", concept: "Lezione:", nextRound: "Prossima Lezione", gameOver: "Diplomato!", winner: "Top Trader", playAgain: "Ricomincia Academy", day: "", wheelValues: { BANKRUPT: "BANCAROTTA", LOSE_TURN: "SALTA TURNO" }, lessonUnlocked: "LEZIONE SBLOCCATA", rankTitle: "Rango", progress: "Progresso", noHints: "Nessun aiuto disponibile" },
-            es: { title: "ACADEMY", players1: "1 Jugador", players2: "2 Jugadores", selectLesson: "Empezar en", startGame: "Iniciar Viaje", spinWheel: "Gira la rueda", buyVowel: "Vocal (250)", hint: "Pista (100)", solve: "RESOLVER", turnPrefix: "Turno: J", turnSuffix: "", bankrupt: "¡BANCARROTA!", loseTurn: "¡PIERDE TURNO!", consonantPrompt: "Consonante a:", vowelPrompt: "Elegir Vocal", solvePrompt: "Tu Solución:", submit: "Verificar", cancel: "Cancelar", correct: "¡Genial!", wrong: "¡Error!", concept: "Lección:", nextRound: "Siguiente Lección", gameOver: "¡Graduado!", winner: "Top Trader", playAgain: "Reiniciar Academy", day: "", wheelValues: { BANKRUPT: "BANCARROTA", LOSE_TURN: "PIERDE TURNO" }, lessonUnlocked: "LECCIÓN DESBLOQUEADA", rankTitle: "Rango", progress: "Progreso", noHints: "No hay pistas disponibles" },
+            es: { title: "ACADEMY", players1: "1 Jugador", players2: "2 Jugadores", selectLesson: "Empezar en", startGame: "Iniciar Viaje", spinWheel: "Gira la rueda", buyVowel: "Vocal (250)", hint: "Pista (100)", solve: "RESOLVER", turnPrefix: "Turno: J", turnSuffix: "", bankrupt: "¡BANCARROTA!", loseTurn: "¡PIERDE TURNO!", consonantPrompt: "Consonante a:", vowelPrompt: "Elegir Vocal", solvePrompt: "Tu Solución:", submit: "Verificar", cancel: "Cancelar", correct: "¡Genial!", wrong: "¡Error!", concept: "Lección:", nextRound: "Siguiente Lección", gameOver: "¡Graduado!", winner: "Top Trader", playAgain: "Reiniciar Academy", day: "", wheelValues: { BANKRUPT: "BANCARROTA", LOSE_TURN: "PIERDE TURNO" }, lessonUnlocked: "LECCIÓN DESBLOQUEADA", rankTitle: "Rango", progress: "Progresso", noHints: "No hay pistas disponibles" },
             pt: { title: "ACADEMY", players1: "1 Jogador", players2: "2 Jogadores", selectLesson: "Começar em", startGame: "Iniciar Viagem", spinWheel: "Gira a roda", buyVowel: "Vogal (250)", hint: "Dica (100)", solve: "RESOLVER", turnPrefix: "Vez: J", turnSuffix: "", bankrupt: "FALÊNCIA!", loseTurn: "PASSA A VEZ", consonantPrompt: "Consoante a:", vowelPrompt: "Escolha Vogal", solvePrompt: "A sua Solução:", submit: "Verificar", cancel: "Cancelar", correct: "Fantástico!", wrong: "Erro!", concept: "Lição:", nextRound: "Próxima Lição", gameOver: "Diplomado!", winner: "Top Trader", playAgain: "Reiniciar Academy", day: "", wheelValues: { BANKRUPT: "FALÊNCIA", LOSE_TURN: "PASSA A VEZ" }, lessonUnlocked: "LIÇÃO DESBLOQUEADA", rankTitle: "Classificação", progress: "Progresso", noHints: "Sem dicas disponíveis" }
         };
 
@@ -303,6 +291,7 @@
                 } catch(e) {}
             };
 
+            // Suoni Sintetizzati Cyborg/Moderni
             const playTick = () => playTone(800, 'sine', 0.05, 0.05, 0, 200);
             
             const playCorrect = () => { 
@@ -323,8 +312,51 @@
                 playTone(1046.50, 'sine', 0.8, 0.08, 0.4);
             };
 
+            // Infrasuono e Modulazione di Schumann (7,83Hz)
+            const startSchumann = () => {
+                if (!audioCtxRef.current || audioCtxRef.current.schumannStarted) return;
+                const ctx = audioCtxRef.current;
+                
+                // Onda base di Schumann (infrasuono profondo)
+                const oscBase = ctx.createOscillator();
+                const gainBase = ctx.createGain();
+                oscBase.type = 'sine';
+                oscBase.frequency.setValueAtTime(7.83, ctx.currentTime);
+                gainBase.gain.setValueAtTime(0.03, ctx.currentTime); 
+                oscBase.connect(gainBase);
+                gainBase.connect(ctx.destination);
+                oscBase.start();
+
+                // Armonica percepibile pulsata a 7,83 Hz per indurre sottilmente il ritmo
+                const oscHarmonic = ctx.createOscillator();
+                const gainHarmonic = ctx.createGain();
+                const lfo = ctx.createOscillator();
+                
+                oscHarmonic.type = 'sine';
+                oscHarmonic.frequency.setValueAtTime(62.64, ctx.currentTime); // 7.83 * 8
+                
+                lfo.type = 'sine';
+                lfo.frequency.setValueAtTime(7.83, ctx.currentTime); 
+                
+                gainHarmonic.gain.setValueAtTime(0.015, ctx.currentTime);
+                
+                const lfoGain = ctx.createGain();
+                lfoGain.gain.setValueAtTime(0.01, ctx.currentTime);
+                lfo.connect(lfoGain);
+                lfoGain.connect(gainHarmonic.gain);
+                
+                oscHarmonic.connect(gainHarmonic);
+                gainHarmonic.connect(ctx.destination);
+                
+                oscHarmonic.start();
+                lfo.start();
+
+                ctx.schumannStarted = true;
+            };
+
             const startGame = () => {
                 initAudio();
+                startSchumann();
                 setScores([0, 0]); setCurrentPlayer(0);
                 setCurrentRoundIndex(startTopicIndex);
                 startRound(startTopicIndex);
@@ -451,11 +483,10 @@
                 startRound(next); setGameState('PLAYING');
             };
 
-            // LOGICA DI SOLUZIONE MIGLIORATA
             const handleSolveSubmit = () => {
                 const isCorrect = solveInput.trim().toUpperCase() === phraseData.phrase.toUpperCase();
                 
-                setTurnPhase('IDLE'); // Chiude ISTANTANEAMENTE il modal di inserimento
+                setTurnPhase('IDLE');
                 setSolveInput('');
                 
                 if (isCorrect) {
@@ -466,7 +497,7 @@
                 } else {
                     playWrong();
                     showTemporaryModal(ui.wrong, 'error');
-                    setTimeout(nextTurn, 1500); // Passa il turno in automatico dopo aver mostrato l'errore gigante
+                    setTimeout(nextTurn, 1500); 
                 }
             };
 
@@ -476,9 +507,9 @@
             return (
                 <div className="viewport-container bg-transparent text-white">
                     {/* HEADER */}
-                    <header className="px-2 sm:px-4 py-2 flex justify-between items-center border-b border-white/10 bg-[#111827]/80 backdrop-blur-md sticky top-0 z-50 h-[55px] sm:h-[70px] shadow-lg">
+                    <header className="px-2 sm:px-4 py-2 flex justify-between items-center border-b border-white/10 bg-[#111827]/80 backdrop-blur-md sticky top-0 z-50 h-[55px] sm:h-[70px]">
                         <div className="flex items-center gap-2">
-                            <img src="logo-tondo.jpeg" className="w-7 h-7 sm:w-10 sm:h-10 rounded-full object-cover shadow-[0_0_15px_rgba(0,209,102,0.4)]" />
+                            <img src="logo-tondo.jpeg" className="w-7 h-7 sm:w-10 sm:h-10 rounded-full object-cover shadow-lg" />
                             <div className="flex flex-col">
                                 <span className="text-[#00D166] font-black text-[9px] sm:text-sm tracking-widest uppercase">BETTING EXCHANGE ROOM</span>
                                 <span className="text-white/60 font-bold text-[8px] sm:text-[10px] tracking-widest hidden sm:block">{ui.title}</span>
@@ -497,34 +528,34 @@
                                     </div>
                                 )}
                                 {gameState === 'PLAYING' && (
-                                    <div className="bg-black/50 px-2 py-1 rounded-full border border-white/10 flex items-center gap-1 shadow-inner hidden md:flex">
+                                    <div className="bg-black/50 px-2 py-1 rounded-full border border-white/10 flex items-center gap-1 hidden md:flex">
                                         <Icon name={currentRank.icon} size={12} className="text-white/50"/>
                                         <span className="text-[10px] font-black uppercase" style={{color: currentRank.color}}>{currentRank.title[lang]}</span>
                                     </div>
                                 )}
-                                <button onClick={() => setGameState('SETUP')} className="text-white/50 hover:text-white p-1.5 rounded-full bg-white/5 transition-all active:scale-95"><Icon name="SettingsIcon" size={16}/></button>
+                                <button onClick={() => setGameState('SETUP')} className="text-white/50 hover:text-white p-1.5 rounded-full hover:bg-white/5 transition-colors active:scale-95"><Icon name="SettingsIcon" size={16}/></button>
                             </div>
                         )}
                     </header>
 
                     <main className="flex-1 overflow-y-auto overflow-x-hidden flex flex-col items-center relative">
                         {gameState === 'SETUP' && (
-                            <div className="flex flex-col items-center justify-center w-full max-w-md p-6 sm:p-8 rounded-3xl bg-black/40 backdrop-blur-xl border border-white/10 animate-pop-in mx-auto relative overflow-hidden my-auto max-h-[90vh] shadow-2xl mt-8">
+                            <div className="flex flex-col items-center justify-center w-full max-w-md p-6 sm:p-8 rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 animate-pop-in mx-auto relative overflow-hidden my-auto max-h-[90vh] mt-8">
                                 <div className="absolute top-[-50px] left-[-50px] w-48 h-48 bg-[#00D166]/20 rounded-full blur-[80px]"></div>
                                 <div className="absolute bottom-[-50px] right-[-50px] w-48 h-48 bg-[#2E9DDF]/20 rounded-full blur-[80px]"></div>
                                 
-                                <h1 className="text-3xl sm:text-5xl font-black text-[#00D166] text-center mb-6 tracking-tighter italic drop-shadow-[0_2px_15px_rgba(0,209,102,0.4)]">ZERO TO HERO ACADEMY</h1>
+                                <h1 className="text-3xl sm:text-5xl font-black text-[#00D166] text-center mb-6 tracking-tighter italic">ZERO TO HERO ACADEMY</h1>
                                 
                                 <div className="flex gap-4 mb-8">
                                     {Object.keys(flagImages).map(l => (
-                                        <button key={l} onClick={()=>setLang(l)} className={`w-12 h-12 rounded-full overflow-hidden border-2 transition-all ${lang===l?'border-[#00D166] scale-110 shadow-[0_0_15px_rgba(0,209,102,0.5)]':'opacity-40 border-transparent hover:opacity-100'}`}>
+                                        <button key={l} onClick={()=>setLang(l)} className={`w-12 h-12 rounded-full overflow-hidden border-2 transition-all ${lang===l?'border-[#00D166] scale-110 shadow-lg':'opacity-40 border-transparent hover:opacity-100'}`}>
                                             <img src={flagImages[l]} className="w-full h-full object-cover"/>
                                         </button>
                                     ))}
                                 </div>
                                 <div className="flex gap-3 w-full mb-6">
-                                    <button onClick={()=>setNumPlayers(1)} className={`flex-1 p-3 rounded-2xl flex flex-col items-center gap-2 text-xs transition-all ${numPlayers===1?'bg-[#2E9DDF] border border-blue-400 shadow-[0_0_20px_rgba(46,157,223,0.4)] font-black text-white':'bg-white/5 border border-white/10 font-bold opacity-70'}`}><Icon name="User" size={20}/>{ui.players1}</button>
-                                    <button onClick={()=>setNumPlayers(2)} className={`flex-1 p-3 rounded-2xl flex flex-col items-center gap-2 text-xs transition-all ${numPlayers===2?'bg-[#2E9DDF] border border-blue-400 shadow-[0_0_20px_rgba(46,157,223,0.4)] font-black text-white':'bg-white/5 border border-white/10 font-bold opacity-70'}`}><Icon name="Users" size={20}/>{ui.players2}</button>
+                                    <button onClick={()=>setNumPlayers(1)} className={`flex-1 p-3 rounded-2xl flex flex-col items-center gap-2 text-xs transition-colors ${numPlayers===1?'bg-blue-600 font-black text-white':'bg-white/5 border border-white/10 font-bold opacity-70 hover:bg-white/10'}`}><Icon name="User" size={20}/>{ui.players1}</button>
+                                    <button onClick={()=>setNumPlayers(2)} className={`flex-1 p-3 rounded-2xl flex flex-col items-center gap-2 text-xs transition-colors ${numPlayers===2?'bg-blue-600 font-black text-white':'bg-white/5 border border-white/10 font-bold opacity-70 hover:bg-white/10'}`}><Icon name="Users" size={20}/>{ui.players2}</button>
                                 </div>
                                 <div className="w-full mb-8 text-center bg-black/30 p-4 rounded-2xl border border-white/5">
                                     <label className="block text-[10px] uppercase font-black mb-2 tracking-widest text-[#FFB805]">{ui.selectLesson}</label>
@@ -536,7 +567,7 @@
                                     </div>
                                 </div>
 
-                                <button onClick={startGame} className="w-full py-4 rounded-2xl slot-button text-white font-black text-sm sm:text-base flex items-center justify-center gap-2 active:scale-95 transition-transform uppercase border border-red-400/50 shadow-[0_10px_20px_rgba(153,0,0,0.4)]">
+                                <button onClick={startGame} className="w-full py-4 rounded-2xl bg-red-600 hover:bg-red-500 text-white font-black text-sm sm:text-base flex items-center justify-center gap-2 active:scale-95 transition-all uppercase">
                                     <Icon name="Play" size={20} className="fill-current"/>
                                     {ui.startGame}
                                 </button>
@@ -575,7 +606,7 @@
                                         </svg>
                                     </div>
 
-                                    <div className="w-full bg-black/60 p-2 sm:p-3 rounded-2xl border border-white/10 text-center relative overflow-hidden shadow-xl min-h-[90px] flex flex-col justify-center">
+                                    <div className="w-full bg-black/40 p-2 sm:p-3 rounded-2xl border border-white/10 text-center relative overflow-hidden shadow-lg min-h-[90px] flex flex-col justify-center backdrop-blur-md">
 
                                         {turnPhase === 'IDLE' ? (
                                             <div className="flex flex-col gap-2 animate-fade-in-up items-center w-full">
@@ -583,20 +614,20 @@
                                                     <h3 className="font-black text-[#FFB805] uppercase tracking-widest text-[9px] sm:text-[10px] flex items-center gap-1 bg-black/40 px-2 py-1 rounded-full border border-white/5">
                                                         <Icon name="User" size={12}/> {ui.turnPrefix}{currentPlayer+1}
                                                     </h3>
-                                                    <button onClick={()=>setTurnPhase('SOLVING')} className="px-3 py-1 bg-[#00D166] rounded-full font-black text-[9px] sm:text-[10px] text-black shadow-[0_2px_0_#00994d] active:translate-y-1 active:shadow-none tracking-widest uppercase">
+                                                    <button onClick={()=>setTurnPhase('SOLVING')} className="px-3 py-1 bg-[#00D166] hover:bg-green-400 rounded-full font-black text-[9px] sm:text-[10px] text-black active:scale-95 transition-all tracking-widest uppercase">
                                                         {ui.solve}
                                                     </button>
                                                 </div>
                                                 
-                                                <button onClick={spinWheel} className="w-full py-2.5 sm:py-4 rounded-xl slot-button flex items-center justify-center text-white font-black text-xs sm:text-sm uppercase shadow-[0_4px_0_#990000] active:translate-y-1 active:shadow-none tracking-widest">
+                                                <button onClick={spinWheel} className="w-full py-2.5 sm:py-4 rounded-xl bg-red-600 hover:bg-red-500 flex items-center justify-center text-white font-black text-xs sm:text-sm uppercase active:scale-95 transition-all tracking-widest">
                                                     {ui.spinWheel}
                                                 </button>
 
                                                 <div className="flex gap-2 w-full">
-                                                    <button onClick={buyHint} disabled={scores[currentPlayer]<100} className={`flex-1 py-1.5 sm:py-2.5 rounded-xl font-black text-[9px] sm:text-[10px] flex items-center justify-center gap-1 transition-all ${scores[currentPlayer]>=100?'bg-[#8B5CF6] text-white shadow-[0_3px_0_#5B21B6] active:translate-y-1 active:shadow-none':'bg-white/5 text-white/20 border border-white/5 cursor-not-allowed'}`}>
+                                                    <button onClick={buyHint} disabled={scores[currentPlayer]<100} className={`flex-1 py-1.5 sm:py-2.5 rounded-xl font-black text-[9px] sm:text-[10px] flex items-center justify-center gap-1 transition-all ${scores[currentPlayer]>=100?'bg-[#8B5CF6] hover:bg-purple-500 text-white active:scale-95':'bg-white/5 text-white/20 border border-white/5 cursor-not-allowed'}`}>
                                                         <Icon name="Lightbulb" size={12}/> {ui.hint}
                                                     </button>
-                                                    <button onClick={buyVowel} disabled={scores[currentPlayer]<250} className={`flex-1 py-1.5 sm:py-2.5 rounded-xl font-black text-[9px] sm:text-[10px] flex items-center justify-center gap-1 transition-all ${scores[currentPlayer]>=250?'bg-[#2E9DDF] text-white shadow-[0_3px_0_#0284C7] active:translate-y-1 active:shadow-none':'bg-white/5 text-white/20 border border-white/5 cursor-not-allowed'}`}>
+                                                    <button onClick={buyVowel} disabled={scores[currentPlayer]<250} className={`flex-1 py-1.5 sm:py-2.5 rounded-xl font-black text-[9px] sm:text-[10px] flex items-center justify-center gap-1 transition-all ${scores[currentPlayer]>=250?'bg-[#2E9DDF] hover:bg-blue-400 text-white active:scale-95':'bg-white/5 text-white/20 border border-white/5 cursor-not-allowed'}`}>
                                                         {ui.buyVowel}
                                                     </button>
                                                 </div>
@@ -607,7 +638,7 @@
                                                 {turnPhase==='WAITING_CONSONANT' && spinValue && (
                                                     <div className="animate-fade-in-up flex flex-col items-center">
                                                         <div className="text-[9px] font-black text-white/60 uppercase mb-0">{ui.consonantPrompt}</div>
-                                                        <div className="text-2xl sm:text-3xl font-black drop-shadow-[0_2px_10px_rgba(255,255,255,0.2)] leading-none" style={{color: spinValue.color}}>{spinValue.val}</div>
+                                                        <div className="text-2xl sm:text-3xl font-black drop-shadow-md leading-none" style={{color: spinValue.color}}>{spinValue.val}</div>
                                                     </div>
                                                 )}
                                                 {turnPhase==='WAITING_VOWEL' && <div className="text-[10px] font-black text-[#2E9DDF] uppercase animate-fade-in-up">{ui.vowelPrompt}</div>}
@@ -619,17 +650,17 @@
                                 {/* COLONNA DESTRA */}
                                 <div className="lg:w-2/3 flex flex-col lg:justify-between lg:h-full gap-2 lg:gap-4 pb-2 lg:pb-0">
                                     <div className="flex flex-col items-center gap-2 w-full flex-1">
-                                        <div className="bg-black/80 px-4 py-1 sm:px-6 sm:py-2 rounded-full border border-[#FFB805]/30 shadow-[0_0_10px_rgba(255,184,5,0.1)] flex justify-center w-full max-w-md mx-auto">
+                                        <div className="bg-black/40 px-4 py-1 sm:px-6 sm:py-2 rounded-full border border-white/10 flex justify-center w-full max-w-md mx-auto backdrop-blur-md">
                                             <span className="text-[#FFB805] font-black text-[11px] sm:text-sm uppercase tracking-widest text-center">{phraseData.topic}</span>
                                         </div>
                                         
-                                        <div className="relative w-full p-2 sm:p-4 rounded-3xl border-[3px] sm:border-4 border-[#374151] bg-gradient-to-b from-[#0F2027] to-[#111827] flex flex-col items-center shadow-2xl overflow-hidden min-h-[100px] sm:min-h-[220px] justify-center flex-1">
+                                        <div className="relative w-full p-2 sm:p-4 rounded-3xl border border-white/10 bg-black/30 flex flex-col items-center shadow-lg overflow-hidden min-h-[100px] sm:min-h-[220px] justify-center flex-1 backdrop-blur-md">
                                             <div className="flex flex-wrap justify-center gap-y-2 sm:gap-y-3 gap-x-3 sm:gap-x-8">
                                                 {phraseData.phrase.split(' ').map((w, wi)=>(
                                                     <div key={wi} className="flex gap-1 sm:gap-2">
                                                         {w.split('').map((c, ci)=>(
                                                             <div key={ci} style={{perspective: '1000px'}} className="w-6 h-8 sm:w-10 sm:h-14 md:w-12 md:h-16 relative">
-                                                                <div className={`w-full h-full flex items-center justify-center text-base sm:text-2xl md:text-3xl font-black uppercase rounded-lg shadow-md transition-all absolute inset-0 backface-hidden ${guessedLetters.includes(c) ? 'bg-white text-black border-b-2 sm:border-b-4 border-gray-300 animate-flip-in' : 'bg-white/5 border border-white/10 text-transparent'}`}>
+                                                                <div className={`w-full h-full flex items-center justify-center text-base sm:text-2xl md:text-3xl font-black uppercase rounded sm:rounded-lg transition-all absolute inset-0 backface-hidden ${guessedLetters.includes(c) ? 'bg-white/90 text-black border border-white/50 animate-flip-in' : 'bg-white/5 border border-white/10 text-transparent'}`}>
                                                                     {guessedLetters.includes(c) ? c : ''}
                                                                 </div>
                                                             </div>
@@ -640,8 +671,8 @@
                                         </div>
                                     </div>
 
-                                    {/* TASTIERA COMPATTATA */}
-                                    <div className="w-full bg-black/40 p-1.5 sm:p-3 rounded-2xl border border-white/5 shadow-inner backdrop-blur-sm mt-auto shrink-0">
+                                    {/* TASTIERA SOTTILE E MODERNA */}
+                                    <div className="w-full bg-black/30 p-1.5 sm:p-3 rounded-2xl border border-white/5 backdrop-blur-md mt-auto shrink-0">
                                         <div className="flex flex-col gap-1.5 sm:gap-2 w-full max-w-3xl mx-auto">
                                             {QWERTY.map((row, ri) => (
                                                 <div key={ri} className="flex justify-center gap-1 sm:gap-2 w-full">
@@ -650,15 +681,15 @@
                                                         const isGuessed = guessedLetters.includes(l);
                                                         const disabled = turnPhase==='IDLE' || turnPhase==='SPINNING' || turnPhase==='SOLVING' || (turnPhase==='WAITING_CONSONANT' && isV) || (turnPhase==='WAITING_VOWEL' && !isV);
                                                         
-                                                        let btnClass = "relative flex-1 max-w-[28px] sm:max-w-[40px] md:max-w-[50px] h-9 sm:h-12 rounded sm:rounded-lg font-black text-[12px] sm:text-base flex items-center justify-center transition-all duration-75 select-none ";
+                                                        let btnClass = "relative flex-1 max-w-[28px] sm:max-w-[40px] md:max-w-[50px] h-9 sm:h-12 rounded sm:rounded-md font-black text-[12px] sm:text-base flex items-center justify-center transition-all duration-200 select-none border ";
                                                         
                                                         if (isGuessed) {
                                                             const inPhrase = phraseData.phrase.includes(l);
-                                                            btnClass += inPhrase ? "bg-[#374151] text-white/30 translate-y-[2px] shadow-none" : "bg-red-950/40 text-red-500/50 border border-red-900/30 translate-y-[2px] shadow-none";
+                                                            btnClass += inPhrase ? "bg-[#374151]/50 border-white/5 text-white/30" : "bg-red-950/20 border-red-900/20 text-red-500/40";
                                                         } else if (disabled) {
-                                                            btnClass += "bg-white/5 text-white/20 opacity-50 shadow-none";
+                                                            btnClass += "bg-white/5 border-white/5 text-white/20 opacity-50";
                                                         } else {
-                                                            btnClass += "bg-white text-[#111827] shadow-[0_3px_0_#9CA3AF] hover:translate-y-[1px] hover:shadow-[0_2px_0_#9CA3AF] active:translate-y-[3px] active:shadow-none cursor-pointer";
+                                                            btnClass += "bg-white/10 border-white/20 text-white hover:bg-white/20 hover:border-white/30 active:scale-90 cursor-pointer";
                                                         }
 
                                                         return (
@@ -678,8 +709,8 @@
                         {/* MODALE DI INSERIMENTO SOLUZIONE (SOLVE) A SCHERMO INTERO */}
                         {turnPhase === 'SOLVING' && (
                             <div className="fixed inset-0 z-[9999] bg-black/95 flex flex-col items-center justify-center p-4 backdrop-blur-md animate-pop-in">
-                                <div className="w-full max-w-lg bg-gradient-to-b from-[#0F2027] to-black border border-[#00D166]/50 rounded-3xl p-6 sm:p-8 shadow-[0_0_40px_rgba(0,209,102,0.2)] flex flex-col items-center">
-                                    <Icon name="Lightbulb" size={40} className="text-[#00D166] mb-4 drop-shadow-[0_0_15px_rgba(0,209,102,0.6)]" />
+                                <div className="w-full max-w-lg bg-black/80 border border-[#00D166]/50 rounded-3xl p-6 sm:p-8 flex flex-col items-center">
+                                    <Icon name="Lightbulb" size={40} className="text-[#00D166] mb-4" />
                                     <h2 className="text-[#00D166] font-black text-lg sm:text-2xl mb-6 tracking-[0.1em] uppercase text-center">{ui.solvePrompt}</h2>
                                     <input 
                                         type="text" 
@@ -687,12 +718,12 @@
                                         value={solveInput} 
                                         onChange={e=>setSolveInput(e.target.value)} 
                                         onKeyDown={e => e.key === 'Enter' && handleSolveSubmit()}
-                                        className="w-full p-4 rounded-2xl bg-white/5 border-2 border-white/20 text-white text-center font-black uppercase outline-none focus:border-[#00D166] text-xl sm:text-3xl mb-8 shadow-inner transition-colors" 
+                                        className="w-full p-4 rounded-2xl bg-white/5 border border-white/20 text-white text-center font-black uppercase outline-none focus:border-[#00D166] text-xl sm:text-3xl mb-8 transition-colors" 
                                         placeholder="..."
                                     />
                                     <div className="flex gap-4 w-full">
-                                        <button onClick={()=>setTurnPhase('IDLE')} className="flex-1 py-4 bg-red-900/40 text-red-400 rounded-2xl font-black uppercase text-sm sm:text-base border border-red-500/20 active:scale-95 transition-transform">{ui.cancel}</button>
-                                        <button onClick={handleSolveSubmit} className="flex-1 py-4 bg-[#00D166] text-black rounded-2xl font-black uppercase text-sm sm:text-base shadow-[0_4px_0_#00994d] active:translate-y-1 active:shadow-none transition-all">{ui.submit}</button>
+                                        <button onClick={()=>setTurnPhase('IDLE')} className="flex-1 py-4 bg-red-900/40 text-red-400 hover:bg-red-900/60 rounded-2xl font-black uppercase text-sm sm:text-base border border-red-500/20 active:scale-95 transition-all">{ui.cancel}</button>
+                                        <button onClick={handleSolveSubmit} className="flex-1 py-4 bg-[#00D166] hover:bg-green-400 text-black rounded-2xl font-black uppercase text-sm sm:text-base active:scale-95 transition-all">{ui.submit}</button>
                                     </div>
                                 </div>
                             </div>
@@ -701,11 +732,11 @@
                         {/* MESSAGGIO MODALE GIGANTE GLOBALE (Es. Sbagliato, Bancarotta, +150) */}
                         {modalMessage && (
                             <div className="fixed inset-0 z-[10000] bg-black/60 flex flex-col items-center justify-center backdrop-blur-sm animate-pop-in pointer-events-none">
-                                <div className={`border-2 p-8 sm:p-12 rounded-[2rem] shadow-2xl flex flex-col items-center transform scale-110 ${modalMessage.type==='success'?'bg-green-950/90 border-green-500/50 text-[#00D166]':modalMessage.type==='error'?'bg-red-950/90 border-red-500/50 text-red-500':'bg-blue-950/90 border-blue-500/50 text-[#2E9DDF]'}`}>
+                                <div className={`border p-8 sm:p-12 rounded-[2rem] flex flex-col items-center transform scale-110 backdrop-blur-md ${modalMessage.type==='success'?'bg-green-950/80 border-green-500/30 text-[#00D166]':modalMessage.type==='error'?'bg-red-950/80 border-red-500/30 text-red-500':'bg-blue-950/80 border-blue-500/30 text-[#2E9DDF]'}`}>
                                     {modalMessage.isIcon && (
-                                        <Icon name={modalMessage.type==='success'?'CheckCircle':'AlertCircle'} size={80} className="mb-4 drop-shadow-md" />
+                                        <Icon name={modalMessage.type==='success'?'CheckCircle':'AlertCircle'} size={80} className="mb-4" />
                                     )}
-                                    <div className="text-3xl sm:text-6xl font-black uppercase text-center drop-shadow-lg tracking-widest">{modalMessage.text}</div>
+                                    <div className="text-3xl sm:text-6xl font-black uppercase text-center tracking-widest">{modalMessage.text}</div>
                                 </div>
                             </div>
                         )}
@@ -714,26 +745,25 @@
                         {gameState === 'SOLVED' && (
                             <div className="flex flex-col items-center justify-center h-full w-full p-2 sm:p-4 animate-pop-in absolute inset-0 bg-[#111827]/95 backdrop-blur-xl z-[100]">
                                 <Confetti />
-                                <div className="w-full max-w-2xl bg-[#0F2027] p-1 rounded-3xl shadow-[0_0_50px_rgba(0,209,102,0.3)] relative z-10 max-h-full flex flex-col border border-[#00D166]/50">
-                                    <div className="bg-gradient-to-b from-[#111827] to-[#0F2027] rounded-[1.4rem] p-4 sm:p-8 flex flex-col items-center text-center relative overflow-y-auto flex-1">
+                                <div className="w-full max-w-2xl bg-black/40 p-1 rounded-3xl relative z-10 max-h-full flex flex-col border border-[#00D166]/30">
+                                    <div className="bg-black/60 rounded-[1.4rem] p-4 sm:p-8 flex flex-col items-center text-center relative overflow-y-auto flex-1 border border-white/5">
                                         
-                                        {/* Effetto Shimmer */}
                                         <div className="absolute inset-0 animate-shine z-0 pointer-events-none"></div>
                                         
-                                        <div className="relative z-10 animate-float mb-2 sm:mb-4">
-                                            <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-[#00D166] to-green-800 text-[#111827] shadow-[0_0_20px_rgba(0,209,102,0.6)] border-2 sm:border-4 border-[#111827]">
+                                        <div className="relative z-10 animate-float mb-2 sm:mb-4 mt-2">
+                                            <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-[#00D166]/20 text-[#00D166] border border-[#00D166]/50">
                                                 <Icon name="CheckCircle" size={24} className="sm:w-8 sm:h-8" />
                                             </div>
                                         </div>
                                         
-                                        <h2 className="text-[#00D166] font-black text-[10px] sm:text-sm mb-1 sm:mb-2 tracking-[0.2em] sm:tracking-[0.3em] uppercase drop-shadow-md z-10">{ui.lessonUnlocked}</h2>
+                                        <h2 className="text-[#00D166] font-black text-[10px] sm:text-sm mb-1 sm:mb-2 tracking-[0.2em] sm:tracking-[0.3em] uppercase z-10">{ui.lessonUnlocked}</h2>
                                         
-                                        <div className="text-white text-lg sm:text-4xl font-black mb-3 sm:mb-6 uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)] tracking-tight leading-tight z-10">
+                                        <div className="text-white text-lg sm:text-4xl font-black mb-3 sm:mb-6 uppercase tracking-tight leading-tight z-10">
                                             {phraseData.phrase}
                                         </div>
                                         
-                                        <div className="w-full bg-black/60 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-left border border-white/10 mb-4 sm:mb-6 shadow-2xl relative z-10 flex-shrink-0">
-                                            <div className="absolute top-0 left-0 w-1 sm:w-1.5 h-full bg-[#FFB805]"></div>
+                                        <div className="w-full bg-white/5 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-left border border-white/10 mb-4 sm:mb-6 relative z-10 flex-shrink-0">
+                                            <div className="absolute top-0 left-0 w-1 h-full bg-[#FFB805] rounded-l-xl sm:rounded-l-2xl"></div>
                                             <h3 className="text-[#FFB805] font-black uppercase text-[10px] sm:text-sm mb-2 sm:mb-3 tracking-widest flex items-center gap-2">
                                                 <Icon name="Lightbulb" size={16} className="text-[#FFB805] animate-pulse sm:w-5 sm:h-5"/> 
                                                 {phraseData.topic}
@@ -743,12 +773,12 @@
 
                                         <div className="w-full flex flex-row items-center justify-between bg-white/5 p-3 sm:p-4 rounded-xl sm:rounded-2xl border border-white/10 mb-4 sm:mb-6 z-10 gap-2 sm:gap-4 shrink-0">
                                             <div className="flex items-center gap-2 sm:gap-3">
-                                                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center bg-black/50 border-2" style={{borderColor: currentRank.color}}>
+                                                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center bg-black/50 border border-white/20" style={{borderColor: currentRank.color}}>
                                                     <Icon name={currentRank.icon} size={16} className="sm:w-5 sm:h-5" style={{color: currentRank.color}}/>
                                                 </div>
                                                 <div className="text-left">
                                                     <div className="text-white/40 text-[8px] sm:text-[10px] font-black uppercase tracking-widest">{ui.rankTitle}</div>
-                                                    <div className="text-sm sm:text-xl font-black drop-shadow-md leading-none mt-0.5" style={{color: currentRank.color}}>{currentRank.title[lang]}</div>
+                                                    <div className="text-sm sm:text-xl font-black leading-none mt-0.5" style={{color: currentRank.color}}>{currentRank.title[lang]}</div>
                                                 </div>
                                             </div>
                                             <div className="text-right">
@@ -757,7 +787,7 @@
                                             </div>
                                         </div>
 
-                                        <button onClick={handleNextRound} className="w-full py-3 sm:py-5 bg-gradient-to-r from-[#FFB805] to-yellow-600 text-black rounded-xl sm:rounded-2xl font-black text-xs sm:text-lg shadow-[0_4px_0_#CC9200] sm:shadow-[0_6px_0_#CC9200] active:translate-y-1 sm:active:translate-y-2 active:shadow-none transition-all uppercase tracking-[0.1em] sm:tracking-[0.2em] flex items-center justify-center gap-2 sm:gap-3 hover:from-yellow-400 hover:to-yellow-500 z-10 shrink-0 mt-auto">
+                                        <button onClick={handleNextRound} className="w-full py-3 sm:py-5 bg-[#FFB805] hover:bg-yellow-400 text-black rounded-xl sm:rounded-2xl font-black text-xs sm:text-lg active:scale-95 transition-all uppercase tracking-[0.1em] sm:tracking-[0.2em] flex items-center justify-center gap-2 sm:gap-3 z-10 shrink-0 mt-auto">
                                             {ui.nextRound} <Icon name="Play" size={16} className="fill-current sm:w-6 sm:h-6"/>
                                         </button>
                                     </div>
@@ -766,11 +796,11 @@
                         )}
 
                         {gameState === 'GAME_OVER' && (
-                            <div className="text-center text-white py-10 px-8 bg-gradient-to-b from-black/80 to-[#111827] rounded-3xl backdrop-blur-xl border border-[#FFB805]/30 my-auto animate-pop-in w-full max-w-md shadow-[0_0_50px_rgba(255,184,5,0.2)]">
-                                <Icon name="Trophy" size={64} className="text-[#FFB805] mx-auto mb-6 drop-shadow-[0_0_15px_rgba(255,184,5,0.6)]" />
+                            <div className="text-center text-white py-10 px-8 bg-black/60 rounded-3xl backdrop-blur-xl border border-[#FFB805]/30 my-auto animate-pop-in w-full max-w-md">
+                                <Icon name="Trophy" size={64} className="text-[#FFB805] mx-auto mb-6" />
                                 <h2 className="text-4xl font-black text-white mb-2 uppercase tracking-tighter">{ui.gameOver}</h2>
                                 <p className="text-xl font-bold text-[#FFB805] mb-8 tracking-widest uppercase">{ui.winner}</p>
-                                <button onClick={()=>setGameState('SETUP')} className="w-full py-4 bg-[#2E9DDF] rounded-2xl font-black text-sm flex items-center justify-center gap-2 shadow-[0_6px_0_#0284C7] active:translate-y-1.5 active:shadow-none transition-all uppercase tracking-widest">
+                                <button onClick={()=>setGameState('SETUP')} className="w-full py-4 bg-[#2E9DDF] hover:bg-blue-400 rounded-2xl font-black text-sm flex items-center justify-center gap-2 active:scale-95 transition-all uppercase tracking-widest">
                                     <Icon name="RotateCcw" size={18}/>{ui.playAgain}
                                 </button>
                             </div>
