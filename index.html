@@ -61,6 +61,17 @@
             align-items: center;
         }
 
+        /* Pulsante Slot Machine Style */
+        .slot-button {
+            background: radial-gradient(circle at 30% 30%, #ff4d4d, #990000);
+            box-shadow: 0 4px 0 #660000, 0 8px 15px rgba(0,0,0,0.5);
+            transition: all 0.1s;
+        }
+        .slot-button:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 #660000, 0 2px 5px rgba(0,0,0,0.5);
+        }
+
         @media (min-width: 1024px) {
             .main-content { overflow: hidden; }
         }
@@ -88,10 +99,14 @@
                 AlertCircle: <Fragment><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></Fragment>,
                 ChevronDown: <polyline points="6 9 12 15 18 9" />,
                 SettingsIcon: <Fragment><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.1a2 2 0 0 1-1-1.72v-.51a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V2Z" /><circle cx="12" cy="12" r="3" /></Fragment>,
-                TelegramBall: <Fragment><circle cx="12" cy="12" r="10" fill="#fff" stroke="#333" strokeWidth="0.5"/><path d="M12 2a10 10 0 0 0-10 10 10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2zm0 2c1.3 0 2.5.3 3.6.8L12 8.4l-3.6-3.6C9.5 4.3 10.7 4 12 4zM4.8 15.6l3.6-3.6 3.6 3.6-3.6 3.6c-.5-.5-1-1-1.5-1.5-.7-.7-1.4-1.4-2.1-2.1zM19.2 8.4l-3.6 3.6-3.6-3.6 3.6-3.6c.5.5 1 1 1.5 1.5.7.7 1.4 1.4 2.1 2.1zm-3.6 7.2l3.6-3.6c.5.5 1 1 1.5 1.5.2.2.4.5.5.8-1.1 2.2-3.1 3.9-5.6 4.8l0-3.5zM12 20c-1.3 0-2.5-.3-3.6-.8l3.6-3.6 3.6 3.6C14.5 19.7 13.3 20 12 20z" fill="#333" /></Fragment>
+                TelegramBall: <Fragment>
+                    <circle cx="12" cy="12" r="11" fill="#FFFFFF" />
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="#0088CC" />
+                    <path d="M12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z" fill="#333" />
+                </Fragment>
             };
             return (
-                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className={className}>
                     {icons[name] || null}
                 </svg>
             );
@@ -105,7 +120,7 @@
             { id: 3, en: { topic: "LAY ACTION", phrase: "LAY A BET" }, it: { topic: "AZIONE BANCA", phrase: "BANCARE UNA QUOTA" }, es: { topic: "ACCIÓN LAY", phrase: "APUESTA EN CONTRA" }, pt: { topic: "AÇÃO LAY", phrase: "APOSTAR CONTRA" }, explanation_key: "ex3" },
             { id: 4, en: { topic: "THE MATCH", phrase: "MATCHED BET" }, it: { topic: "ABBINAMENTO", phrase: "SCOMMESSA ABBINATA" }, es: { topic: "IGUALACIÓN", phrase: "APUESTA IGUALADA" }, pt: { topic: "CORRESPONDÊNCIA", phrase: "APOSTA CORRESPONDIDA" }, explanation_key: "ex4" },
             { id: 5, en: { topic: "MONEY FLOW", phrase: "MARKET LIQUIDITY" }, it: { topic: "LIQUIDITÀ", phrase: "LIQUIDITA DI MERCATO" }, es: { topic: "LIQUIDEZ", phrase: "LIQUIDEZ DEL MERCADO" }, pt: { topic: "LIQUIDEZ", phrase: "LIQUIDEZ DO MERCADO" }, explanation_key: "ex5" },
-            { id: 6, en: { topic: "RISK CONTROL", phrase: "LIABILITY" }, it: { topic: "RESPONSABILITÀ", phrase: "RESPONSABILITA" }, es: { topic: "RESPONSABILIDAD", phrase: "RIESGO POTENCIAL" }, pt: { topic: "RESPONSABILIDADE", phrase: "RISCO POTENCIAL" }, explanation_key: "ex6" },
+            { id: 6, en: { topic: "RISK CONTROL", phrase: "LIABILITY" }, it: { topic: "RESPONSABILITÀ", phrase: "RESPONSABILITA" }, es: { topic: "RIESGO", phrase: "RIESGO POTENCIAL" }, pt: { topic: "RISCO", phrase: "RISCO POTENCIAL" }, explanation_key: "ex6" },
             { id: 7, en: { topic: "STEPS", phrase: "TICK SIZE" }, it: { topic: "SCATTO QUOTA", phrase: "TICK SIZE" }, es: { topic: "PASO CUOTA", phrase: "TAMAÑO DEL TICK" }, pt: { topic: "SALTO ODD", phrase: "TAMANHO DO TICK" }, explanation_key: "ex7" },
             { id: 8, en: { topic: "FEES", phrase: "COMMISSION" }, it: { topic: "COMMISSIONE", phrase: "TASSA EXCHANGE" }, es: { topic: "TARIFAS", phrase: "COMISION" }, pt: { topic: "TAXAS", phrase: "COMISSAO" }, explanation_key: "ex8" },
             { id: 9, en: { topic: "SAFETY", phrase: "VOID BET" }, it: { topic: "SCOMMESSA NULLA", phrase: "SCOMMESSA ANNULLATA" }, es: { topic: "APUESTA NULA", phrase: "APUESTA ANULADA" }, pt: { topic: "APOSTA NULA", phrase: "APOSTA ANULADA" }, explanation_key: "ex9" },
@@ -149,10 +164,10 @@
         };
 
         const uiTranslations = {
-            en: { title: "BETTING EXCHANGE ROOM", tagline: "Zero to Hero Course!", players1: "1 Player", players2: "2 Players", selectLesson: "Lesson", startGame: "Spin the Wheel", spinWheel: "Spin", buyVowel: "Vowel (250)", solve: "Solve", turnPrefix: "Turn for Player ", turnSuffix: "", bankrupt: "BANKRUPT!", loseTurn: "MISS TURN", consonantPrompt: "Consonant @ Odds:", vowelPrompt: "Choose Vowel", solvePrompt: "Solution:", submit: "Send", cancel: "Cancel", correct: "Correct!", wrong: "Wrong!", concept: "Recap:", nextRound: "Next Lesson", gameOver: "Graduated!", winner: "Top Trader", playAgain: "Restart", day: "", wheelValues: { BANKRUPT: "BANKRUPT", LOSE_TURN: "LOSE TURN" } },
-            it: { title: "BETTING EXCHANGE ROOM", tagline: "Corso Zero to Hero!", players1: "1 Giocatore", players2: "2 Giocatori", selectLesson: "Lezione", startGame: "Gira la ruota", spinWheel: "Gira", buyVowel: "Vocale (250)", solve: "Risolvi", turnPrefix: "Tocca al giocatore numero ", turnSuffix: "", bankrupt: "BANCAROTTA!", loseTurn: "PASSO", consonantPrompt: "Consonante a Quota:", vowelPrompt: "Scegli Vocale", solvePrompt: "Soluzione:", submit: "Invia", cancel: "Annulla", correct: "Esatto!", wrong: "Sbagliato!", concept: "Recap:", nextRound: "Prossima Lezione", gameOver: "Diplomato!", winner: "Top Trader", playAgain: "Ricomincia", day: "", wheelValues: { BANKRUPT: "BANCAROTTA", LOSE_TURN: "PASSO" } },
-            es: { title: "BETTING EXCHANGE ROOM", tagline: "¡Curso Zero to Hero!", players1: "1 Jugador", players2: "2 Jugadores", selectLesson: "Lección", startGame: "Gira la rueda", spinWheel: "Girar", buyVowel: "Vocal (250)", solve: "Resolver", turnPrefix: "Turno del jugador número ", turnSuffix: "", bankrupt: "¡BANCARROTA!", loseTurn: "¡PASO!", consonantPrompt: "Consonante a Cuota:", vowelPrompt: "Elegir Vocal", solvePrompt: "Solución:", submit: "Enviar", cancel: "Cancelar", correct: "¡Correcto!", wrong: "¡Incorrecto!", concept: "Recap:", nextRound: "Siguiente Tema", gameOver: "¡Graduado!", winner: "Top Trader", playAgain: "Reiniciar", day: "", wheelValues: { BANKRUPT: "BANCARROTA", LOSE_TURN: "PASO" } },
-            pt: { title: "BETTING EXCHANGE ROOM", tagline: "Curso Zero to Hero!", players1: "1 Jogador", players2: "2 Jogadores", selectLesson: "Lição", startGame: "Gira a roda", spinWheel: "Girar", buyVowel: "Vogal (250)", solve: "Resolver", turnPrefix: "Vez do jogador número ", turnSuffix: "", bankrupt: "FALÊNCIA!", loseTurn: "PASSO!", consonantPrompt: "Consoante @ Cota:", vowelPrompt: "Escolha Vogal", solvePrompt: "Solução:", submit: "Enviar", cancel: "Cancelar", correct: "Correto!", wrong: "Errado!", concept: "Recap:", nextRound: "Próxima Lição", gameOver: "Diplomado!", winner: "Top Trader", playAgain: "Reiniciar", day: "", wheelValues: { BANKRUPT: "FALÊNCIA", LOSE_TURN: "PASSO" } }
+            en: { title: "BETTING EXCHANGE ROOM", tagline: "Zero to Hero Course!", players1: "1 Player", players2: "2 Players", selectLesson: "Topic", startGame: "Gira la ruota", spinWheel: "Spin", buyVowel: "Buy Vowel (250)", solve: "Solve", turnPrefix: "Player ", turnSuffix: "", bankrupt: "BANKRUPT!", loseTurn: "MISS TURN", consonantPrompt: "Consonant @ Odds:", vowelPrompt: "Choose Vowel", solvePrompt: "Solution:", submit: "Send", cancel: "Cancel", correct: "Correct!", wrong: "Not found!", concept: "Recap:", nextRound: "Next Lesson", gameOver: "Graduated!", winner: "Top Trader", playAgain: "Restart", day: "", wheelValues: { BANKRUPT: "BANKRUPT", LOSE_TURN: "MISS TURN" } },
+            it: { title: "BETTING EXCHANGE ROOM", tagline: "Corso Zero to Hero!", players1: "1 Giocatore", players2: "2 Giocatori", selectLesson: "Tema", startGame: "Gira la ruota", spinWheel: "Gira", buyVowel: "Compro Vocale (250)", solve: "Risolvi", turnPrefix: "P", turnSuffix: "", bankrupt: "BANCAROTTA!", loseTurn: "PASSO", consonantPrompt: "Consonante a Quota:", vowelPrompt: "Scegli Vocale", solvePrompt: "Soluzione:", submit: "Invia", cancel: "Annulla", correct: "Esatto!", wrong: "Non c'è!", concept: "Recap:", nextRound: "Prossima Lezione", gameOver: "Diplomato!", winner: "Top Trader", playAgain: "Ricomincia", day: "", wheelValues: { BANKRUPT: "BANCAROTTA", LOSE_TURN: "PASSO" } },
+            es: { title: "BETTING EXCHANGE ROOM", tagline: "¡Curso Zero to Hero!", players1: "1 Jugador", players2: "2 Jugadores", selectLesson: "Tema", startGame: "Gira la rueda", spinWheel: "Girar", buyVowel: "Comprar Vocal (250)", solve: "Resolver", turnPrefix: "Jugador ", turnSuffix: "", bankrupt: "¡BANCARROTA!", loseTurn: "¡PASO!", consonantPrompt: "Consonante a Cuota:", vowelPrompt: "Elegir Vocal", solvePrompt: "Solución:", submit: "Enviar", cancel: "Cancelar", correct: "¡Correcto!", wrong: "¡No está!", concept: "Recap:", nextRound: "Siguiente Tema", gameOver: "¡Graduado!", winner: "Top Trader", playAgain: "Reiniciar", day: "", wheelValues: { BANKRUPT: "BANCARROTA", LOSE_TURN: "PASSO" } },
+            pt: { title: "BETTING EXCHANGE ROOM", tagline: "Curso Zero to Hero!", players1: "1 Jogador", players2: "2 Jogadores", selectLesson: "Tema", startGame: "Gira a roda", spinWheel: "Girar", buyVowel: "Comprar Vogal (250)", solve: "Resolver", turnPrefix: "Jogador ", turnSuffix: "", bankrupt: "FALÊNCIA!", loseTurn: "PASSO!", consonantPrompt: "Consoante @ Cota:", vowelPrompt: "Escolha Vogal", solvePrompt: "Solução:", submit: "Enviar", cancel: "Cancelar", correct: "Correto!", wrong: "Não está!", concept: "Recap:", nextRound: "Próxima Lição", gameOver: "Diplomado!", winner: "Top Trader", playAgain: "Reiniciar", day: "", wheelValues: { BANKRUPT: "FALÊNCIA", LOSE_TURN: "PASSO" } }
         };
 
         const WHEEL_SEGMENTS = [
@@ -258,15 +273,30 @@
                         rotationRef.current = curr;
                         const res = WHEEL_SEGMENTS[segIdx];
                         setSpinValue(res);
+                        
                         if (res.type === 'BANKRUPT') {
+                            setTurnPhase('IDLE');
                             const ns = [...scores]; ns[currentPlayer] = 0; setScores(ns);
                             showTemporaryModal(ui.bankrupt, 'error'); setTimeout(nextTurn, 2000);
                         } else if (res.type === 'LOSE_TURN') {
+                            setTurnPhase('IDLE');
                             showTemporaryModal(ui.loseTurn, 'error'); setTimeout(nextTurn, 2000);
-                        } else setTurnPhase('WAITING_CONSONANT');
+                        } else {
+                            setTurnPhase('WAITING_CONSONANT');
+                        }
                     }
                 };
                 requestAnimationFrame(anim);
+            };
+
+            const buyVowel = () => {
+                if (scores[currentPlayer] >= 250 && turnPhase === 'IDLE') {
+                    setTurnPhase('WAITING_VOWEL');
+                    const ns = [...scores];
+                    ns[currentPlayer] -= 250;
+                    setScores(ns);
+                    showTemporaryModal("-250", 'info');
+                }
             };
 
             const handleLetterClick = (letter) => {
@@ -330,7 +360,7 @@
                                 <div className="absolute top-[-50px] left-[-50px] w-40 h-40 bg-green-500/20 rounded-full blur-[80px]"></div>
                                 <div className="absolute bottom-[-50px] right-[-50px] w-40 h-40 bg-blue-500/20 rounded-full blur-[80px]"></div>
                                 
-                                <div className="mb-4 text-[#00D166] flex justify-center"><Icon name="TelegramBall" size={60} className="drop-shadow-lg"/></div>
+                                <div className="mb-4 flex justify-center"><Icon name="TelegramBall" size={60} className="drop-shadow-lg"/></div>
                                 
                                 <p className="text-center font-bold mb-4 text-white/90 text-sm sm:text-base">{ui.tagline}</p>
                                 
@@ -342,19 +372,27 @@
                                     ))}
                                 </div>
                                 <div className="flex gap-2 w-full mb-4">
-                                    <button onClick={()=>setNumPlayers(1)} className={`flex-1 p-3 rounded-xl flex flex-col items-center gap-1 text-xs ${numPlayers===1?'bg-[#2E9DDF] border-2 border-blue-300':'bg-black/40'}`}><Icon name="User" size={16}/>{ui.players1}</button>
-                                    <button onClick={()=>setNumPlayers(2)} className={`flex-1 p-3 rounded-xl flex flex-col items-center gap-1 text-xs ${numPlayers===2?'bg-[#2E9DDF] border-2 border-blue-300':'bg-black/40'}`}><Icon name="Users" size={16}/>{ui.players2}</button>
+                                    <button onClick={()=>setNumPlayers(1)} className={`flex-1 p-3 rounded-xl flex flex-col items-center gap-1 text-xs ${numPlayers===1?'bg-[#2E9DDF] border-2 border-blue-300 shadow-md':'bg-black/40'}`}><Icon name="User" size={16}/>{ui.players1}</button>
+                                    <button onClick={()=>setNumPlayers(2)} className={`flex-1 p-3 rounded-xl flex flex-col items-center gap-1 text-xs ${numPlayers===2?'bg-[#2E9DDF] border-2 border-blue-300 shadow-md':'bg-black/40'}`}><Icon name="Users" size={16}/>{ui.players2}</button>
                                 </div>
                                 <div className="w-full mb-6 text-center">
                                     <label className="block text-[8px] uppercase font-black mb-1 opacity-70 tracking-widest">{ui.selectLesson}</label>
                                     <div className="relative">
                                         <select value={startTopicIndex} onChange={e=>setStartTopicIndex(Number(e.target.value))} className="w-full p-3 pr-10 rounded-xl bg-black/60 border-2 border-white/10 text-white font-bold outline-none appearance-none cursor-pointer text-xs">
-                                            {phrasesDictionary.map((p,i)=><option key={i} value={i}>{i+1} - {p[lang].topic}</option>)}
+                                            {phrasesDictionary.map((p,i)=><option key={i} value={i} className="text-black">{(i+1).toString().padStart(2, '0')} - {p[lang].topic}</option>)}
                                         </select>
                                         <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none opacity-50"><Icon name="ChevronDown" size={16}/></div>
                                     </div>
                                 </div>
-                                <button onClick={startGame} className="w-full sm:w-auto px-10 py-4 bg-[#FFB805] text-black rounded-full font-black text-lg flex items-center justify-center gap-2 active:scale-95 shadow-xl transition-all hover:scale-105"><Icon name="Play" size={20}/>{ui.startGame}</button>
+
+                                {/* Pulsante Gira di Inizio */}
+                                <button 
+                                    onClick={startGame} 
+                                    className="w-20 h-20 sm:w-24 sm:h-24 rounded-full slot-button text-white font-black text-[10px] sm:text-xs flex flex-col items-center justify-center gap-1 active:scale-95 transition-all uppercase border-4 border-white/20"
+                                >
+                                    <Icon name="Play" size={16} className="fill-current"/>
+                                    {ui.startGame}
+                                </button>
                             </div>
                         )}
 
@@ -392,27 +430,42 @@
                                     {gameState==='PLAYING' && (
                                         <div className="w-full max-w-sm bg-[#1A1A1A] p-2 rounded-xl border border-white/10 text-center relative overflow-hidden shadow-lg min-h-[110px] flex flex-col justify-center">
                                             {turnPhase === 'IDLE' ? (
-                                                <div className="flex flex-col gap-1.5 animate-fade-in-up">
-                                                    <h3 className="font-black text-[#FFB805] uppercase tracking-widest text-[9px]">{ui.turnPrefix}{currentPlayer+1}{ui.turnSuffix}</h3>
-                                                    <button onClick={spinWheel} className="w-full py-1.5 bg-[#FFB805] text-black rounded-lg font-black text-sm active:scale-95 uppercase">{ui.spinWheel}</button>
-                                                    <div className="flex gap-2">
-                                                        <button onClick={()=>scores[currentPlayer]>=250 && (setScores(s=>{const n=[...s]; n[currentPlayer]-=250; return n;}), setTurnPhase('WAITING_VOWEL'), showTemporaryModal("-250",'info'))} disabled={scores[currentPlayer]<250} className={`flex-1 py-1.5 rounded-lg font-bold text-[8px] ${scores[currentPlayer]>=250?'bg-[#2E9DDF] text-white':'bg-white/5 opacity-30'}`}>{ui.buyVowel}</button>
-                                                        <button onClick={()=>setTurnPhase('SOLVING')} className="flex-1 py-1.5 bg-purple-600 rounded-lg font-bold text-[8px] text-white">{ui.solve}</button>
+                                                <div className="flex flex-col gap-1.5 animate-fade-in-up items-center">
+                                                    <h3 className="font-black text-[#FFB805] uppercase tracking-widest text-[8px] flex items-center gap-1">
+                                                        <Icon name="User" size={10}/> {ui.turnPrefix}{currentPlayer+1}
+                                                    </h3>
+                                                    
+                                                    {/* Pulsante Tondo Slot Machine */}
+                                                    <button onClick={spinWheel} className="w-16 h-16 sm:w-20 sm:h-20 rounded-full slot-button flex items-center justify-center text-white font-black text-[10px] sm:text-xs uppercase border-4 border-white/10 active:scale-95 transition-all">
+                                                        {ui.spinWheel}
+                                                    </button>
+
+                                                    <div className="flex gap-2 w-full">
+                                                        <button 
+                                                            onClick={buyVowel} 
+                                                            disabled={scores[currentPlayer]<250} 
+                                                            className={`flex-1 py-1.5 rounded-lg font-bold text-[8px] ${scores[currentPlayer]>=250?'bg-[#2E9DDF] text-white shadow-md':'bg-white/5 opacity-30 cursor-not-allowed'}`}
+                                                        >
+                                                            {ui.buyVowel}
+                                                        </button>
+                                                        <button onClick={()=>setTurnPhase('SOLVING')} className="flex-1 py-1.5 bg-purple-600 rounded-lg font-bold text-[8px] text-white shadow-md">
+                                                            {ui.solve}
+                                                        </button>
                                                     </div>
                                                 </div>
                                             ) : (
                                                 <div className="flex flex-col items-center justify-center h-full">
-                                                    {turnPhase==='SPINNING' && <div className="text-xs font-black text-[#FFB805] animate-pulse">GIRANDO...</div>}
+                                                    {turnPhase==='SPINNING' && <div className="text-xs font-black text-[#FFB805] animate-pulse uppercase tracking-widest">GIRANDO...</div>}
                                                     {turnPhase==='WAITING_CONSONANT' && spinValue && (
                                                         <div className="animate-fade-in-up">
                                                             <div className="text-[7px] opacity-60 uppercase mb-0.5">{ui.consonantPrompt}</div>
-                                                            <div className="text-2xl font-black" style={{color: spinValue.color}}>{spinValue.val}</div>
+                                                            <div className="text-xl font-black" style={{color: spinValue.color}}>{spinValue.val}</div>
                                                         </div>
                                                     )}
                                                     {turnPhase==='WAITING_VOWEL' && <div className="text-sm font-black text-[#2E9DDF] uppercase animate-fade-in-up">{ui.vowelPrompt}</div>}
                                                     {turnPhase==='SOLVING' && (
                                                         <div className="w-full animate-fade-in-up flex flex-col gap-1.5">
-                                                            <input type="text" value={solveInput} onChange={e=>setSolveInput(e.target.value)} placeholder={ui.solvePrompt} className="w-full p-1 rounded-lg bg-white/5 border border-white/20 text-white text-center font-black uppercase outline-none focus:border-[#FFB805] text-xs" />
+                                                            <input type="text" value={solveInput} onChange={e=>setSolveInput(e.target.value)} placeholder={ui.solvePrompt} className="w-full p-1.5 rounded-lg bg-white/5 border border-white/20 text-white text-center font-black uppercase outline-none focus:border-[#FFB805] text-xs" />
                                                             <div className="flex gap-2">
                                                                 <button onClick={()=>setTurnPhase('IDLE')} className="flex-1 py-1 bg-red-500/20 text-red-400 rounded-lg font-bold text-[8px]">{ui.cancel}</button>
                                                                 <button onClick={handleSolveSubmit} className="flex-1 py-1 bg-[#00D166] text-black rounded-lg font-bold text-[8px]">{ui.submit}</button>
@@ -434,14 +487,15 @@
                                 <div className="lg:w-2/3 flex flex-col justify-between py-1 lg:h-full overflow-hidden">
                                     <div className="flex justify-center gap-2 w-full max-w-xs mx-auto mb-1">
                                         {[...Array(numPlayers)].map((_, i) => (
-                                            <div key={i} className={`flex-1 p-1 rounded-xl border-2 text-center transition-all ${currentPlayer===i && gameState==='PLAYING'?'border-[#FFB805] bg-[#FFB805]/10 scale-105':'opacity-30'}`}>
-                                                <div className="text-[7px] font-black uppercase text-white/60">{ui.player} {i+1}</div>
+                                            <div key={i} className={`flex-1 p-1 rounded-xl border-2 text-center transition-all ${currentPlayer===i && gameState==='PLAYING'?'border-[#FFB805] bg-[#FFB805]/10 scale-105 shadow-sm':'opacity-20'}`}>
+                                                <div className="text-[7px] font-black uppercase text-white/60 flex items-center justify-center gap-1">
+                                                    <Icon name="User" size={10}/> {i + 1}
+                                                </div>
                                                 <div className="text-base font-black text-white">{scores[i]}</div>
                                             </div>
                                         ))}
                                     </div>
 
-                                    {/* Etichetta Topic separata dal Tabellone per evitare sovrapposizioni */}
                                     <div className="flex flex-col items-center gap-1.5 w-full mb-1">
                                         <div className="bg-black/80 px-4 py-1 rounded-full font-black text-[9px] sm:text-xs shadow-md border border-white/10 flex gap-2">
                                             <span className="text-[#00D166]">{phraseData.day}</span>
@@ -465,10 +519,23 @@
                                             <div className="flex flex-wrap justify-center gap-1">
                                                 {'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map(l => {
                                                     const isV = ['A','E','I','O','U'].includes(l);
-                                                    const disabled = turnPhase==='IDLE' || turnPhase==='SPINNING' || (turnPhase==='WAITING_CONSONANT' && isV) || (turnPhase==='WAITING_VOWEL' && !isV);
                                                     const isGuessed = guessedLetters.includes(l);
+                                                    const disabled = turnPhase==='IDLE' || turnPhase==='SPINNING' || (turnPhase==='WAITING_CONSONANT' && isV) || (turnPhase==='WAITING_VOWEL' && !isV);
                                                     return (
-                                                        <button key={l} disabled={disabled || isGuessed} onClick={()=>handleLetterClick(l)} className={`flex-grow-0 basis-[11.5%] lg:basis-[7.5%] h-8 sm:h-10 rounded-lg font-black text-[10px] sm:text-sm transition-all ${isGuessed?'bg-black/50 text-white/10':'bg-white/10 hover:bg-[#FFB805] hover:text-black shadow active:scale-90'} ${disabled?'opacity-20':'opacity-100'}`}>{l}</button>
+                                                        <button 
+                                                            key={l} 
+                                                            disabled={disabled || isGuessed} 
+                                                            onClick={()=>handleLetterClick(l)} 
+                                                            className={`flex-grow-0 basis-[11.5%] lg:basis-[7.5%] h-8 sm:h-10 rounded-lg font-black text-[10px] sm:text-sm transition-all shadow-sm
+                                                                ${isGuessed 
+                                                                    ? 'bg-black/50 text-white/5 opacity-10 cursor-not-allowed shadow-none' 
+                                                                    : disabled 
+                                                                        ? 'bg-white/5 text-white/20 opacity-30 cursor-not-allowed'
+                                                                        : 'bg-[#00D166]/15 text-[#00D166] border border-[#00D166]/30 hover:bg-[#00D166] hover:text-black active:scale-90'
+                                                                }`}
+                                                        >
+                                                            {l}
+                                                        </button>
                                                     )
                                                 })}
                                             </div>
