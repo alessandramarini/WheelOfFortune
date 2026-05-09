@@ -106,7 +106,7 @@
 
         const Icon = ({ name, size = 24, className = "" }) => {
             const icons = {
-                Settings: <path d="M12.22 2h-.44a2 2 0 0 0-2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2a2 2 0 0 0-2-2h-.44a2 2 0 0 0-2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2a2 2 0 0 0-2-2h-.44a2 2 0 0 0-2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2a2 2 0 0 0-2-2" />,
+                Settings: <path d="M12.22 2h-.44a2 2 0 0 0-2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2a2 2 0 0 0-2-2h-.44a2 2 0 0 0-2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2a2 2 0 0 0-2-2h-.44a2 2 0 0 0-2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2a2 2 0 0 0-2-2h-.44a2 2 0 0 0-2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2a2 2 0 0 0-2-2" />,
                 Play: <path d="m7 4 12 8-12 8V4z" />,
                 User: <Fragment><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></Fragment>,
                 Users: <Fragment><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></Fragment>,
@@ -125,127 +125,225 @@
 
         const COLORS = { primary: '#1A1A1A', secondary: '#FFB805', greenCorp: '#00D166', backBlue: '#2E9DDF', layPink: '#F48EAD', text: '#FFFFFF', boardBg: '#0F2027' };
 
-        // Dizionario completamente revisionato con zero allucinazioni e lezioni didattiche dirette.
+        // 30 Lezioni Sintetiche, Multilingua e con frasi lunghe.
         const phrasesDictionary = [
             { 
                 id: 1, 
-                it: { topic: "AZIONE BASE", phrase: "PUNTARE", lesson: "👉 Scommetti <b>A FAVORE</b>. Credi che accadrà. È la scommessa classica: se la tua squadra vince, vinci anche tu." },
-                en: { topic: "BASIC ACTION", phrase: "BACKING", lesson: "👉 Bet <b>FOR</b> an outcome. You believe it will happen. If your selection wins, you win." },
+                it: { topic: "AZIONE BASE", phrase: "PUNTARE UNA QUOTA", lesson: "👉 Scommetti <b>A FAVORE</b>. Credi che accadrà. È la scommessa classica: se la tua squadra vince, vinci anche tu." },
+                en: { topic: "BASIC ACTION", phrase: "BACKING AN ODDS", lesson: "👉 Bet <b>FOR</b> an outcome. You believe it will happen. If your selection wins, you win." },
                 es: { topic: "ACCIÓN BASE", phrase: "APOSTAR A FAVOR", lesson: "👉 Apuesta <b>A FAVOR</b>. Crees que sucederá. Si tu selección gana, tú ganas." },
                 pt: { topic: "AÇÃO BASE", phrase: "APOSTAR A FAVOR", lesson: "👉 Aposte <b>A FAVOR</b>. Acredita que vai acontecer. Se a sua seleção ganhar, você ganha." }
             },
             { 
                 id: 2, 
-                it: { topic: "IL BANCO", phrase: "BANCARE", lesson: "🛑 Scommetti <b>CONTRO</b>. Fai tu da bookmaker! Vinci se la squadra perde o pareggia." },
-                en: { topic: "THE BOOKIE", phrase: "LAYING", lesson: "🛑 Bet <b>AGAINST</b> an outcome. You play the bookmaker! You win if the team loses or draws." },
+                it: { topic: "IL BANCO", phrase: "BANCARE LA SQUADRA", lesson: "🛑 Scommetti <b>CONTRO</b>. Fai tu da bookmaker! Vinci se la squadra perde o pareggia." },
+                en: { topic: "THE BOOKIE", phrase: "LAYING THE TEAM", lesson: "🛑 Bet <b>AGAINST</b> an outcome. You play the bookmaker! You win if the team loses or draws." },
                 es: { topic: "LA CASA", phrase: "APOSTAR EN CONTRA", lesson: "🛑 Apuesta <b>EN CONTRA</b>. ¡Eres el bookmaker! Ganas si el equipo pierde o empata." },
-                pt: { topic: "A CASA", phrase: "APOSTAR CONTRA", lesson: "🛑 Aposte <b>CONTRA</b>. Você é o bookmaker! Ganha se a equipa perder ou empatar." }
+                pt: { topic: "A CASA", phrase: "APOSTAR CONTRA A EQUIPA", lesson: "🛑 Aposte <b>CONTRA</b>. Você é o bookmaker! Ganha se a equipa perder ou empatar." }
             },
             { 
                 id: 3, 
-                it: { topic: "GESTIONE RISCHIO", phrase: "RESPONSABILITA", lesson: "⚠️ Il tuo <b>RISCHIO REALE</b>. Bancare 10€ a quota 3.0 ti costa 20€. Tieni sempre d'occhio il portafoglio!" },
-                en: { topic: "RISK MANAGEMENT", phrase: "LIABILITY", lesson: "⚠️ Your <b>ACTUAL RISK</b>. Laying 10€ at odds of 3.0 risks 20€. Always watch your liability!" },
-                es: { topic: "GESTIÓN RIESGO", phrase: "RESPONSABILIDAD", lesson: "⚠️ Tu <b>RIESGO REAL</b>. Apostar 10€ en contra a cuota 3.0 cuesta 20€. ¡Vigila tu cartera!" },
-                pt: { topic: "GESTÃO DE RISCO", phrase: "RESPONSABILIDADE", lesson: "⚠️ O seu <b>RISCO REAL</b>. Apostar 10€ contra a cota 3.0 custa 20€. Cuidado com a carteira!" }
+                it: { topic: "GESTIONE RISCHIO", phrase: "RESPONSABILITA DEL BANCO", lesson: "⚠️ Il tuo <b>RISCHIO REALE</b>. Bancare 10€ a quota 3.0 ti costa 20€. Tieni sempre d'occhio il portafoglio!" },
+                en: { topic: "RISK MANAGEMENT", phrase: "BOOKMAKER LIABILITY", lesson: "⚠️ Your <b>ACTUAL RISK</b>. Laying 10€ at odds of 3.0 risks 20€. Always watch your liability!" },
+                es: { topic: "GESTIÓN RIESGO", phrase: "RIESGO DEL BOOKMAKER", lesson: "⚠️ Tu <b>RIESGO REAL</b>. Apostar 10€ en contra a cuota 3.0 cuesta 20€. ¡Vigila tu cartera!" },
+                pt: { topic: "GESTÃO DE RISCO", phrase: "RESPONSABILIDADE DA CASA", lesson: "⚠️ O seu <b>RISCO REAL</b>. Apostar 10€ contra a cota 3.0 custa 20€. Cuidado com a carteira!" }
             },
             { 
                 id: 4, 
-                it: { topic: "STATO SCOMMESSA", phrase: "ABBINATA", lesson: "🤝 <b>PATTO CHIUSO!</b> Trovi un utente che scommette l'opposto alla tua stessa quota. Senza abbinamento, niente scommessa." },
-                en: { topic: "BET STATUS", phrase: "MATCHED", lesson: "🤝 <b>DEAL DONE!</b> Someone took the opposite side of your bet. No match = no bet." },
-                es: { topic: "ESTADO APUESTA", phrase: "IGUALADA", lesson: "🤝 <b>¡TRATO HECHO!</b> Alguien tomó el lado opuesto de tu apuesta. Sin igualación no hay apuesta." },
-                pt: { topic: "ESTADO APOSTA", phrase: "CORRESPONDIDA", lesson: "🤝 <b>NEGÓCIO FECHADO!</b> Alguém aceitou o lado oposto da sua aposta. Sem correspondência não há aposta." }
+                it: { topic: "STATO SCOMMESSA", phrase: "SCOMMESSA BEN ABBINATA", lesson: "🤝 <b>PATTO CHIUSO!</b> Trovi un utente che scommette l'opposto alla tua stessa quota. Senza abbinamento, niente scommessa." },
+                en: { topic: "BET STATUS", phrase: "WELL MATCHED BET", lesson: "🤝 <b>DEAL DONE!</b> Someone took the opposite side of your bet. No match = no bet." },
+                es: { topic: "ESTADO APUESTA", phrase: "APUESTA BIEN IGUALADA", lesson: "🤝 <b>¡TRATO HECHO!</b> Alguien tomó el lado opuesto de tu apuesta. Sin igualación no hay apuesta." },
+                pt: { topic: "ESTADO APOSTA", phrase: "APOSTA BEM CORRESPONDIDA", lesson: "🤝 <b>NEGÓCIO FECHADO!</b> Alguém aceitou o lado oposto da sua aposta. Sem correspondência não há aposta." }
             },
             { 
                 id: 5, 
-                it: { topic: "SOLDI NEL MERCATO", phrase: "LIQUIDITA", lesson: "🌊 <b>I SOLDI VERI</b> sul mercato. Tanta liquidità = zero sbalzi improvvisi e abbinamenti immediati." },
-                en: { topic: "MARKET MONEY", phrase: "LIQUIDITY", lesson: "🌊 <b>REAL MONEY</b> in the market. High liquidity = stable odds and instant matches." },
-                es: { topic: "DINERO DEL MERCADO", phrase: "LIQUIDEZ", lesson: "🌊 <b>DINERO REAL</b> en el mercado. Alta liquidez = cuotas estables y emparejamientos instantáneos." },
-                pt: { topic: "DINHEIRO MERCADO", phrase: "LIQUIDEZ", lesson: "🌊 <b>DINHEIRO REAL</b> no mercado. Alta liquidez = cotas estáveis e correspondência instantânea." }
+                it: { topic: "SOLDI NEL MERCATO", phrase: "LIQUIDITA DEL MERCATO", lesson: "🌊 <b>I SOLDI VERI</b> sul mercato. Tanta liquidità = zero sbalzi improvvisi e abbinamenti immediati." },
+                en: { topic: "MARKET MONEY", phrase: "MARKET LIQUIDITY", lesson: "🌊 <b>REAL MONEY</b> in the market. High liquidity = stable odds and instant matches." },
+                es: { topic: "DINERO DEL MERCADO", phrase: "LIQUIDEZ DEL MERCADO", lesson: "🌊 <b>DINERO REAL</b> en el mercado. Alta liquidez = cuotas estables y emparejamientos instantáneos." },
+                pt: { topic: "DINHEIRO MERCADO", phrase: "LIQUIDEZ DO MERCADO", lesson: "🌊 <b>DINHEIRO REAL</b> no mercado. Alta liquidez = cotas estáveis e correspondência instantânea." }
             },
             { 
                 id: 6, 
-                it: { topic: "MOVIMENTO QUOTA", phrase: "TICK", lesson: "⏱️ Il <b>BATTITO</b> del mercato. Lo scatto minimo di una quota (es. da 2.00 a 2.02). Ogni tick è potenziale oro." },
-                en: { topic: "ODDS MOVEMENT", phrase: "TICK", lesson: "⏱️ The market's <b>HEARTBEAT</b>. The minimum odds movement (e.g., 2.00 to 2.02). Every tick is potential profit." },
-                es: { topic: "MOVIMIENTO CUOTA", phrase: "TICK", lesson: "⏱️ El <b>LATIDO</b> del mercado. El movimiento mínimo de cuota. Cada tick es oro potencial." },
-                pt: { topic: "MOVIMIENTO COTA", phrase: "TICK", lesson: "⏱️ O <b>BATIMENTO</b> do mercado. O movimento mínimo da cota. Cada tick é ouro potencial." }
+                it: { topic: "MOVIMENTO QUOTA", phrase: "MOVIMENTO DI UN TICK", lesson: "⏱️ Il <b>BATTITO</b> del mercato. Lo scatto minimo di una quota (es. da 2.00 a 2.02). Ogni tick è potenziale oro." },
+                en: { topic: "ODDS MOVEMENT", phrase: "ONE TICK MOVEMENT", lesson: "⏱️ The market's <b>HEARTBEAT</b>. The minimum odds movement (e.g., 2.00 to 2.02). Every tick is potential profit." },
+                es: { topic: "MOVIMIENTO CUOTA", phrase: "MOVIMIENTO DE UN TICK", lesson: "⏱️ El <b>LATIDO</b> del mercado. El movimiento mínimo de cuota. Cada tick es oro potencial." },
+                pt: { topic: "MOVIMIENTO COTA", phrase: "MOVIMENTO DE UM TICK", lesson: "⏱️ O <b>BATIMENTO</b> do mercado. O movimento mínimo da cota. Cada tick é ouro potencial." }
             },
             { 
                 id: 7, 
-                it: { topic: "USCITA ANTICIPATA", phrase: "CASH OUT", lesson: "🚪 L'<b>USCITA DI SICUREZZA</b>. Incassa il profitto o taglia la perdita <i>prima</i> del fischio finale." },
-                en: { topic: "EARLY EXIT", phrase: "CASH OUT", lesson: "🚪 The <b>EMERGENCY EXIT</b>. Lock in profit or cut losses <i>before</i> the final whistle." },
-                es: { topic: "SALIDA TEMPRANA", phrase: "CASH OUT", lesson: "🚪 La <b>SALIDA DE EMERGENCIA</b>. Asegura ganancias o recorta pérdidas <i>antes</i> del final." },
-                pt: { topic: "SAÍDA ANTECIPADA", phrase: "CASH OUT", lesson: "🚪 A <b>SAÍDA DE EMERGÊNCIA</b>. Garanta lucros ou corte perdas <i>antes</i> do apito final." }
+                it: { topic: "USCITA ANTICIPATA", phrase: "USCITA IN CASH OUT", lesson: "🚪 L'<b>USCITA DI SICUREZZA</b>. Incassa il profitto o taglia la perdita <i>prima</i> del fischio finale." },
+                en: { topic: "EARLY EXIT", phrase: "EARLY CASH OUT", lesson: "🚪 The <b>EMERGENCY EXIT</b>. Lock in profit or cut losses <i>before</i> the final whistle." },
+                es: { topic: "SALIDA TEMPRANA", phrase: "SALIDA EN CASH OUT", lesson: "🚪 La <b>SALIDA DE EMERGENCIA</b>. Asegura ganancias o recorta pérdidas <i>antes</i> del final." },
+                pt: { topic: "SAÍDA ANTECIPADA", phrase: "SAIDA EM CASH OUT", lesson: "🚪 A <b>SAÍDA DE EMERGÊNCIA</b>. Garanta lucros ou corte perdas <i>antes</i> do apito final." }
             },
             { 
                 id: 8, 
-                it: { topic: "PROFITTO CERTO", phrase: "GREEN BOOK", lesson: "🍏 Il <b>SACRO GRAAL</b>. Profitto matematico e garantito su <i>ogni</i> risultato. Mettiti comodo e goditi la partita!" },
-                en: { topic: "GUARANTEED PROFIT", phrase: "GREEN BOOK", lesson: "🍏 The <b>HOLY GRAIL</b>. Mathematical, guaranteed profit regardless of the outcome. Sit back and enjoy!" },
-                es: { topic: "BENEFICIO SEGURO", phrase: "LIBRO VERDE", lesson: "🍏 El <b>SANTO GRIAL</b>. Beneficio matemático garantizado en <i>cualquier</i> resultado. ¡Disfruta del juego!" },
-                pt: { topic: "LUCRO GARANTIDO", phrase: "LIVRO VERDE", lesson: "🍏 O <b>SANTO GRAAL</b>. Lucro matemático garantido em <i>qualquer</i> resultado. Desfrute do jogo!" }
+                it: { topic: "PROFITTO CERTO", phrase: "PROFITTO SUL GREEN BOOK", lesson: "🍏 Il <b>SACRO GRAAL</b>. Profitto matematico e garantito su <i>ogni</i> risultato. Mettiti comodo e goditi la partita!" },
+                en: { topic: "GUARANTEED PROFIT", phrase: "GREEN BOOK PROFIT", lesson: "🍏 The <b>HOLY GRAIL</b>. Mathematical, guaranteed profit regardless of the outcome. Sit back and enjoy!" },
+                es: { topic: "BENEFICIO SEGURO", phrase: "BENEFICIO DEL LIBRO VERDE", lesson: "🍏 El <b>SANTO GRIAL</b>. Beneficio matemático garantizado en <i>cualquier</i> resultado. ¡Disfruta del juego!" },
+                pt: { topic: "LUCRO GARANTIDO", phrase: "LUCRO DO LIVRO VERDE", lesson: "🍏 O <b>SANTO GRAAL</b>. Lucro matemático garantido em <i>qualquer</i> resultado. Desfrute do jogo!" }
             },
             { 
                 id: 9, 
-                it: { topic: "TRADING VELOCE", phrase: "SCALPING", lesson: "⚡ <b>TOCCA E FUGA</b>. Ruba 1-2 tick in pochi secondi. Tanti mini-profitti costanti a rischio quasi zero." },
-                en: { topic: "FAST TRADING", phrase: "SCALPING", lesson: "⚡ <b>HIT AND RUN</b>. Steal 1-2 ticks in seconds. Lots of micro-profits with near-zero risk." },
-                es: { topic: "TRADING RÁPIDO", phrase: "SCALPING", lesson: "⚡ <b>TOCA Y HUYE</b>. Roba 1-2 ticks en segundos. Muchos micro-beneficios con riesgo casi nulo." },
-                pt: { topic: "TRADING RÁPIDO", phrase: "SCALPING", lesson: "⚡ <b>TOCA E FOGE</b>. Roube 1-2 ticks em segundos. Muitos micro-lucros com risco quase nulo." }
+                it: { topic: "TRADING VELOCE", phrase: "FARE SCALPING VELOCE", lesson: "⚡ <b>TOCCA E FUGA</b>. Ruba 1-2 tick in pochi secondi. Tanti mini-profitti costanti a rischio quasi zero." },
+                en: { topic: "FAST TRADING", phrase: "QUICK SCALPING TRADE", lesson: "⚡ <b>HIT AND RUN</b>. Steal 1-2 ticks in seconds. Lots of micro-profits with near-zero risk." },
+                es: { topic: "TRADING RÁPIDO", phrase: "HACER SCALPING RAPIDO", lesson: "⚡ <b>TOCA Y HUYE</b>. Roba 1-2 ticks en segundos. Muchos micro-beneficios con riesgo casi nulo." },
+                pt: { topic: "TRADING RÁPIDO", phrase: "FAZER SCALPING RAPIDO", lesson: "⚡ <b>TOCA E FOGE</b>. Roube 1-2 ticks em segundos. Muitos micro-lucros com risco quase nulo." }
             },
             { 
                 id: 10, 
-                it: { topic: "VANTAGGIO MATEMATICO", phrase: "VALUE BET", lesson: "💎 La <b>GEMMA NASCOSTA</b>. Compri a un prezzo migliore del suo valore reale. Il vero vantaggio sui bookmaker." },
-                en: { topic: "MATHEMATICAL EDGE", phrase: "VALUE BET", lesson: "💎 The <b>HIDDEN GEM</b>. Buying at a better price than true probability. Your real edge." },
-                es: { topic: "VENTAJA MATEMÁTICA", phrase: "APUESTA DE VALOR", lesson: "💎 La <b>JOYA OCULTA</b>. Comprar a mejor precio que la probabilidad real. Tu verdadera ventaja." },
-                pt: { topic: "VANTAGEM MATEMÁTICA", phrase: "APOSTA DE VALOR", lesson: "💎 A <b>JÓIA OCULTA</b>. Comprar a um preço melhor do que a probabilidade real. A sua verdadeira vantagem." }
+                it: { topic: "VANTAGGIO MATEMATICO", phrase: "TROVARE LA VALUE BET", lesson: "💎 La <b>GEMMA NASCOSTA</b>. Compri a un prezzo migliore del suo valore reale. Il vero vantaggio sui bookmaker." },
+                en: { topic: "MATHEMATICAL EDGE", phrase: "FINDING VALUE BETS", lesson: "💎 The <b>HIDDEN GEM</b>. Buying at a better price than true probability. Your real edge." },
+                es: { topic: "VENTAJA MATEMÁTICA", phrase: "ENCONTRAR APUESTA DE VALOR", lesson: "💎 La <b>JOYA OCULTA</b>. Comprar a mejor precio que la probabilidad real. Tu verdadera ventaja." },
+                pt: { topic: "VANTAGEM MATEMÁTICA", phrase: "ENCONTRAR APOSTA DE VALOR", lesson: "💎 A <b>JÓIA OCULTA</b>. Comprar a um preço melhor do que a probabilidade real. A sua verdadeira vantagem." }
             },
             { 
                 id: 11, 
-                it: { topic: "MULTISELEZIONE", phrase: "DUTCHING", lesson: "🍕 <b>DIVIDI LA TORTA</b>. Spalma la puntata su più cavalli. Stesso profitto garantito, chiunque vinca tra loro." },
-                en: { topic: "MULTI SELECTION", phrase: "DUTCHING", lesson: "🍕 <b>SPLIT THE PIE</b>. Spread your stake across multiple picks for the exact same profit on either winner." },
-                es: { topic: "MULTI SELECCIÓN", phrase: "DUTCHING", lesson: "🍕 <b>DIVIDE EL PASTEL</b>. Reparte tu apuesta en varias selecciones para el mismo beneficio si alguna gana." },
-                pt: { topic: "MULTI SELEÇÃO", phrase: "DUTCHING", lesson: "🍕 <b>DIVIDA O BOLO</b>. Distribua a aposta por várias seleções para o mesmo lucro se alguma ganhar." }
+                it: { topic: "MULTISELEZIONE", phrase: "DUTCHING SUI RISULTATI", lesson: "🍕 <b>DIVIDI LA TORTA</b>. Spalma la puntata su più cavalli. Stesso profitto garantito, chiunque vinca tra loro." },
+                en: { topic: "MULTI SELECTION", phrase: "DUTCHING THE OUTCOMES", lesson: "🍕 <b>SPLIT THE PIE</b>. Spread your stake across multiple picks for the exact same profit on either winner." },
+                es: { topic: "MULTI SELECCIÓN", phrase: "DUTCHING DE RESULTADOS", lesson: "🍕 <b>DIVIDE EL PASTEL</b>. Reparte tu apuesta en varias selecciones para el mismo beneficio si alguna gana." },
+                pt: { topic: "MULTI SELEÇÃO", phrase: "DUTCHING DE RESULTADOS", lesson: "🍕 <b>DIVIDA O BOLO</b>. Distribua a aposta por várias seleções para o mesmo lucro se alguma ganhar." }
             },
             { 
                 id: 12, 
-                it: { topic: "TASSA EXCHANGE", phrase: "COMMISSIONE", lesson: "✂️ Solo sulle <b>VINCITE NETTE</b>. L'Exchange non trucca le quote: trattiene una minuscola % solo se chiudi in positivo." },
-                en: { topic: "EXCHANGE FEE", phrase: "COMMISSION", lesson: "✂️ Only on <b>NET WINNINGS</b>. The Exchange doesn't rig odds; they just take a tiny % if you profit." },
-                es: { topic: "TARIFA EXCHANGE", phrase: "COMISION", lesson: "✂️ Solo en <b>GANANCIAS NETAS</b>. El Exchange no manipula cuotas, cobra un % mínimo solo si ganas." },
-                pt: { topic: "TAXA EXCHANGE", phrase: "COMISSAO", lesson: "✂️ Apenas em <b>GANHOS LÍQUIDOS</b>. A Exchange não manipula cotas, cobra uma % mínima só se lucrar." }
+                it: { topic: "TASSA EXCHANGE", phrase: "COMMISSIONE SULLE VINCITE", lesson: "✂️ Solo sulle <b>VINCITE NETTE</b>. L'Exchange non trucca le quote: trattiene una minuscola % solo se chiudi in positivo." },
+                en: { topic: "EXCHANGE FEE", phrase: "COMMISSION ON WINNINGS", lesson: "✂️ Only on <b>NET WINNINGS</b>. The Exchange doesn't rig odds; they just take a tiny % if you profit." },
+                es: { topic: "TARIFA EXCHANGE", phrase: "COMISION SOBRE GANANCIAS", lesson: "✂️ Solo en <b>GANANCIAS NETAS</b>. El Exchange no manipula cuotas, cobra un % mínimo solo si ganas." },
+                pt: { topic: "TAXA EXCHANGE", phrase: "COMISSAO SOBRE GANHOS", lesson: "✂️ Apenas em <b>GANHOS LÍQUIDOS</b>. A Exchange não manipula cotas, cobra uma % mínima só se lucrar." }
             },
             { 
                 id: 13, 
-                it: { topic: "TRADING INVERSO", phrase: "LAY TO BACK", lesson: "📉 <b>COMPRA BASSO, VENDI ALTO</b>. Banchi una quota bassa sperando che salga. Ottima strategia per le sfavorite." },
-                en: { topic: "REVERSE TRADING", phrase: "LAY TO BACK", lesson: "📉 <b>BUY LOW, SELL HIGH</b>. Lay at low odds hoping they drift up. Great strategy against favorites." },
-                es: { topic: "TRADING INVERSO", phrase: "LAY TO BACK", lesson: "📉 <b>COMPRA BAJO, VENDE ALTO</b>. Apuesta en contra a baja cuota esperando que suba." },
-                pt: { topic: "TRADING INVERSO", phrase: "LAY TO BACK", lesson: "📉 <b>COMPRA BAIXO, VENDE ALTO</b>. Aposte contra a cota baixa esperando que ela suba." }
+                it: { topic: "TRADING INVERSO", phrase: "STRATEGIA LAY TO BACK", lesson: "📉 <b>COMPRA BASSO, VENDI ALTO</b>. Banchi una quota bassa sperando che salga. Ottima strategia per le sfavorite." },
+                en: { topic: "REVERSE TRADING", phrase: "LAY TO BACK STRATEGY", lesson: "📉 <b>BUY LOW, SELL HIGH</b>. Lay at low odds hoping they drift up. Great strategy against favorites." },
+                es: { topic: "TRADING INVERSO", phrase: "ESTRATEGIA LAY TO BACK", lesson: "📉 <b>COMPRA BAJO, VENDE ALTO</b>. Apuesta en contra a baja cuota esperando que suba." },
+                pt: { topic: "TRADING INVERSO", phrase: "ESTRATEGIA LAY TO BACK", lesson: "📉 <b>COMPRA BAIXO, VENDE ALTO</b>. Aposte contra a cota baixa esperando que ela suba." }
             },
             { 
                 id: 14, 
-                it: { topic: "TRADING DI BASE", phrase: "BACK TO LAY", lesson: "📈 <b>LA MOSSA DEL MAESTRO</b>. Punti a quota alta. La squadra segna? La quota crolla, tu banchi e crei il Green Book!" },
-                en: { topic: "BASIC TRADING", phrase: "BACK TO LAY", lesson: "📈 <b>THE MASTER MOVE</b>. Back high. Team scores? Odds crash, you lay low and lock in the Green Book!" },
-                es: { topic: "TRADING BÁSICO", phrase: "BACK TO LAY", lesson: "📈 <b>EL MOVIMIENTO MAESTRO</b>. Apuesta a favor alto. Si marcan, la cuota cae, apuestas en contra y ¡aseguras!" },
-                pt: { topic: "TRADING BÁSICO", phrase: "BACK TO LAY", lesson: "📈 <b>A JOGADA DE MESTRE</b>. Aposte a favor alto. Marcaram? A cota cai, aposta contra e garante o Green Book!" }
+                it: { topic: "TRADING DI BASE", phrase: "TECNICA BACK TO LAY", lesson: "📈 <b>LA MOSSA DEL MAESTRO</b>. Punti a quota alta. La squadra segna? La quota crolla, tu banchi e crei il Green Book!" },
+                en: { topic: "BASIC TRADING", phrase: "BACK TO LAY TECHNIQUE", lesson: "📈 <b>THE MASTER MOVE</b>. Back high. Team scores? Odds crash, you lay low and lock in the Green Book!" },
+                es: { topic: "TRADING BÁSICO", phrase: "TECNICA BACK TO LAY", lesson: "📈 <b>EL MOVIMIENTO MAESTRO</b>. Apuesta a favor alto. Si marcan, la cuota cae, apuestas en contra y ¡aseguras!" },
+                pt: { topic: "TRADING BÁSICO", phrase: "TECNICA BACK TO LAY", lesson: "📈 <b>A JOGADA DE MESTRE</b>. Aposte a favor alto. Marcaram? A cota cai, aposta contra e garante o Green Book!" }
             },
             { 
                 id: 15, 
-                it: { topic: "ATTESA SUL MERCATO", phrase: "NON ABBINATA", lesson: "🎣 <b>L'AMO IN ACQUA</b>. Ordine fuori mercato in attesa. Piazzi la trappola e aspetti che qualcuno 'abbocchi'." },
-                en: { topic: "WAITING IN MARKET", phrase: "UNMATCHED", lesson: "🎣 <b>HOOK IN THE WATER</b>. An unmatched order waiting for the market to move and bite." },
-                es: { topic: "ESPERANDO MERCADO", phrase: "NO IGUALADA", lesson: "🎣 <b>ANZUELO AL AGUA</b>. Orden esperando que el mercado se mueva y alguien 'pique'." },
-                pt: { topic: "ESPERANDO MERCADO", phrase: "NÃO CORRESPONDIDA", lesson: "🎣 <b>ANZOL NA ÁGUA</b>. Ordem à espera que o mercado se mova e alguém 'morda'." }
+                it: { topic: "ATTESA SUL MERCATO", phrase: "SCOMMESSA NON ABBINATA", lesson: "🎣 <b>L'AMO IN ACQUA</b>. Ordine fuori mercato in attesa. Piazzi la trappola e aspetti che qualcuno 'abbocchi'." },
+                en: { topic: "WAITING IN MARKET", phrase: "UNMATCHED BET ORDER", lesson: "🎣 <b>HOOK IN THE WATER</b>. An unmatched order waiting for the market to move and bite." },
+                es: { topic: "ESPERANDO MERCADO", phrase: "APUESTA NO IGUALADA", lesson: "🎣 <b>ANZUELO AL AGUA</b>. Orden esperando que el mercado se mueva y alguien 'pique'." },
+                pt: { topic: "ESPERANDO MERCADO", phrase: "APOSTA NAO CORRESPONDIDA", lesson: "🎣 <b>ANZOL NA ÁGUA</b>. Ordem à espera que o mercado se mova e alguém 'morda'." }
             },
             { 
                 id: 16, 
-                it: { topic: "TAGLIO PERDITE", phrase: "STOP LOSS", lesson: "🛡️ Il tuo <b>SCUDO SALVAVITA</b>. Decidi la perdita massima prima di iniziare. Tocchi il limite? Esci. Senza. Esitare." },
-                en: { topic: "CUTTING LOSSES", phrase: "STOP LOSS", lesson: "🛡️ Your <b>LIFESAVER</b>. Decide max loss before entering. Hit it? Exit. Without. Hesitation." },
-                es: { topic: "CORTAR PÉRDIDAS", phrase: "STOP LOSS", lesson: "🛡️ Tu <b>ESCUDO VITAL</b>. Decide la pérdida máxima antes de entrar. ¿La tocas? Sal sin dudar." },
-                pt: { topic: "CORTAR PERDAS", phrase: "STOP LOSS", lesson: "🛡️ O seu <b>ESCUDO VITAL</b>. Decida a perda máxima antes de entrar. Tocou nela? Saia sem hesitar." }
+                it: { topic: "TAGLIO PERDITE", phrase: "IMPOSTARE LO STOP LOSS", lesson: "🛡️ Il tuo <b>SCUDO SALVAVITA</b>. Decidi la perdita massima prima di iniziare. Tocchi il limite? Esci. Senza. Esitare." },
+                en: { topic: "CUTTING LOSSES", phrase: "SETTING A STOP LOSS", lesson: "🛡️ Your <b>LIFESAVER</b>. Decide max loss before entering. Hit it? Exit. Without. Hesitation." },
+                es: { topic: "CORTAR PÉRDIDAS", phrase: "AJUSTAR EL STOP LOSS", lesson: "🛡️ Tu <b>ESCUDO VITAL</b>. Decide la pérdida máxima antes de entrar. ¿La tocas? Sal sin dudar." },
+                pt: { topic: "CORTAR PERDAS", phrase: "DEFINIR O STOP LOSS", lesson: "🛡️ O seu <b>ESCUDO VITAL</b>. Decida a perda máxima antes de entrar. Tocou nela? Saia sem hesitar." }
+            },
+            { 
+                id: 17, 
+                it: { topic: "IL CAPITALE", phrase: "GESTIONE DELLA CASSA", lesson: "🏦 Il tuo <b>MOTORE</b>. Non puntare mai più del 5% del tuo capitale. Senza soldi non si gioca, proteggili!" },
+                en: { topic: "THE BANKROLL", phrase: "BANKROLL MANAGEMENT", lesson: "🏦 Your <b>ENGINE</b>. Never risk more than 5% of your bankroll. No money, no game. Protect it!" },
+                es: { topic: "EL CAPITAL", phrase: "GESTION DE BANKROLL", lesson: "🏦 Tu <b>MOTOR</b>. Nunca arriesgues más del 5%. ¡Sin dinero no hay juego, protégelo!" },
+                pt: { topic: "O CAPITAL", phrase: "GESTAO DE BANCA", lesson: "🏦 O seu <b>MOTOR</b>. Nunca arrisque mais de 5%. Sem dinheiro não há jogo, proteja-o!" }
+            },
+            { 
+                id: 18, 
+                it: { topic: "IL PREMATCH", phrase: "QUOTA DI PARTENZA", lesson: "🏁 La <b>LINEA DI START</b>. Analizza la quota iniziale prima che la partita inizi. Spesso nasconde indizi sul mercato." },
+                en: { topic: "THE PREMATCH", phrase: "STARTING PRICE ODDS", lesson: "🏁 The <b>STARTING LINE</b>. Analyze the initial odds before kick-off. It often hides market clues." },
+                es: { topic: "EL PREPARTIDO", phrase: "CUOTA DE SALIDA", lesson: "🏁 La <b>LÍNEA DE SALIDA</b>. Analiza la cuota inicial antes de empezar. A menudo esconde pistas." },
+                pt: { topic: "O PRÉ JOGO", phrase: "COTA DE PARTIDA", lesson: "🏁 A <b>LINHA DE PARTIDA</b>. Analise a cota inicial antes de começar. Muitas vezes esconde pistas." }
+            },
+            { 
+                id: 19, 
+                it: { topic: "PRESSIONE MERCATO", phrase: "PESO DEL DENARO", lesson: "⚖️ La <b>BILANCIA</b>. Indica dove stanno andando i soldi. Se ci sono 10mila in Punta e 100 in Banca, la quota scenderà." },
+                en: { topic: "MARKET PRESSURE", phrase: "WEIGHT OF MONEY", lesson: "⚖️ The <b>SCALE</b>. Shows where the money is going. If Back money vastly outweighs Lay money, odds will drop." },
+                es: { topic: "PRESIÓN DEL MERCADO", phrase: "PESO DEL DINERO", lesson: "⚖️ La <b>BÁSCULA</b>. Indica dónde va el dinero. Si hay mucho más en Back que en Lay, la cuota bajará." },
+                pt: { topic: "PRESSÃO DO MERCADO", phrase: "PESO DO DINHEIRO", lesson: "⚖️ A <b>BALANÇA</b>. Indica para onde vai o dinheiro. Se há muito mais no Back do que no Lay, a cota vai descer." }
+            },
+            { 
+                id: 20, 
+                it: { topic: "TRADING IN DIRETTA", phrase: "MERCATO IN GIOCO LIVE", lesson: "🔥 <b>IL CAOS CONTROLLATO</b>. Durante la partita le quote impazziscono ad ogni azione. Massimi rischi, massimi profitti." },
+                en: { topic: "LIVE TRADING", phrase: "IN PLAY LIVE MARKET", lesson: "🔥 <b>CONTROLLED CHAOS</b>. During the match, odds go wild with every action. Max risk, max reward." },
+                es: { topic: "TRADING EN DIRECTO", phrase: "MERCADO EN VIVO", lesson: "🔥 <b>EL CAOS CONTROLADO</b>. En juego las cuotas enloquecen con cada acción. Máximo riesgo y beneficio." },
+                pt: { topic: "TRADING EM DIRETO", phrase: "MERCADO AO VIVO", lesson: "🔥 <b>O CAOS CONTROLADO</b>. Durante o jogo as cotas enlouquecem com cada ação. Máximo risco e lucro." }
+            },
+            { 
+                id: 21, 
+                it: { topic: "PUNTI CHIAVE", phrase: "PUNTO DI RESISTENZA", lesson: "🧱 Il <b>MURO DI GOMMA</b>. Livelli di quota storici difficili da superare. Perfetti per fare entry contro-trend." },
+                en: { topic: "KEY POINTS", phrase: "RESISTANCE POINT", lesson: "🧱 The <b>RUBBER WALL</b>. Historic odds levels that are hard to break. Perfect for counter-trend entries." },
+                es: { topic: "PUNTOS CLAVE", phrase: "PUNTO DE RESISTENCIA", lesson: "🧱 El <b>MURO DE GOMA</b>. Niveles de cuota difíciles de romper. Perfectos para entradas contra tendencia." },
+                pt: { topic: "PONTOS CHAVE", phrase: "PONTO DE RESISTENCIA", lesson: "🧱 O <b>MURO DE BORRACHA</b>. Níveis de cota difíceis de quebrar. Perfeitos para entradas contra tendência." }
+            },
+            { 
+                id: 22, 
+                it: { topic: "IL FLUSSO", phrase: "TENDENZA DEL MERCATO", lesson: "🏄‍♂️ <b>CAVALCA L'ONDA</b>. Il mercato ha una direzione. Vai con la corrente, non combatterla se non sei sicuro." },
+                en: { topic: "THE FLOW", phrase: "MARKET TREND DIRECTION", lesson: "🏄‍♂️ <b>RIDE THE WAVE</b>. The market has a direction. Go with the flow, don't fight the trend unless sure." },
+                es: { topic: "EL FLUJO", phrase: "TENDENCIA DEL MERCADO", lesson: "🏄‍♂️ <b>CABALGA LA OLA</b>. El mercado tiene dirección. Ve con la corriente, no la luches si no estás seguro." },
+                pt: { topic: "O FLUXO", phrase: "TENDENCIA DO MERCADO", lesson: "🏄‍♂️ <b>APANHE A ONDA</b>. O mercado tem uma direção. Siga a corrente, não a combata a menos que tenha a certeza." }
+            },
+            { 
+                id: 23, 
+                it: { topic: "SENZA RISCHIO", phrase: "ARBITRAGGIO SPORTIVO", lesson: "⚖️ Il <b>SUREBET</b>. Sfrutti le differenze di quota tra bookmaker ed Exchange per guadagnare a prescindere. Raro ma letale." },
+                en: { topic: "RISK FREE", phrase: "SPORTS ARBITRAGE", lesson: "⚖️ The <b>SUREBET</b>. Exploiting odds differences between bookies and the Exchange for guaranteed profit." },
+                es: { topic: "SIN RIESGO", phrase: "ARBITRAJE DEPORTIVO", lesson: "⚖️ La <b>SUREBET</b>. Explotar diferencias de cuotas entre bookies y el Exchange para ganar seguro." },
+                pt: { topic: "SEM RISCO", phrase: "ARBITRAGEM DESPORTIVA", lesson: "⚖️ A <b>SUREBET</b>. Explorar diferenças de cotas entre bookies e a Exchange para ganhar sempre." }
+            },
+            { 
+                id: 24, 
+                it: { topic: "L'ERRORE FATALE", phrase: "RECUPERO DELLA PERDITA", lesson: "💀 La <b>TRAPPOLA</b>. Perdi e punti il doppio per recuperare subito. È il modo più veloce per azzerare il conto. Fermati!" },
+                en: { topic: "FATAL FLAW", phrase: "CHASING THE LOSSES", lesson: "💀 The <b>TRAP</b>. Losing and betting double to win it back fast. The fastest way to blow your account. Stop!" },
+                es: { topic: "EL ERROR FATAL", phrase: "PERSEGUIR LAS PERDIDAS", lesson: "💀 La <b>TRAMPA</b>. Perder y apostar el doble para recuperar rápido. La vía más rápida a la quiebra. ¡Para!" },
+                pt: { topic: "O ERRO FATAL", phrase: "CORRER ATRAS DO PREJUIZO", lesson: "💀 A <b>ARMADILHA</b>. Perder e apostar o dobro para recuperar. A forma mais rápida de zerar a conta. Pare!" }
+            },
+            { 
+                id: 25, 
+                it: { topic: "MARGINE OCCULTO", phrase: "OVERROUND DEL BOOKMAKER", lesson: "✂️ La <b>TASSA INVISIBILE</b>. I bookmaker abbassano le quote per avere vantaggio matematico. L'Exchange non lo fa!" },
+                en: { topic: "HIDDEN MARGIN", phrase: "BOOKMAKER OVERROUND", lesson: "✂️ The <b>INVISIBLE TAX</b>. Bookies lower odds to gain a mathematical edge. The Exchange doesn't!" },
+                es: { topic: "MARGEN OCULTO", phrase: "MARGEN DEL BOOKMAKER", lesson: "✂️ La <b>TASA INVISIBLE</b>. Los bookies bajan cuotas para tener ventaja matemática. ¡El Exchange no!" },
+                pt: { topic: "MARGEM OCULTA", phrase: "MARGEM DO BOOKMAKER", lesson: "✂️ A <b>TAXA INVISÍVEL</b>. Os bookies baixam as cotas para ter vantagem. A Exchange não faz isso!" }
+            },
+            { 
+                id: 26, 
+                it: { topic: "ANALISI TECNICA", phrase: "LETTURA DEL GRAFICO", lesson: "📊 <b>I RAGGI X</b>. Guarda i grafici storici della quota: i pattern si ripetono. Studia il passato per prevedere il futuro." },
+                en: { topic: "TECHNICAL ANALYSIS", phrase: "READING THE CHARTS", lesson: "📊 <b>THE X-RAY</b>. Look at historical odds charts: patterns repeat. Study the past to predict the future." },
+                es: { topic: "ANÁLISIS TÉCNICO", phrase: "LECTURA DE GRAFICOS", lesson: "📊 <b>LOS RAYOS X</b>. Mira los gráficos históricos de cuotas: los patrones se repiten. Estudia el pasado." },
+                pt: { topic: "ANÁLISE TÉCNICA", phrase: "LEITURA DE GRAFICOS", lesson: "📊 <b>O RAIO X</b>. Veja os gráficos históricos de cotas: os padrões repetem-se. Estude o passado." }
+            },
+            { 
+                id: 27, 
+                it: { topic: "PSICOLOGIA", phrase: "MENTE DEL TRADER", lesson: "🧠 <b>IL VERO CAMPO DA GIOCO</b>. Il 90% del successo è mentale. Zero emotività, sei un automa che esegue un piano." },
+                en: { topic: "PSYCHOLOGY", phrase: "TRADER MINDSET", lesson: "🧠 <b>THE REAL BATTLEFIELD</b>. 90% of success is mental. Zero emotion, you are a machine executing a plan." },
+                es: { topic: "PSICOLOGÍA", phrase: "MENTALIDAD DE TRADER", lesson: "🧠 <b>EL VERDADERO CAMPO</b>. El 90% del éxito es mental. Cero emoción, eres una máquina ejecutando un plan." },
+                pt: { topic: "PSICOLOGIA", phrase: "MENTALIDADE DO TRADER", lesson: "🧠 <b>O VERDADEIRO CAMPO</b>. 90% do sucesso é mental. Zero emoção, você é uma máquina a executar um plano." }
+            },
+            { 
+                id: 28, 
+                it: { topic: "IL SEGRETO", phrase: "DISCIPLINA E PAZIENZA", lesson: "🧘 <b>L'ARMA FINALE</b>. Aspetta l'occasione perfetta. Non devi operare per forza. Nessuna scommessa è spesso la mossa migliore." },
+                en: { topic: "THE SECRET", phrase: "DISCIPLINE AND PATIENCE", lesson: "🧘 <b>THE ULTIMATE WEAPON</b>. Wait for the perfect setup. You don't have to trade. No bet is often the best bet." },
+                es: { topic: "EL SECRETO", phrase: "DISCIPLINA Y PACIENCIA", lesson: "🧘 <b>EL ARMA FINAL</b>. Espera la ocasión perfecta. No tienes que operar. No apostar a veces es la mejor jugada." },
+                pt: { topic: "O SEGREDO", phrase: "DISCIPLINA E PACIENCIA", lesson: "🧘 <b>A ARMA FINAL</b>. Espere a oportunidade perfeita. Não tem de operar. Não apostar é muitas vezes a melhor jogada." }
+            },
+            { 
+                id: 29, 
+                it: { topic: "ENTRATA", phrase: "PUNTO DI INGRESSO", lesson: "🎯 <b>IL CECCHINO</b>. Non entrare a caso. Definisci prima a quale quota e a quale minuto esatto premere il grilletto." },
+                en: { topic: "ENTRY", phrase: "ENTRY POINT", lesson: "🎯 <b>THE SNIPER</b>. Don't enter blindly. Define beforehand at what exact odds and minute you pull the trigger." },
+                es: { topic: "ENTRADA", phrase: "PUNTO DE ENTRADA", lesson: "🎯 <b>EL FRANCOTIRADOR</b>. No entres a ciegas. Define antes a qué cuota y minuto exacto apretar el gatillo." },
+                pt: { topic: "ENTRADA", phrase: "PONTO DE ENTRADA", lesson: "🎯 <b>O FRANCO ATIRADOR</b>. Não entre às cegas. Defina antes a que cota e minuto exato apertar o gatilho." }
+            },
+            { 
+                id: 30, 
+                it: { topic: "L'OBIETTIVO", phrase: "PROFITTO A LUNGO TERMINE", lesson: "🏆 <b>LA MARATONA</b>. Non si diventa ricchi in un giorno. Focus sulla costanza. Ora sei un Maestro dell'Exchange!" },
+                en: { topic: "THE GOAL", phrase: "LONG TERM PROFIT", lesson: "🏆 <b>THE MARATHON</b>. You don't get rich in a day. Focus on consistency. You are now an Exchange Master!" },
+                es: { topic: "EL OBJETIVO", phrase: "BENEFICIO A LARGO PLAZO", lesson: "🏆 <b>LA MARATÓN</b>. No te haces rico en un día. Céntrate en la constancia. ¡Ya eres un Maestro del Exchange!" },
+                pt: { topic: "O OBJETIVO", phrase: "LUCRO A LONGO PRAZO", lesson: "🏆 <b>A MARATONA</b>. Não se fica rico num dia. Foco na consistência. Agora é um Mestre da Exchange!" }
             }
         ];
 
         const uiTranslations = {
-            en: { title: "BETTING EXCHANGE ROOM", tagline: "Zero to Hero Course!", players1: "1 Player", players2: "2 Players", selectLesson: "Select Topic", startGame: "Start Course", spinWheel: "Spin the wheel", buyVowel: "Buy Vowel (250)", solve: "Solve", turnPrefix: "Turn for player ", turnSuffix: "", bankrupt: "BANKRUPT!", loseTurn: "MISS TURN", consonantPrompt: "Consonant @ Odds:", vowelPrompt: "Choose Vowel", solvePrompt: "Solution:", submit: "Send", cancel: "Cancel", correct: "Correct!", wrong: "Not found!", concept: "Lesson:", nextRound: "Next Lesson", gameOver: "Graduated!", winner: "Top Trader", playAgain: "Restart", day: "", wheelValues: { BANKRUPT: "BANKRUPT", LOSE_TURN: "LOSE TURN" } },
-            it: { title: "BETTING EXCHANGE ROOM", tagline: "Corso Zero to Hero!", players1: "1 Giocatore", players2: "2 Giocatori", selectLesson: "Scegli Argomento", startGame: "Inizia Corso", spinWheel: "Gira la ruota", buyVowel: "Compro Vocale (250)", solve: "Risolvi", turnPrefix: "Tocca al giocatore ", turnSuffix: "", bankrupt: "BANCAROTTA!", loseTurn: "SALTA TURNO", consonantPrompt: "Consonante a Quota:", vowelPrompt: "Scegli Vocale", solvePrompt: "Soluzione:", submit: "Invia", cancel: "Annulla", correct: "Esatto!", wrong: "Non c'è!", concept: "Lezione:", nextRound: "Prossima Lezione", gameOver: "Diplomato!", winner: "Top Trader", playAgain: "Ricomincia", day: "", wheelValues: { BANKRUPT: "BANCAROTTA", LOSE_TURN: "SALTA TURNO" } },
-            es: { title: "BETTING EXCHANGE ROOM", tagline: "¡Curso Zero to Hero!", players1: "1 Jugador", players2: "2 Jugadores", selectLesson: "Elige Tema", startGame: "Iniciar Curso", spinWheel: "Gira la rueda", buyVowel: "Comprar Vocal (250)", solve: "Resolver", turnPrefix: "Turno del jugador ", turnSuffix: "", bankrupt: "¡BANCARROTA!", loseTurn: "¡PIERDE TURNO!", consonantPrompt: "Consonante a Cuota:", vowelPrompt: "Elegir Vocal", solvePrompt: "Solución:", submit: "Enviar", cancel: "Cancelar", correct: "¡Correcto!", wrong: "¡No está!", concept: "Lección:", nextRound: "Siguiente Tema", gameOver: "¡Graduado!", winner: "Top Trader", playAgain: "Reiniciar", day: "", wheelValues: { BANKRUPT: "BANCARROTA", LOSE_TURN: "PIERDE TURNO" } },
-            pt: { title: "BETTING EXCHANGE ROOM", tagline: "Curso Zero to Hero!", players1: "1 Jogador", players2: "2 Jogadores", selectLesson: "Escolha Tema", startGame: "Iniciar Curso", spinWheel: "Gira a roda", buyVowel: "Comprar Vogal (250)", solve: "Resolver", turnPrefix: "Vez do jogador ", turnSuffix: "", bankrupt: "FALÊNCIA!", loseTurn: "PASSA A VEZ!", consonantPrompt: "Consoante @ Cota:", vowelPrompt: "Escolha Vogal", solvePrompt: "Solução:", submit: "Enviar", cancel: "Cancelar", correct: "Correto!", wrong: "Não está!", concept: "Lição:", nextRound: "Próxima Lição", gameOver: "Diplomado!", winner: "Top Trader", playAgain: "Reiniciar", day: "", wheelValues: { BANKRUPT: "FALÊNCIA", LOSE_TURN: "PASSA A VEZ" } }
+            en: { title: "BETTING EXCHANGE ROOM", tagline: "Zero to Hero Course!", players1: "1 Player", players2: "2 Players", selectLesson: "Select Topic", startGame: "Start Course", spinWheel: "Spin the wheel", buyVowel: "Buy Vowel (250)", solve: "I'LL SOLVE", turnPrefix: "Turn for player ", turnSuffix: "", bankrupt: "BANKRUPT!", loseTurn: "MISS TURN", consonantPrompt: "Consonant @ Odds:", vowelPrompt: "Choose Vowel", solvePrompt: "Solution:", submit: "Send", cancel: "Cancel", correct: "Correct!", wrong: "Not found!", concept: "Lesson:", nextRound: "Next Lesson", gameOver: "Graduated!", winner: "Top Trader", playAgain: "Restart", day: "", wheelValues: { BANKRUPT: "BANKRUPT", LOSE_TURN: "LOSE TURN" } },
+            it: { title: "BETTING EXCHANGE ROOM", tagline: "Corso Zero to Hero!", players1: "1 Giocatore", players2: "2 Giocatori", selectLesson: "Scegli Argomento", startGame: "Inizia Corso", spinWheel: "Gira la ruota", buyVowel: "Compro Vocale (250)", solve: "DO LA SOLUZIONE", turnPrefix: "Tocca al giocatore ", turnSuffix: "", bankrupt: "BANCAROTTA!", loseTurn: "SALTA TURNO", consonantPrompt: "Consonante a Quota:", vowelPrompt: "Scegli Vocale", solvePrompt: "Soluzione:", submit: "Invia", cancel: "Annulla", correct: "Esatto!", wrong: "Non c'è!", concept: "Lezione:", nextRound: "Prossima Lezione", gameOver: "Diplomato!", winner: "Top Trader", playAgain: "Ricomincia", day: "", wheelValues: { BANKRUPT: "BANCAROTTA", LOSE_TURN: "SALTA TURNO" } },
+            es: { title: "BETTING EXCHANGE ROOM", tagline: "¡Curso Zero to Hero!", players1: "1 Jugador", players2: "2 Jugadores", selectLesson: "Elige Tema", startGame: "Iniciar Curso", spinWheel: "Gira la rueda", buyVowel: "Comprar Vocal (250)", solve: "DOY LA SOLUCIÓN", turnPrefix: "Turno del jugador ", turnSuffix: "", bankrupt: "¡BANCARROTA!", loseTurn: "¡PIERDE TURNO!", consonantPrompt: "Consonante a Cuota:", vowelPrompt: "Elegir Vocal", solvePrompt: "Solución:", submit: "Enviar", cancel: "Cancelar", correct: "¡Correcto!", wrong: "¡No está!", concept: "Lección:", nextRound: "Siguiente Tema", gameOver: "¡Graduado!", winner: "Top Trader", playAgain: "Reiniciar", day: "", wheelValues: { BANKRUPT: "BANCARROTA", LOSE_TURN: "PIERDE TURNO" } },
+            pt: { title: "BETTING EXCHANGE ROOM", tagline: "Curso Zero to Hero!", players1: "1 Jogador", players2: "2 Jogadores", selectLesson: "Escolha Tema", startGame: "Iniciar Curso", spinWheel: "Gira a roda", buyVowel: "Comprar Vogal (250)", solve: "DOU A SOLUÇÃO", turnPrefix: "Vez do jogador ", turnSuffix: "", bankrupt: "FALÊNCIA!", loseTurn: "PASSA A VEZ!", consonantPrompt: "Consoante @ Cota:", vowelPrompt: "Escolha Vogal", solvePrompt: "Solução:", submit: "Enviar", cancel: "Cancelar", correct: "Correto!", wrong: "Não está!", concept: "Lição:", nextRound: "Próxima Lição", gameOver: "Diplomado!", winner: "Top Trader", playAgain: "Reiniciar", day: "", wheelValues: { BANKRUPT: "FALÊNCIA", LOSE_TURN: "PASSA A VEZ" } }
         };
 
         const WHEEL_SEGMENTS = [
@@ -416,7 +514,8 @@
             };
 
             const handleSolveSubmit = () => {
-                if (solveInput.toUpperCase() === phraseData.phrase.toUpperCase()) {
+                // Rimuove gli spazi prima di confrontare per facilitare l'utente o confronta per intero (senza case)
+                if (solveInput.trim().toUpperCase() === phraseData.phrase.toUpperCase()) {
                     setGuessedLetters('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''));
                     showTemporaryModal(ui.correct, 'success');
                     setTimeout(() => setGameState('SOLVED'), 1500);
@@ -547,7 +646,14 @@
                                                     {turnPhase==='WAITING_VOWEL' && <div className="text-sm font-black text-[#2E9DDF] uppercase animate-fade-in-up drop-shadow-md bg-black/50 px-3 py-1 rounded-full">{ui.vowelPrompt}</div>}
                                                     {turnPhase==='SOLVING' && (
                                                         <div className="w-full animate-fade-in-up flex flex-col gap-1.5">
-                                                            <input type="text" value={solveInput} onChange={e=>setSolveInput(e.target.value)} placeholder={ui.solvePrompt} className="w-full p-1.5 rounded-lg bg-white/5 border border-white/20 text-white text-center font-black uppercase outline-none focus:border-[#FFB805] text-xs" />
+                                                            <input 
+                                                                type="text" 
+                                                                autoFocus
+                                                                value={solveInput} 
+                                                                onChange={e=>setSolveInput(e.target.value)} 
+                                                                placeholder={ui.solvePrompt} 
+                                                                className="w-full p-1.5 rounded-lg bg-white/5 border border-white/20 text-white text-center font-black uppercase outline-none focus:border-[#FFB805] text-xs" 
+                                                            />
                                                             <div className="flex gap-2">
                                                                 <button onClick={()=>setTurnPhase('IDLE')} className="flex-1 py-1 bg-red-500/20 text-red-400 rounded-lg font-bold text-[8px]">{ui.cancel}</button>
                                                                 <button onClick={handleSolveSubmit} className="flex-1 py-1 bg-[#00D166] text-black rounded-lg font-bold text-[8px]">{ui.submit}</button>
