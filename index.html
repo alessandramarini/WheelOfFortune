@@ -245,24 +245,54 @@
                 if (audioCtxRef.current?.state === 'suspended') audioCtxRef.current.resume();
             };
 
-            const playTone = (freq, type, duration, vol=0.1) => {
+            const playTone = (freq, type, duration, vol=0.1, startTimeOffset=0, endFreq=null) => {
                 if (!audioCtxRef.current || audioCtxRef.current.state !== 'running') return;
                 try {
-                    const osc = audioCtxRef.current.createOscillator();
-                    const gain = audioCtxRef.current.createGain();
+                    const ctx = audioCtxRef.current;
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    const startTime = ctx.currentTime + startTimeOffset;
+                    
                     osc.type = type;
-                    osc.frequency.setValueAtTime(freq, audioCtxRef.current.currentTime);
-                    gain.gain.setValueAtTime(vol, audioCtxRef.current.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtxRef.current.currentTime + duration);
-                    osc.connect(gain); gain.connect(audioCtxRef.current.destination);
-                    osc.start(); osc.stop(audioCtxRef.current.currentTime + duration);
+                    osc.frequency.setValueAtTime(freq, startTime);
+                    if (endFreq) {
+                        osc.frequency.exponentialRampToValueAtTime(endFreq, startTime + duration);
+                    }
+                    
+                    // Inviluppo sonoro morbido (Attack, Decay) per suoni eleganti e non tagliati
+                    gain.gain.setValueAtTime(0, startTime);
+                    gain.gain.linearRampToValueAtTime(vol, startTime + duration * 0.1);
+                    gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+                    
+                    osc.connect(gain); gain.connect(ctx.destination);
+                    osc.start(startTime); 
+                    osc.stop(startTime + duration);
                 } catch(e) {}
             };
 
-            const playTick = () => playTone(300, 'triangle', 0.05, 0.15);
-            const playCorrect = () => { playTone(600, 'sine', 0.1); setTimeout(()=>playTone(800, 'sine', 0.15), 100); };
-            const playWrong = () => playTone(200, 'sawtooth', 0.3);
-            const playWin = () => { playTone(400, 'square', 0.1); setTimeout(()=>playTone(500, 'square', 0.1), 100); setTimeout(()=>playTone(600, 'square', 0.3), 200); };
+            // Suoni stile Cyborg UI / Sci-Fi
+            const playTick = () => playTone(800, 'sine', 0.05, 0.05, 0, 200); // Click olografico veloce
+            
+            const playCorrect = () => { 
+                // Accordo ascendente cristallino
+                playTone(523.25, 'sine', 0.2, 0.08, 0); 
+                playTone(659.25, 'sine', 0.3, 0.08, 0.08); 
+                playTone(1046.50, 'sine', 0.4, 0.05, 0.15); 
+            };
+            
+            const playWrong = () => {
+                // Sfumatura "power-down" dolce, niente ronzii fastidiosi
+                playTone(250, 'triangle', 0.4, 0.1, 0, 150); 
+            };
+            
+            const playWin = () => { 
+                // Arpeggio C Major 9 stile "AI sbloccata" e accordo finale lungo
+                const notes = [523.25, 659.25, 783.99, 987.77, 1174.66];
+                notes.forEach((freq, i) => playTone(freq, 'sine', 0.3, 0.08, i * 0.08));
+                playTone(523.25, 'sine', 0.8, 0.08, 0.4);
+                playTone(783.99, 'sine', 0.8, 0.08, 0.4);
+                playTone(1046.50, 'sine', 0.8, 0.08, 0.4);
+            };
 
             const startGame = () => {
                 initAudio();
@@ -513,17 +543,6 @@
                                     </div>
 
                                     <div className="w-full bg-black/60 p-2 sm:p-3 rounded-2xl border border-white/10 text-center relative overflow-hidden shadow-xl min-h-[90px] flex flex-col justify-center">
-                                        
-                                        {turnPhase === 'SOLVING' && (
-                                            <div className="absolute inset-0 z-20 bg-black/95 rounded-2xl flex flex-col items-center justify-center p-3 backdrop-blur-md animate-pop-in border border-[#00D166]/30">
-                                                <div className="text-[#00D166] font-black mb-1 uppercase text-[10px] tracking-widest">{ui.solvePrompt}</div>
-                                                <input type="text" autoFocus value={solveInput} onChange={e=>setSolveInput(e.target.value)} className="w-full p-2 rounded-xl bg-white/5 border border-white/20 text-white text-center font-black uppercase outline-none focus:border-[#00D166] text-sm sm:text-lg mb-2 shadow-inner" />
-                                                <div className="flex gap-2 w-full">
-                                                    <button onClick={()=>setTurnPhase('IDLE')} className="flex-1 py-1.5 bg-red-900/40 text-red-400 rounded-xl font-bold uppercase text-[10px] border border-red-500/20">{ui.cancel}</button>
-                                                    <button onClick={handleSolveSubmit} className="flex-1 py-1.5 bg-[#00D166] text-black rounded-xl font-bold uppercase text-[10px] shadow-[0_2px_0_#00994d] active:translate-y-1 active:shadow-none">{ui.submit}</button>
-                                                </div>
-                                            </div>
-                                        )}
 
                                         {turnPhase === 'IDLE' ? (
                                             <div className="flex flex-col gap-2 animate-fade-in-up items-center w-full">
@@ -559,6 +578,7 @@
                                                     </div>
                                                 )}
                                                 {turnPhase==='WAITING_VOWEL' && <div className="text-[10px] font-black text-[#2E9DDF] uppercase animate-fade-in-up">{ui.vowelPrompt}</div>}
+                                                {turnPhase==='SOLVING' && <div className="text-[10px] font-black text-[#00D166] animate-pulse uppercase tracking-widest">{ui.solvePrompt}</div>}
                                             </div>
                                         )}
                                         
@@ -625,6 +645,28 @@
                                                 </div>
                                             ))}
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {turnPhase === 'SOLVING' && (
+                            <div className="fixed inset-0 z-[9999] bg-black/95 flex flex-col items-center justify-center p-4 backdrop-blur-md animate-pop-in">
+                                <div className="w-full max-w-lg bg-gradient-to-b from-[#0F2027] to-black border border-[#00D166]/50 rounded-3xl p-6 sm:p-8 shadow-[0_0_40px_rgba(0,209,102,0.2)] flex flex-col items-center">
+                                    <Icon name="Lightbulb" size={40} className="text-[#00D166] mb-4 drop-shadow-[0_0_15px_rgba(0,209,102,0.6)]" />
+                                    <h2 className="text-[#00D166] font-black text-lg sm:text-2xl mb-6 tracking-[0.1em] uppercase text-center">{ui.solvePrompt}</h2>
+                                    <input 
+                                        type="text" 
+                                        autoFocus 
+                                        value={solveInput} 
+                                        onChange={e=>setSolveInput(e.target.value)} 
+                                        onKeyDown={e => e.key === 'Enter' && handleSolveSubmit()}
+                                        className="w-full p-4 rounded-2xl bg-white/5 border-2 border-white/20 text-white text-center font-black uppercase outline-none focus:border-[#00D166] text-xl sm:text-3xl mb-8 shadow-inner transition-colors" 
+                                        placeholder="..."
+                                    />
+                                    <div className="flex gap-4 w-full">
+                                        <button onClick={()=>setTurnPhase('IDLE')} className="flex-1 py-4 bg-red-900/40 text-red-400 rounded-2xl font-black uppercase text-sm sm:text-base border border-red-500/20 active:scale-95 transition-transform">{ui.cancel}</button>
+                                        <button onClick={handleSolveSubmit} className="flex-1 py-4 bg-[#00D166] text-black rounded-2xl font-black uppercase text-sm sm:text-base shadow-[0_4px_0_#00994d] active:translate-y-1 active:shadow-none transition-all">{ui.submit}</button>
                                     </div>
                                 </div>
                             </div>
