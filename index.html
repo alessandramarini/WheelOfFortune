@@ -189,7 +189,7 @@
             { id: 26, it: { topic: "ANALISI TECNICA", phrase: "LETTURA DEL GRAFICO", lesson: "📊 <b>I RAGGI X</b>. Guarda i grafici storici della quota: i pattern si ripetono. Studia il passato per prevedere il futuro." }, en: { topic: "TECHNICAL ANALYSIS", phrase: "READING THE CHARTS", lesson: "📊 <b>THE X-RAY</b>. Look at historical odds charts: patterns repeat. Study the past to predict the future." }, es: { topic: "ANÁLISIS TÉCNICO", phrase: "LECTURA DE GRAFICOS", lesson: "📊 <b>LOS RAYOS X</b>. Mira los gráficos históricos de cuotas: los patrones se repiten. Estudia el pasado." }, pt: { topic: "ANÁLISE TÉCNICA", phrase: "LEITURA DE GRAFICOS", lesson: "📊 <b>O RAIO X</b>. Veja os gráficos históricos de cotas: os padrões repetem-se. Estude o passado." } },
             { id: 27, it: { topic: "PSICOLOGIA", phrase: "MENTE DEL TRADER", lesson: "🧠 <b>IL VERO CAMPO DA GIOCO</b>. Il 90% del successo è mentale. Zero emotività, sei un automa che esegue un piano." }, en: { topic: "PSYCHOLOGY", phrase: "TRADER MINDSET", lesson: "🧠 <b>THE REAL BATTLEFIELD</b>. 90% of success is mental. Zero emotion, you are a machine executing a plan." }, es: { topic: "PSICOLOGÍA", phrase: "MENTALIDAD DE TRADER", lesson: "🧠 <b>EL VERDADERO CAMPO</b>. El 90% del éxito es mental. Cero emoción, eres una máquina ejecutando un plan." }, pt: { topic: "PSICOLOGIA", phrase: "MENTALIDADE DO TRADER", lesson: "🧠 <b>O VERDADEIRO CAMPO</b>. 90% do sucesso é mental. Zero emoção, você é uma máquina a executar um plano." } },
             { id: 28, it: { topic: "IL SEGRETO", phrase: "DISCIPLINA E PAZIENZA", lesson: "🧘 <b>L'ARMA FINALE</b>. Aspetta l'occasione perfetta. Non devi operare per forza. Nessuna scommessa è spesso la mossa migliore." }, en: { topic: "THE SECRET", phrase: "DISCIPLINE AND PATIENCE", lesson: "🧘 <b>THE ULTIMATE WEAPON</b>. Wait for the perfect setup. You don't have to trade. No bet is often the best bet." }, es: { topic: "EL SECRETO", phrase: "DISCIPLINA Y PACIENCIA", lesson: "🧘 <b>EL ARMA FINAL</b>. Espera la ocasión perfecta. No tienes que operar. No apostar a veces es la mejor jugada." }, pt: { topic: "O SEGREDO", phrase: "DISCIPLINA E PACIENCIA", lesson: "🧘 <b>A ARMA FINAL</b>. Espere a oportunidade perfeita. Não tem de operar. Não apostar é muitas vezes a melhor jogada." } },
-            { id: 29, it: { topic: "ENTRATA", phrase: "PUNTO DI INGRESSO", lesson: "🎯 <b>IL CECCHINO</b>. Non entrare a caso. Definisci prima a quale quota e a quale minuto esatto premere il grilletto." }, en: { topic: "ENTRY", phrase: "ENTRY POINT", lesson: "🎯 <b>THE SNIPER</b>. Don't enter blindly. Define beforehand at what exact odds and minute you pull the trigger." }, es: { topic: "ENTRADA", phrase: "PUNTO DE ENTRADA", lesson: "🎯 <b>EL FRANCOTIRADOR</b>. No entres a ciegas. Define antes a qué cuota y minuto exacto apretar el gatillo." }, pt: { topic: "ENTRADA", phrase: "PONTO DE ENTRADA", lesson: "🎯 <b>O FRANCO ATIRADOR</b>. Não entre às cegas. Defina antes a que cota e minuto exato apertar o gatilho." } },
+            { id: 29, it: { topic: "ENTRATA", phrase: "PUNTO DI INGRESSO", lesson: "🎯 <b>IL CECCHINO</b>. Non entrare a caso. Definisci prima a quale quota e a quale minuto esatto premere il grilletto." }, en: { topic: "ENTRY", phrase: "ENTRY POINT", lesson: "🎯 <b>THE SNIPER</b>. Don't enter blindly. Define beforehand at what exact odds and minute you pull the trigger." }, es: { topic: "ENTRADA", phrase: "PUNTO DE ENTRADA", lesson: "🎯 <b>EL FRANCOTIRADOR</b>. No entres a ciegas. Define antes a qué cuota y minuto exacto apretar el gatillo." }, pt: { topic: "ENTRADA", phrase: "PONTO DE ENTRADA", lesson: "🎯 <b>O FRANCO ATIRADOR</b>. Não entre às cegas. Defina antes a que cota e minuto exato apertar o gatillo." } },
             { id: 30, it: { topic: "L'OBIETTIVO", phrase: "PROFITTO A LUNGO TERMINE", lesson: "🏆 <b>LA MARATONA</b>. Non si diventa ricchi in un giorno. Focus sulla costanza. Ora sei un Maestro dell'Exchange!" }, en: { topic: "THE GOAL", phrase: "LONG TERM PROFIT", lesson: "🏆 <b>THE MARATHON</b>. You don't get rich in a day. Focus on consistency. You are now an Exchange Master!" }, es: { topic: "EL OBJETIVO", phrase: "BENEFICIO A LARGO PLAZO", lesson: "🏆 <b>LA MARATÓN</b>. No te haces rico en un día. Céntrate en la constancia. ¡Ya eres un Maestro del Exchange!" }, pt: { topic: "O OBJETIVO", phrase: "LUCRO A LONGO PRAZO", lesson: "🏆 <b>A MARATONA</b>. Não se fica rico num dia. Foco na consistência. Agora é um Mestre da Exchange!" } }
         ];
 
@@ -504,12 +504,17 @@
             const getCurrentRank = (index) => RANKS.find(r => index < r.max) || RANKS[RANKS.length - 1];
             const currentRank = getCurrentRank(currentRoundIndex);
 
+            // Compute available vowels
+            const isVowel = char => ['A','E','I','O','U'].includes(char);
+            const unrevealedVowels = phraseData?.phrase.split('').filter(c => isVowel(c) && !guessedLetters.includes(c));
+            const hasVowelsLeft = unrevealedVowels && unrevealedVowels.length > 0;
+
             return (
                 <div className="viewport-container bg-transparent text-white">
                     {/* HEADER */}
-                    <header className="px-2 sm:px-4 py-2 flex justify-between items-center border-b border-white/10 bg-[#111827]/80 backdrop-blur-md sticky top-0 z-50 h-[55px] sm:h-[70px]">
+                    <header className="px-2 sm:px-4 py-2 flex justify-between items-center border-b border-white/10 bg-[#111827]/80 backdrop-blur-md sticky top-0 z-50 h-[55px] sm:h-[70px] shrink-0">
                         <div className="flex items-center gap-2">
-                            <img src="logo-tondo.jpeg" className="w-7 h-7 sm:w-10 sm:h-10 rounded-full object-cover shadow-lg" />
+                            <img src="logo-tondo.jpeg" className="w-7 h-7 sm:w-10 sm:h-10 rounded-full object-cover shadow-lg" alt="Logo" />
                             <div className="flex flex-col">
                                 <span className="text-[#00D166] font-black text-[9px] sm:text-sm tracking-widest uppercase">BETTING EXCHANGE ROOM</span>
                                 <span className="text-white/60 font-bold text-[8px] sm:text-[10px] tracking-widest hidden sm:block">{ui.title}</span>
@@ -538,169 +543,181 @@
                         )}
                     </header>
 
-                    <main className="flex-1 overflow-y-auto overflow-x-hidden flex flex-col items-center relative">
+                    <main className="flex-1 flex flex-col relative w-full overflow-hidden">
                         {gameState === 'SETUP' && (
-                            <div className="flex flex-col items-center justify-center w-full max-w-md p-6 sm:p-8 rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 animate-pop-in mx-auto relative overflow-hidden my-auto max-h-[90vh] mt-8">
-                                <div className="absolute top-[-50px] left-[-50px] w-48 h-48 bg-[#00D166]/20 rounded-full blur-[80px]"></div>
-                                <div className="absolute bottom-[-50px] right-[-50px] w-48 h-48 bg-[#2E9DDF]/20 rounded-full blur-[80px]"></div>
-                                
-                                <h1 className="text-3xl sm:text-5xl font-black text-[#00D166] text-center mb-6 tracking-tighter italic">ZERO TO HERO ACADEMY</h1>
-                                
-                                <div className="flex gap-4 mb-8">
-                                    {Object.keys(flagImages).map(l => (
-                                        <button key={l} onClick={()=>setLang(l)} className={`w-12 h-12 rounded-full overflow-hidden border-2 transition-all ${lang===l?'border-[#00D166] scale-110 shadow-lg':'opacity-40 border-transparent hover:opacity-100'}`}>
-                                            <img src={flagImages[l]} className="w-full h-full object-cover"/>
-                                        </button>
-                                    ))}
-                                </div>
-                                <div className="flex gap-3 w-full mb-6">
-                                    <button onClick={()=>setNumPlayers(1)} className={`flex-1 p-3 rounded-2xl flex flex-col items-center gap-2 text-xs transition-colors ${numPlayers===1?'bg-blue-600 font-black text-white':'bg-white/5 border border-white/10 font-bold opacity-70 hover:bg-white/10'}`}><Icon name="User" size={20}/>{ui.players1}</button>
-                                    <button onClick={()=>setNumPlayers(2)} className={`flex-1 p-3 rounded-2xl flex flex-col items-center gap-2 text-xs transition-colors ${numPlayers===2?'bg-blue-600 font-black text-white':'bg-white/5 border border-white/10 font-bold opacity-70 hover:bg-white/10'}`}><Icon name="Users" size={20}/>{ui.players2}</button>
-                                </div>
-                                <div className="w-full mb-8 text-center bg-black/30 p-4 rounded-2xl border border-white/5">
-                                    <label className="block text-[10px] uppercase font-black mb-2 tracking-widest text-[#FFB805]">{ui.selectLesson}</label>
-                                    <div className="relative">
-                                        <select value={startTopicIndex} onChange={e=>setStartTopicIndex(Number(e.target.value))} className="w-full p-3 pr-10 rounded-xl bg-black/80 border border-white/20 text-white font-black outline-none appearance-none cursor-pointer text-xs uppercase text-center focus:border-[#00D166] transition-colors">
-                                            {phrasesDictionary.map((p,i)=><option key={i} value={i}>{i+1}. {p[lang].topic}</option>)}
-                                        </select>
-                                        <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none opacity-50"><Icon name="ChevronDown" size={16}/></div>
+                            <div className="flex-1 overflow-y-auto flex items-center justify-center p-4">
+                                <div className="flex flex-col items-center justify-center w-full max-w-md p-6 sm:p-8 rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 animate-pop-in relative overflow-hidden">
+                                    <div className="absolute top-[-50px] left-[-50px] w-48 h-48 bg-[#00D166]/20 rounded-full blur-[80px]"></div>
+                                    <div className="absolute bottom-[-50px] right-[-50px] w-48 h-48 bg-[#2E9DDF]/20 rounded-full blur-[80px]"></div>
+                                    
+                                    <h1 className="text-3xl sm:text-5xl font-black text-[#00D166] text-center mb-6 tracking-tighter italic">ZERO TO HERO ACADEMY</h1>
+                                    
+                                    <div className="flex gap-4 mb-8">
+                                        {Object.keys(flagImages).map(l => (
+                                            <button key={l} onClick={()=>setLang(l)} className={`w-12 h-12 rounded-full overflow-hidden border-2 transition-all ${lang===l?'border-[#00D166] scale-110 shadow-lg':'opacity-40 border-transparent hover:opacity-100'}`}>
+                                                <img src={flagImages[l]} className="w-full h-full object-cover" alt="Flag"/>
+                                            </button>
+                                        ))}
                                     </div>
-                                </div>
+                                    <div className="flex gap-3 w-full mb-6">
+                                        <button onClick={()=>setNumPlayers(1)} className={`flex-1 p-3 rounded-2xl flex flex-col items-center gap-2 text-xs transition-colors ${numPlayers===1?'bg-blue-600 font-black text-white':'bg-white/5 border border-white/10 font-bold opacity-70 hover:bg-white/10'}`}><Icon name="User" size={20}/>{ui.players1}</button>
+                                        <button onClick={()=>setNumPlayers(2)} className={`flex-1 p-3 rounded-2xl flex flex-col items-center gap-2 text-xs transition-colors ${numPlayers===2?'bg-blue-600 font-black text-white':'bg-white/5 border border-white/10 font-bold opacity-70 hover:bg-white/10'}`}><Icon name="Users" size={20}/>{ui.players2}</button>
+                                    </div>
+                                    <div className="w-full mb-8 text-center bg-black/30 p-4 rounded-2xl border border-white/5">
+                                        <label className="block text-[10px] uppercase font-black mb-2 tracking-widest text-[#FFB805]">{ui.selectLesson}</label>
+                                        <div className="relative">
+                                            <select value={startTopicIndex} onChange={e=>setStartTopicIndex(Number(e.target.value))} className="w-full p-3 pr-10 rounded-xl bg-black/80 border border-white/20 text-white font-black outline-none appearance-none cursor-pointer text-xs uppercase text-center focus:border-[#00D166] transition-colors">
+                                                {phrasesDictionary.map((p,i)=><option key={i} value={i}>{i+1}. {p[lang].topic}</option>)}
+                                            </select>
+                                            <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none opacity-50"><Icon name="ChevronDown" size={16}/></div>
+                                        </div>
+                                    </div>
 
-                                <button onClick={startGame} className="w-full py-4 rounded-2xl bg-red-600 hover:bg-red-500 text-white font-black text-sm sm:text-base flex items-center justify-center gap-2 active:scale-95 transition-all uppercase">
-                                    <Icon name="Play" size={20} className="fill-current"/>
-                                    {ui.startGame}
-                                </button>
+                                    <button onClick={startGame} className="w-full py-4 rounded-2xl bg-red-600 hover:bg-red-500 text-white font-black text-sm sm:text-base flex items-center justify-center gap-2 active:scale-95 transition-all uppercase">
+                                        <Icon name="Play" size={20} className="fill-current"/>
+                                        {ui.startGame}
+                                    </button>
+                                </div>
                             </div>
                         )}
 
                         {gameState === 'PLAYING' && (
-                            <div className="w-full flex flex-col lg:flex-row gap-2 lg:gap-6 p-1 sm:p-4 max-w-7xl mx-auto flex-1 lg:h-full lg:overflow-hidden">
+                            <div className="w-full flex flex-col p-2 max-w-7xl mx-auto flex-1 h-full overflow-hidden relative">
                                 
-                                {/* COLONNA SINISTRA */}
-                                <div className="lg:w-1/3 flex flex-col items-center justify-center gap-2 lg:h-full relative shrink-0">
-                                    <div className="relative w-full max-w-[150px] sm:max-w-[280px] lg:max-w-[340px] aspect-square drop-shadow-2xl z-10">
-                                        <svg viewBox="0 0 400 400" className="w-full h-full overflow-visible">
-                                            <circle cx="200" cy="200" r="195" fill="#000" stroke="#374151" strokeWidth="8" />
-                                            <g ref={wheelRef} style={{ transformOrigin: '200px 200px', willChange: 'transform' }}>
-                                                {WHEEL_SEGMENTS.map((s, i)=>{
-                                                    const rot = i * (360/WHEEL_SEGMENTS.length) - 90;
-                                                    const label = s.type==='value'?s.val:(ui.wheelValues[s.type]||s.type);
-                                                    const isVal = s.type==='value';
-                                                    const textStroke = s.textColor === '#FFFFFF' ? '#000' : '#fff';
-                                                    const textStrokeWidth = isVal ? '1.5' : '0.5';
-                                                    return (
-                                                        <g key={i} transform={`rotate(${rot}, 200, 200)`}>
-                                                            <path d="M 200 200 L 383.5 150.8 A 190 190 0 0 1 383.5 249.2 Z" fill={s.color} stroke="rgba(0,0,0,0.3)" strokeWidth="1"/>
-                                                            <text x={label.length>9?'378':'365'} y="200" textAnchor="end" dominantBaseline="central" fill={s.textColor} fontSize={isVal?'34': (label.length > 9 ? '12' : '16')} fontWeight="900" stroke={textStroke} strokeWidth={textStrokeWidth} paintOrder="stroke fill" letterSpacing={isVal?"0":"1"}>{label}</text>
-                                                            <circle cx="373.8" cy="246.5" r="4" fill="#d1d5db" stroke="#111827" strokeWidth="1"/>
-                                                        </g>
-                                                    )
-                                                })}
-                                                <circle cx="200" cy="200" r="32" fill="#FFB805" stroke="#111827" strokeWidth="3" />
-                                                <image href="logo-tondo.jpeg" x="172" y="172" width="56" height="56" clipPath="circle(28px at 28px 28px)" />
-                                            </g>
-                                            <g style={{ transformOrigin: '200px 10px' }}>
-                                                <path d="M 185 -5 L 215 -5 L 200 35 Z" fill="#EF4444" stroke="#7F1D1D" strokeWidth="2" filter="drop-shadow(0 4px 3px rgb(0 0 0 / 0.5))"/>
-                                            </g>
-                                        </svg>
+                                {/* --- 1. TABELLONE (ALTO) --- */}
+                                <div className="w-full flex flex-col items-center shrink-0 mb-2">
+                                    <div className="bg-black/40 px-3 py-1 sm:px-6 sm:py-2 rounded-full border border-white/10 mb-2 flex justify-center backdrop-blur-md">
+                                        <span className="text-[#FFB805] font-black text-[10px] sm:text-sm uppercase tracking-widest text-center">{phraseData.topic}</span>
                                     </div>
 
-                                    <div className="w-full bg-black/40 p-2 sm:p-3 rounded-2xl border border-white/10 text-center relative overflow-hidden shadow-lg min-h-[90px] flex flex-col justify-center backdrop-blur-md">
-
-                                        {turnPhase === 'IDLE' ? (
-                                            <div className="flex flex-col gap-2 animate-fade-in-up items-center w-full">
-                                                <div className="flex items-center justify-between w-full px-1">
-                                                    <h3 className="font-black text-[#FFB805] uppercase tracking-widest text-[9px] sm:text-[10px] flex items-center gap-1 bg-black/40 px-2 py-1 rounded-full border border-white/5">
-                                                        <Icon name="User" size={12}/> {ui.turnPrefix}{currentPlayer+1}
-                                                    </h3>
-                                                    <button onClick={()=>setTurnPhase('SOLVING')} className="px-3 py-1 bg-[#00D166] hover:bg-green-400 rounded-full font-black text-[9px] sm:text-[10px] text-black active:scale-95 transition-all tracking-widest uppercase">
-                                                        {ui.solve}
-                                                    </button>
+                                    {/* Tabellone con Responsive Scaling Garantito per Non Tagliarsi Mai */}
+                                    <div className="w-full p-2 sm:p-4 rounded-2xl border border-white/10 bg-black/30 flex flex-col items-center shadow-lg justify-center backdrop-blur-md min-h-[70px] sm:min-h-[100px]">
+                                        <div className="flex flex-wrap justify-center gap-y-1.5 sm:gap-y-3 gap-x-2 sm:gap-x-6 w-full">
+                                            {phraseData.phrase.split(' ').map((w, wi)=>(
+                                                <div key={wi} className="flex flex-wrap gap-0.5 sm:gap-1.5 justify-center">
+                                                    {w.split('').map((c, ci)=>(
+                                                        <div key={ci} style={{perspective: '1000px'}} className="w-[clamp(14px,4vw,36px)] h-[clamp(20px,5.5vw,50px)] relative shrink-0">
+                                                            <div className={`w-full h-full flex items-center justify-center text-[clamp(10px,2.5vw,22px)] font-black uppercase rounded sm:rounded-md transition-all absolute inset-0 backface-hidden ${guessedLetters.includes(c) ? 'bg-white/90 text-black border border-white/50 animate-flip-in shadow-sm' : 'bg-white/5 border border-white/10 text-transparent shadow-inner'}`}>
+                                                                {guessedLetters.includes(c) ? c : ''}
+                                                            </div>
+                                                        </div>
+                                                    ))}
                                                 </div>
-                                                
-                                                <button onClick={spinWheel} className="w-full py-2.5 sm:py-4 rounded-xl bg-red-600 hover:bg-red-500 flex items-center justify-center text-white font-black text-xs sm:text-sm uppercase active:scale-95 transition-all tracking-widest">
-                                                    {ui.spinWheel}
-                                                </button>
-
-                                                <div className="flex gap-2 w-full">
-                                                    <button onClick={buyHint} disabled={scores[currentPlayer]<100} className={`flex-1 py-1.5 sm:py-2.5 rounded-xl font-black text-[9px] sm:text-[10px] flex items-center justify-center gap-1 transition-all ${scores[currentPlayer]>=100?'bg-[#8B5CF6] hover:bg-purple-500 text-white active:scale-95':'bg-white/5 text-white/20 border border-white/5 cursor-not-allowed'}`}>
-                                                        <Icon name="Lightbulb" size={12}/> {ui.hint}
-                                                    </button>
-                                                    <button onClick={buyVowel} disabled={scores[currentPlayer]<250} className={`flex-1 py-1.5 sm:py-2.5 rounded-xl font-black text-[9px] sm:text-[10px] flex items-center justify-center gap-1 transition-all ${scores[currentPlayer]>=250?'bg-[#2E9DDF] hover:bg-blue-400 text-white active:scale-95':'bg-white/5 text-white/20 border border-white/5 cursor-not-allowed'}`}>
-                                                        {ui.buyVowel}
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        ) : (
-                                            <div className="flex flex-col items-center justify-center h-full">
-                                                {turnPhase==='SPINNING' && <div className="text-xs font-black text-[#FFB805] animate-pulse uppercase tracking-widest">...</div>}
-                                                {turnPhase==='WAITING_CONSONANT' && spinValue && (
-                                                    <div className="animate-fade-in-up flex flex-col items-center">
-                                                        <div className="text-[9px] font-black text-white/60 uppercase mb-0">{ui.consonantPrompt}</div>
-                                                        <div className="text-2xl sm:text-3xl font-black drop-shadow-md leading-none" style={{color: spinValue.color}}>{spinValue.val}</div>
-                                                    </div>
-                                                )}
-                                                {turnPhase==='WAITING_VOWEL' && <div className="text-[10px] font-black text-[#2E9DDF] uppercase animate-fade-in-up">{ui.vowelPrompt}</div>}
-                                            </div>
-                                        )}
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
 
-                                {/* COLONNA DESTRA */}
-                                <div className="lg:w-2/3 flex flex-col lg:justify-between lg:h-full gap-2 lg:gap-4 pb-2 lg:pb-0">
-                                    <div className="flex flex-col items-center gap-2 w-full flex-1">
-                                        <div className="bg-black/40 px-4 py-1 sm:px-6 sm:py-2 rounded-full border border-white/10 flex justify-center w-full max-w-md mx-auto backdrop-blur-md">
-                                            <span className="text-[#FFB805] font-black text-[11px] sm:text-sm uppercase tracking-widest text-center">{phraseData.topic}</span>
+                                {/* --- 2. RUOTA & CONTROLLI (BASSO) --- */}
+                                <div className="flex-1 flex flex-col lg:flex-row gap-2 lg:gap-6 overflow-hidden min-h-0 relative pb-1">
+                                    
+                                    {/* RUOTA */}
+                                    <div className="flex-1 lg:w-1/2 flex items-center justify-center relative min-h-[140px] shrink overflow-hidden">
+                                        <div className="relative w-full max-w-[180px] sm:max-w-[280px] lg:max-w-[340px] aspect-square drop-shadow-2xl z-10 flex items-center justify-center">
+                                            <svg viewBox="0 0 400 400" className="w-full h-full overflow-visible">
+                                                <circle cx="200" cy="200" r="195" fill="#000" stroke="#374151" strokeWidth="8" />
+                                                <g ref={wheelRef} style={{ transformOrigin: '200px 200px', willChange: 'transform' }}>
+                                                    {WHEEL_SEGMENTS.map((s, i)=>{
+                                                        const rot = i * (360/WHEEL_SEGMENTS.length) - 90;
+                                                        const label = s.type==='value'?s.val:(ui.wheelValues[s.type]||s.type);
+                                                        const isVal = s.type==='value';
+                                                        const textStroke = s.textColor === '#FFFFFF' ? '#000' : '#fff';
+                                                        const textStrokeWidth = isVal ? '1.5' : '0.5';
+                                                        return (
+                                                            <g key={i} transform={`rotate(${rot}, 200, 200)`}>
+                                                                <path d="M 200 200 L 383.5 150.8 A 190 190 0 0 1 383.5 249.2 Z" fill={s.color} stroke="rgba(0,0,0,0.3)" strokeWidth="1"/>
+                                                                <text x={label.length>9?'378':'365'} y="200" textAnchor="end" dominantBaseline="central" fill={s.textColor} fontSize={isVal?'34': (label.length > 9 ? '12' : '16')} fontWeight="900" stroke={textStroke} strokeWidth={textStrokeWidth} paintOrder="stroke fill" letterSpacing={isVal?"0":"1"}>{label}</text>
+                                                                <circle cx="373.8" cy="246.5" r="4" fill="#d1d5db" stroke="#111827" strokeWidth="1"/>
+                                                            </g>
+                                                        )
+                                                    })}
+                                                    <circle cx="200" cy="200" r="32" fill="#FFB805" stroke="#111827" strokeWidth="3" />
+                                                    <image href="logo-tondo.jpeg" x="172" y="172" width="56" height="56" clipPath="circle(28px at 28px 28px)" />
+                                                </g>
+                                                <g style={{ transformOrigin: '200px 10px' }}>
+                                                    <path d="M 185 -5 L 215 -5 L 200 35 Z" fill="#EF4444" stroke="#7F1D1D" strokeWidth="2" filter="drop-shadow(0 4px 3px rgb(0 0 0 / 0.5))"/>
+                                                </g>
+                                            </svg>
                                         </div>
+                                    </div>
+
+                                    {/* CONTROLLI & TASTIERA */}
+                                    <div className="w-full lg:w-1/2 flex flex-col justify-end gap-2 shrink-0">
                                         
-                                        <div className="relative w-full p-2 sm:p-4 rounded-3xl border border-white/10 bg-black/30 flex flex-col items-center shadow-lg overflow-hidden min-h-[100px] sm:min-h-[220px] justify-center flex-1 backdrop-blur-md">
-                                            <div className="flex flex-wrap justify-center gap-y-2 sm:gap-y-3 gap-x-3 sm:gap-x-8">
-                                                {phraseData.phrase.split(' ').map((w, wi)=>(
-                                                    <div key={wi} className="flex gap-1 sm:gap-2">
-                                                        {w.split('').map((c, ci)=>(
-                                                            <div key={ci} style={{perspective: '1000px'}} className="w-6 h-8 sm:w-10 sm:h-14 md:w-12 md:h-16 relative">
-                                                                <div className={`w-full h-full flex items-center justify-center text-base sm:text-2xl md:text-3xl font-black uppercase rounded sm:rounded-lg transition-all absolute inset-0 backface-hidden ${guessedLetters.includes(c) ? 'bg-white/90 text-black border border-white/50 animate-flip-in' : 'bg-white/5 border border-white/10 text-transparent'}`}>
-                                                                    {guessedLetters.includes(c) ? c : ''}
-                                                                </div>
-                                                            </div>
-                                                        ))}
+                                        {/* Actions Box */}
+                                        <div className="w-full bg-black/40 p-2 sm:p-3 rounded-2xl border border-white/10 text-center relative shadow-lg flex flex-col justify-center backdrop-blur-md shrink-0">
+                                            {turnPhase === 'IDLE' ? (
+                                                <div className="flex flex-col gap-2 animate-fade-in-up items-center w-full">
+                                                    <div className="flex items-center justify-between w-full px-1">
+                                                        <h3 className="font-black text-[#FFB805] uppercase tracking-widest text-[9px] sm:text-[10px] flex items-center gap-1 bg-black/40 px-2 py-1 rounded-full border border-white/5">
+                                                            <Icon name="User" size={12}/> {ui.turnPrefix}{currentPlayer+1}
+                                                        </h3>
+                                                        <button onClick={()=>setTurnPhase('SOLVING')} className="px-3 py-1.5 sm:py-2 bg-[#00D166] hover:bg-green-400 rounded-full font-black text-[9px] sm:text-[10px] text-black active:scale-95 transition-all tracking-widest uppercase shadow-md">
+                                                            {ui.solve}
+                                                        </button>
+                                                    </div>
+                                                    
+                                                    <button onClick={spinWheel} className="w-full py-2.5 sm:py-3.5 rounded-xl bg-red-600 hover:bg-red-500 flex items-center justify-center text-white font-black text-xs sm:text-sm uppercase active:scale-95 transition-all tracking-widest shadow-lg">
+                                                        {ui.spinWheel}
+                                                    </button>
+
+                                                    <div className="flex gap-2 w-full">
+                                                        <button onClick={buyHint} disabled={scores[currentPlayer]<100} className={`flex-1 py-1.5 sm:py-2.5 rounded-xl font-black text-[9px] sm:text-[10px] flex items-center justify-center gap-1 transition-all ${scores[currentPlayer]>=100?'bg-[#8B5CF6] hover:bg-purple-500 text-white active:scale-95 shadow-md':'bg-white/5 text-white/20 border border-white/5 cursor-not-allowed'}`}>
+                                                            <Icon name="Lightbulb" size={12}/> {ui.hint}
+                                                        </button>
+                                                        {hasVowelsLeft && (
+                                                            <button onClick={buyVowel} disabled={scores[currentPlayer]<250} className={`flex-1 py-1.5 sm:py-2.5 rounded-xl font-black text-[9px] sm:text-[10px] flex items-center justify-center gap-1 transition-all ${scores[currentPlayer]>=250?'bg-[#2E9DDF] hover:bg-blue-400 text-white active:scale-95 shadow-md':'bg-white/5 text-white/20 border border-white/5 cursor-not-allowed'}`}>
+                                                                {ui.buyVowel}
+                                                            </button>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            ) : (
+                                                <div className="flex flex-col items-center justify-center min-h-[90px] sm:min-h-[110px]">
+                                                    {turnPhase==='SPINNING' && <div className="text-xs font-black text-[#FFB805] animate-pulse uppercase tracking-widest">...</div>}
+                                                    {turnPhase==='WAITING_CONSONANT' && spinValue && (
+                                                        <div className="animate-fade-in-up flex flex-col items-center">
+                                                            <div className="text-[9px] font-black text-white/60 uppercase mb-0">{ui.consonantPrompt}</div>
+                                                            <div className="text-2xl sm:text-3xl font-black drop-shadow-md leading-none" style={{color: spinValue.color}}>{spinValue.val}</div>
+                                                        </div>
+                                                    )}
+                                                    {turnPhase==='WAITING_VOWEL' && <div className="text-[10px] font-black text-[#2E9DDF] uppercase animate-fade-in-up">{ui.vowelPrompt}</div>}
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {/* Keyboard Box */}
+                                        <div className="w-full bg-black/30 p-1.5 sm:p-2.5 rounded-2xl border border-white/5 backdrop-blur-md shrink-0">
+                                            <div className="flex flex-col gap-1 sm:gap-1.5 w-full mx-auto">
+                                                {QWERTY.map((row, ri) => (
+                                                    <div key={ri} className="flex justify-center gap-1 sm:gap-1.5 w-full">
+                                                        {row.map(l => {
+                                                            const isV = ['A','E','I','O','U'].includes(l);
+                                                            const isGuessed = guessedLetters.includes(l);
+                                                            const disabled = turnPhase==='IDLE' || turnPhase==='SPINNING' || turnPhase==='SOLVING' || (turnPhase==='WAITING_CONSONANT' && isV) || (turnPhase==='WAITING_VOWEL' && !isV);
+                                                            
+                                                            let btnClass = "relative flex-1 max-w-[28px] sm:max-w-[40px] md:max-w-[46px] h-8 sm:h-11 md:h-12 rounded sm:rounded-md font-black text-[11px] sm:text-[14px] flex items-center justify-center transition-all duration-200 select-none border ";
+                                                            
+                                                            if (isGuessed) {
+                                                                const inPhrase = phraseData.phrase.includes(l);
+                                                                btnClass += inPhrase ? "bg-[#374151]/50 border-white/5 text-white/30" : "bg-red-950/20 border-red-900/20 text-red-500/40";
+                                                            } else if (disabled) {
+                                                                btnClass += "bg-white/5 border-white/5 text-white/20 opacity-50";
+                                                            } else {
+                                                                btnClass += "bg-white/10 border-white/20 text-white hover:bg-white/20 hover:border-white/30 active:scale-90 cursor-pointer shadow-sm";
+                                                            }
+
+                                                            return (
+                                                                <button key={l} disabled={disabled || isGuessed} onClick={()=>handleLetterClick(l)} className={btnClass}>
+                                                                    {l}
+                                                                </button>
+                                                            )
+                                                        })}
                                                     </div>
                                                 ))}
                                             </div>
                                         </div>
-                                    </div>
 
-                                    {/* TASTIERA SOTTILE E MODERNA */}
-                                    <div className="w-full bg-black/30 p-1.5 sm:p-3 rounded-2xl border border-white/5 backdrop-blur-md mt-auto shrink-0">
-                                        <div className="flex flex-col gap-1.5 sm:gap-2 w-full max-w-3xl mx-auto">
-                                            {QWERTY.map((row, ri) => (
-                                                <div key={ri} className="flex justify-center gap-1 sm:gap-2 w-full">
-                                                    {row.map(l => {
-                                                        const isV = ['A','E','I','O','U'].includes(l);
-                                                        const isGuessed = guessedLetters.includes(l);
-                                                        const disabled = turnPhase==='IDLE' || turnPhase==='SPINNING' || turnPhase==='SOLVING' || (turnPhase==='WAITING_CONSONANT' && isV) || (turnPhase==='WAITING_VOWEL' && !isV);
-                                                        
-                                                        let btnClass = "relative flex-1 max-w-[28px] sm:max-w-[40px] md:max-w-[50px] h-9 sm:h-12 rounded sm:rounded-md font-black text-[12px] sm:text-base flex items-center justify-center transition-all duration-200 select-none border ";
-                                                        
-                                                        if (isGuessed) {
-                                                            const inPhrase = phraseData.phrase.includes(l);
-                                                            btnClass += inPhrase ? "bg-[#374151]/50 border-white/5 text-white/30" : "bg-red-950/20 border-red-900/20 text-red-500/40";
-                                                        } else if (disabled) {
-                                                            btnClass += "bg-white/5 border-white/5 text-white/20 opacity-50";
-                                                        } else {
-                                                            btnClass += "bg-white/10 border-white/20 text-white hover:bg-white/20 hover:border-white/30 active:scale-90 cursor-pointer";
-                                                        }
-
-                                                        return (
-                                                            <button key={l} disabled={disabled || isGuessed} onClick={()=>handleLetterClick(l)} className={btnClass}>
-                                                                {l}
-                                                            </button>
-                                                        )
-                                                    })}
-                                                </div>
-                                            ))}
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -741,7 +758,7 @@
                             </div>
                         )}
 
-                        {/* SCHERMATA LEZIONE SBLOCCATA (MEMORABILE E RIFORMATTATA PER MOBILE) */}
+                        {/* SCHERMATA LEZIONE SBLOCCATA */}
                         {gameState === 'SOLVED' && (
                             <div className="flex flex-col items-center justify-center h-full w-full p-2 sm:p-4 animate-pop-in absolute inset-0 bg-[#111827]/95 backdrop-blur-xl z-[100]">
                                 <Confetti />
@@ -762,7 +779,7 @@
                                             {phraseData.phrase}
                                         </div>
                                         
-                                        <div className="w-full bg-white/5 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-left border border-white/10 mb-4 sm:mb-6 relative z-10 flex-shrink-0">
+                                        <div className="w-full bg-white/5 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-left border border-white/10 mb-4 sm:mb-6 relative z-10 flex-shrink-0 shadow-lg">
                                             <div className="absolute top-0 left-0 w-1 h-full bg-[#FFB805] rounded-l-xl sm:rounded-l-2xl"></div>
                                             <h3 className="text-[#FFB805] font-black uppercase text-[10px] sm:text-sm mb-2 sm:mb-3 tracking-widest flex items-center gap-2">
                                                 <Icon name="Lightbulb" size={16} className="text-[#FFB805] animate-pulse sm:w-5 sm:h-5"/> 
@@ -771,7 +788,7 @@
                                             <p className="lesson-content text-white/90 text-xs sm:text-lg leading-snug sm:leading-relaxed font-medium" dangerouslySetInnerHTML={{ __html: phraseData.explanation }}></p>
                                         </div>
 
-                                        <div className="w-full flex flex-row items-center justify-between bg-white/5 p-3 sm:p-4 rounded-xl sm:rounded-2xl border border-white/10 mb-4 sm:mb-6 z-10 gap-2 sm:gap-4 shrink-0">
+                                        <div className="w-full flex flex-row items-center justify-between bg-white/5 p-3 sm:p-4 rounded-xl sm:rounded-2xl border border-white/10 mb-4 sm:mb-6 z-10 gap-2 sm:gap-4 shrink-0 shadow-lg">
                                             <div className="flex items-center gap-2 sm:gap-3">
                                                 <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center bg-black/50 border border-white/20" style={{borderColor: currentRank.color}}>
                                                     <Icon name={currentRank.icon} size={16} className="sm:w-5 sm:h-5" style={{color: currentRank.color}}/>
@@ -787,7 +804,7 @@
                                             </div>
                                         </div>
 
-                                        <button onClick={handleNextRound} className="w-full py-3 sm:py-5 bg-[#FFB805] hover:bg-yellow-400 text-black rounded-xl sm:rounded-2xl font-black text-xs sm:text-lg active:scale-95 transition-all uppercase tracking-[0.1em] sm:tracking-[0.2em] flex items-center justify-center gap-2 sm:gap-3 z-10 shrink-0 mt-auto">
+                                        <button onClick={handleNextRound} className="w-full py-3 sm:py-5 bg-[#FFB805] hover:bg-yellow-400 text-black rounded-xl sm:rounded-2xl font-black text-xs sm:text-lg active:scale-95 transition-all uppercase tracking-[0.1em] sm:tracking-[0.2em] flex items-center justify-center gap-2 sm:gap-3 z-10 shrink-0 mt-auto shadow-xl">
                                             {ui.nextRound} <Icon name="Play" size={16} className="fill-current sm:w-6 sm:h-6"/>
                                         </button>
                                     </div>
@@ -796,13 +813,15 @@
                         )}
 
                         {gameState === 'GAME_OVER' && (
-                            <div className="text-center text-white py-10 px-8 bg-black/60 rounded-3xl backdrop-blur-xl border border-[#FFB805]/30 my-auto animate-pop-in w-full max-w-md">
-                                <Icon name="Trophy" size={64} className="text-[#FFB805] mx-auto mb-6" />
-                                <h2 className="text-4xl font-black text-white mb-2 uppercase tracking-tighter">{ui.gameOver}</h2>
-                                <p className="text-xl font-bold text-[#FFB805] mb-8 tracking-widest uppercase">{ui.winner}</p>
-                                <button onClick={()=>setGameState('SETUP')} className="w-full py-4 bg-[#2E9DDF] hover:bg-blue-400 rounded-2xl font-black text-sm flex items-center justify-center gap-2 active:scale-95 transition-all uppercase tracking-widest">
-                                    <Icon name="RotateCcw" size={18}/>{ui.playAgain}
-                                </button>
+                            <div className="flex-1 flex items-center justify-center p-4">
+                                <div className="text-center text-white py-10 px-8 bg-black/60 rounded-3xl backdrop-blur-xl border border-[#FFB805]/30 w-full max-w-md animate-pop-in">
+                                    <Icon name="Trophy" size={64} className="text-[#FFB805] mx-auto mb-6" />
+                                    <h2 className="text-4xl font-black text-white mb-2 uppercase tracking-tighter">{ui.gameOver}</h2>
+                                    <p className="text-xl font-bold text-[#FFB805] mb-8 tracking-widest uppercase">{ui.winner}</p>
+                                    <button onClick={()=>setGameState('SETUP')} className="w-full py-4 bg-[#2E9DDF] hover:bg-blue-400 rounded-2xl font-black text-sm flex items-center justify-center gap-2 active:scale-95 transition-all uppercase tracking-widest shadow-lg">
+                                        <Icon name="RotateCcw" size={18}/>{ui.playAgain}
+                                    </button>
+                                </div>
                             </div>
                         )}
                     </main>
