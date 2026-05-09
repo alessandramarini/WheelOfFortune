@@ -138,7 +138,6 @@
             { max: 31, title: { it: 'Exchange Master', en: 'Exchange Master', es: 'Maestro Exchange', pt: 'Mestre Exchange' }, color: '#EF4444', icon: 'Trophy' }
         ];
 
-        // Rimosse tutte le duplicazioni di phrasesDictionary
         const phrasesDictionary = [
             { id: 1, it: { topic: "AZIONE BASE", phrase: "PUNTARE UNA QUOTA", lesson: "👉 Scommetti <b>A FAVORE</b>. Credi che accadrà. È la scommessa classica: se la tua squadra vince, vinci anche tu." }, en: { topic: "BASIC ACTION", phrase: "BACKING AN ODDS", lesson: "👉 Bet <b>FOR</b> an outcome. You believe it will happen. If your selection wins, you win." }, es: { topic: "ACCIÓN BASE", phrase: "APOSTAR A FAVOR", lesson: "👉 Apuesta <b>A FAVOR</b>. Crees que sucederá. Si tu selección gana, tú ganas." }, pt: { topic: "AÇÃO BASE", phrase: "APOSTAR A FAVOR", lesson: "👉 Aposte <b>A FAVOR</b>. Acredita que vai acontecer. Se a sua seleção ganhar, você ganha." } },
             { id: 2, it: { topic: "IL BANCO", phrase: "BANCARE LA SQUADRA", lesson: "🛑 Scommetti <b>CONTRO</b>. Fai tu da bookmaker! Vinci se la squadra perde o pareggia." }, en: { topic: "THE BOOKIE", phrase: "LAYING THE TEAM", lesson: "🛑 Bet <b>AGAINST</b> an outcome. You play the bookmaker! You win if the team loses or draws." }, es: { topic: "LA CASA", phrase: "APOSTAR EN CONTRA", lesson: "🛑 Apuesta <b>EN CONTRA</b>. ¡Eres el bookmaker! Ganas si el equipo pierde o empata." }, pt: { topic: "A CASA", phrase: "APOSTAR CONTRA A EQUIPA", lesson: "🛑 Aposte <b>CONTRA</b>. Você é o bookmaker! Ganha se a equipa perder ou empatar." } },
@@ -173,10 +172,10 @@
         ];
 
         const uiTranslations = {
-            en: { title: "ACADEMY", players1: "1 Player", players2: "2 Players", selectLesson: "Start From", startGame: "Start Journey", spinWheel: "Spin", buyVowel: "Vowel (250)", hint: "Hint (100)", solve: "SOLVE", turnPrefix: "Turn: P", turnSuffix: "", bankrupt: "BANKRUPT!", loseTurn: "MISS TURN", consonantPrompt: "Consonant for:", vowelPrompt: "Choose Vowel", solvePrompt: "Your Solution:", submit: "Verify", cancel: "Cancel", correct: "Awesome!", wrong: "Nope!", concept: "Lesson:", nextRound: "Next Lesson", gameOver: "Graduated!", winner: "Top Trader", playAgain: "Restart Academy", day: "", wheelValues: { BANKRUPT: "BANKRUPT", LOSE_TURN: "LOSE TURN" }, lessonUnlocked: "LESSON UNLOCKED", rankTitle: "Rank", progress: "Progress", noHints: "No hints available" },
-            it: { title: "ACADEMY", players1: "1 Giocatore", players2: "2 Giocatori", selectLesson: "Parti da", startGame: "Inizia Viaggio", spinWheel: "Gira", buyVowel: "Vocale (250)", hint: "Aiuto (100)", solve: "RISOLVI", turnPrefix: "Turno: G", turnSuffix: "", bankrupt: "BANCAROTTA!", loseTurn: "SALTA TURNO", consonantPrompt: "Consonante a:", vowelPrompt: "Scegli Vocale", solvePrompt: "La tua soluzione:", submit: "Verifica", cancel: "Annulla", correct: "Spettacolo!", wrong: "Sbagliato!", concept: "Lezione:", nextRound: "Prossima Lezione", gameOver: "Diplomato!", winner: "Top Trader", playAgain: "Ricomincia Academy", day: "", wheelValues: { BANKRUPT: "BANCAROTTA", LOSE_TURN: "SALTA TURNO" }, lessonUnlocked: "LEZIONE SBLOCCATA", rankTitle: "Rango", progress: "Progresso", noHints: "Nessun aiuto disponibile" },
-            es: { title: "ACADEMY", players1: "1 Jugador", players2: "2 Jugadores", selectLesson: "Empezar en", startGame: "Iniciar Viaje", spinWheel: "Girar", buyVowel: "Vocal (250)", hint: "Pista (100)", solve: "RESOLVER", turnPrefix: "Turno: J", turnSuffix: "", bankrupt: "¡BANCARROTA!", loseTurn: "¡PIERDE TURNO!", consonantPrompt: "Consonante a:", vowelPrompt: "Elegir Vocal", solvePrompt: "Tu Solución:", submit: "Verificar", cancel: "Cancelar", correct: "¡Genial!", wrong: "¡Error!", concept: "Lección:", nextRound: "Siguiente Lección", gameOver: "¡Graduado!", winner: "Top Trader", playAgain: "Reiniciar Academy", day: "", wheelValues: { BANKRUPT: "BANCARROTA", LOSE_TURN: "PIERDE TURNO" }, lessonUnlocked: "LECCIÓN DESBLOQUEADA", rankTitle: "Rango", progress: "Progreso", noHints: "No hay pistas disponibles" },
-            pt: { title: "ACADEMY", players1: "1 Jogador", players2: "2 Jogadores", selectLesson: "Começar em", startGame: "Iniciar Viagem", spinWheel: "Girar", buyVowel: "Vogal (250)", hint: "Dica (100)", solve: "RESOLVER", turnPrefix: "Vez: J", turnSuffix: "", bankrupt: "FALÊNCIA!", loseTurn: "PASSA A VEZ", consonantPrompt: "Consoante a:", vowelPrompt: "Escolha Vogal", solvePrompt: "A sua Solução:", submit: "Verificar", cancel: "Cancelar", correct: "Fantástico!", wrong: "Erro!", concept: "Lição:", nextRound: "Próxima Lição", gameOver: "Diplomado!", winner: "Top Trader", playAgain: "Reiniciar Academy", day: "", wheelValues: { BANKRUPT: "FALÊNCIA", LOSE_TURN: "PASSA A VEZ" }, lessonUnlocked: "LIÇÃO DESBLOQUEADA", rankTitle: "Classificação", progress: "Progresso", noHints: "Sem dicas disponíveis" }
+            en: { title: "ACADEMY", players1: "1 Player", players2: "2 Players", selectLesson: "Start From", startGame: "Start Journey", spinWheel: "Spin the wheel", buyVowel: "Vowel (250)", hint: "Hint (100)", solve: "SOLVE", turnPrefix: "Turn: P", turnSuffix: "", bankrupt: "BANKRUPT!", loseTurn: "MISS TURN", consonantPrompt: "Consonant for:", vowelPrompt: "Choose Vowel", solvePrompt: "Your Solution:", submit: "Verify", cancel: "Cancel", correct: "Awesome!", wrong: "Nope!", concept: "Lesson:", nextRound: "Next Lesson", gameOver: "Graduated!", winner: "Top Trader", playAgain: "Restart Academy", day: "", wheelValues: { BANKRUPT: "BANKRUPT", LOSE_TURN: "LOSE TURN" }, lessonUnlocked: "LESSON UNLOCKED", rankTitle: "Rank", progress: "Progress", noHints: "No hints available" },
+            it: { title: "ACADEMY", players1: "1 Giocatore", players2: "2 Giocatori", selectLesson: "Parti da", startGame: "Inizia Viaggio", spinWheel: "Gira la ruota", buyVowel: "Vocale (250)", hint: "Aiuto (100)", solve: "RISOLVI", turnPrefix: "Turno: G", turnSuffix: "", bankrupt: "BANCAROTTA!", loseTurn: "SALTA TURNO", consonantPrompt: "Consonante a:", vowelPrompt: "Scegli Vocale", solvePrompt: "La tua soluzione:", submit: "Verifica", cancel: "Annulla", correct: "Spettacolo!", wrong: "Sbagliato!", concept: "Lezione:", nextRound: "Prossima Lezione", gameOver: "Diplomato!", winner: "Top Trader", playAgain: "Ricomincia Academy", day: "", wheelValues: { BANKRUPT: "BANCAROTTA", LOSE_TURN: "SALTA TURNO" }, lessonUnlocked: "LEZIONE SBLOCCATA", rankTitle: "Rango", progress: "Progresso", noHints: "Nessun aiuto disponibile" },
+            es: { title: "ACADEMY", players1: "1 Jugador", players2: "2 Jugadores", selectLesson: "Empezar en", startGame: "Iniciar Viaje", spinWheel: "Gira la rueda", buyVowel: "Vocal (250)", hint: "Pista (100)", solve: "RESOLVER", turnPrefix: "Turno: J", turnSuffix: "", bankrupt: "¡BANCARROTA!", loseTurn: "¡PIERDE TURNO!", consonantPrompt: "Consonante a:", vowelPrompt: "Elegir Vocal", solvePrompt: "Tu Solución:", submit: "Verificar", cancel: "Cancelar", correct: "¡Genial!", wrong: "¡Error!", concept: "Lección:", nextRound: "Siguiente Lección", gameOver: "¡Graduado!", winner: "Top Trader", playAgain: "Reiniciar Academy", day: "", wheelValues: { BANKRUPT: "BANCARROTA", LOSE_TURN: "PIERDE TURNO" }, lessonUnlocked: "LECCIÓN DESBLOQUEADA", rankTitle: "Rango", progress: "Progreso", noHints: "No hay pistas disponibles" },
+            pt: { title: "ACADEMY", players1: "1 Jogador", players2: "2 Jogadores", selectLesson: "Começar em", startGame: "Iniciar Viagem", spinWheel: "Gira a roda", buyVowel: "Vogal (250)", hint: "Dica (100)", solve: "RESOLVER", turnPrefix: "Vez: J", turnSuffix: "", bankrupt: "FALÊNCIA!", loseTurn: "PASSA A VEZ", consonantPrompt: "Consoante a:", vowelPrompt: "Escolha Vogal", solvePrompt: "A sua Solução:", submit: "Verificar", cancel: "Cancelar", correct: "Fantástico!", wrong: "Erro!", concept: "Lição:", nextRound: "Próxima Lição", gameOver: "Diplomado!", winner: "Top Trader", playAgain: "Reiniciar Academy", day: "", wheelValues: { BANKRUPT: "FALÊNCIA", LOSE_TURN: "PASSA A VEZ" }, lessonUnlocked: "LIÇÃO DESBLOQUEADA", rankTitle: "Classificação", progress: "Progresso", noHints: "Sem dicas disponíveis" }
         };
 
         const WHEEL_SEGMENTS = [
@@ -412,23 +411,34 @@
 
             return (
                 <div className="viewport-container bg-transparent text-white">
-                    <header className="px-4 py-3 flex justify-between items-center border-b border-white/10 bg-[#111827]/80 backdrop-blur-md sticky top-0 z-50 h-[60px] sm:h-[70px] shadow-lg">
-                        <div className="flex items-center gap-3">
-                            <img src="logo-tondo.jpeg" className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover shadow-[0_0_15px_rgba(0,209,102,0.4)]" />
+                    {/* HEADER AGGIORNATO CON PUNTEGGI A DESTRA */}
+                    <header className="px-2 sm:px-4 py-2 flex justify-between items-center border-b border-white/10 bg-[#111827]/80 backdrop-blur-md sticky top-0 z-50 h-[55px] sm:h-[70px] shadow-lg">
+                        <div className="flex items-center gap-2">
+                            <img src="logo-tondo.jpeg" className="w-7 h-7 sm:w-10 sm:h-10 rounded-full object-cover shadow-[0_0_15px_rgba(0,209,102,0.4)]" />
                             <div className="flex flex-col">
-                                <span className="text-[#00D166] font-black text-[11px] sm:text-sm tracking-widest uppercase">BETTING EXCHANGE</span>
-                                <span className="text-white/60 font-bold text-[9px] sm:text-[10px] tracking-widest">{ui.title}</span>
+                                <span className="text-[#00D166] font-black text-[9px] sm:text-sm tracking-widest uppercase">BETTING EXCHANGE</span>
+                                <span className="text-white/60 font-bold text-[8px] sm:text-[10px] tracking-widest hidden sm:block">{ui.title}</span>
                             </div>
                         </div>
                         {gameState !== 'SETUP' && (
-                            <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-2 sm:gap-3">
                                 {gameState === 'PLAYING' && (
-                                    <div className="bg-black/50 px-3 py-1 rounded-full border border-white/10 flex items-center gap-2 shadow-inner">
-                                        <Icon name={currentRank.icon} size={14} className="text-white/50"/>
-                                        <span className="text-xs font-black uppercase" style={{color: currentRank.color}}>{currentRank.title[lang]}</span>
+                                    <div className="flex gap-1.5 mr-1">
+                                        {[...Array(numPlayers)].map((_, i) => (
+                                            <div key={i} className={`flex flex-col items-center justify-center px-1.5 py-0.5 rounded ${currentPlayer===i ? 'bg-[#FFB805]/20 border border-[#FFB805]/50 text-[#FFB805]' : 'bg-white/5 border border-white/10 text-white/50'}`}>
+                                                <span className="text-[7px] font-bold uppercase leading-none">P{i+1}</span>
+                                                <span className="text-[10px] sm:text-xs font-black leading-none">{scores[i]}</span>
+                                            </div>
+                                        ))}
                                     </div>
                                 )}
-                                <button onClick={() => setGameState('SETUP')} className="text-white/50 hover:text-white p-2 rounded-full bg-white/5 transition-all active:scale-95"><Icon name="SettingsIcon" size={18}/></button>
+                                {gameState === 'PLAYING' && (
+                                    <div className="bg-black/50 px-2 py-1 rounded-full border border-white/10 flex items-center gap-1 shadow-inner hidden md:flex">
+                                        <Icon name={currentRank.icon} size={12} className="text-white/50"/>
+                                        <span className="text-[10px] font-black uppercase" style={{color: currentRank.color}}>{currentRank.title[lang]}</span>
+                                    </div>
+                                )}
+                                <button onClick={() => setGameState('SETUP')} className="text-white/50 hover:text-white p-1.5 rounded-full bg-white/5 transition-all active:scale-95"><Icon name="SettingsIcon" size={16}/></button>
                             </div>
                         )}
                     </header>
@@ -470,12 +480,12 @@
                         )}
 
                         {gameState === 'PLAYING' && (
-                            /* RIMOSSO "overflow-hidden" e "h-full" su mobile per permettere lo scroll verso il basso */
-                            <div className="w-full flex flex-col lg:flex-row gap-4 lg:gap-6 p-2 sm:p-4 max-w-7xl mx-auto flex-1 lg:h-full lg:overflow-hidden">
+                            /* LAYOUT OTTIMIZZATO PER EVITARE LO SCROLL */
+                            <div className="w-full flex flex-col lg:flex-row gap-2 lg:gap-6 p-1 sm:p-4 max-w-7xl mx-auto flex-1 lg:h-full lg:overflow-hidden">
                                 
                                 {/* COLONNA SINISTRA: Ruota e Controlli */}
-                                <div className="lg:w-1/3 flex flex-col items-center justify-center gap-3 lg:h-full relative shrink-0">
-                                    <div className="relative w-full max-w-[200px] sm:max-w-[280px] lg:max-w-[340px] aspect-square drop-shadow-2xl z-10">
+                                <div className="lg:w-1/3 flex flex-col items-center justify-center gap-2 lg:h-full relative shrink-0">
+                                    <div className="relative w-full max-w-[150px] sm:max-w-[280px] lg:max-w-[340px] aspect-square drop-shadow-2xl z-10">
                                         <svg viewBox="0 0 400 400" className="w-full h-full overflow-visible">
                                             <circle cx="200" cy="200" r="195" fill="#000" stroke="#374151" strokeWidth="8" />
                                             <g ref={wheelRef} style={{ transformOrigin: '200px 200px', willChange: 'transform' }}>
@@ -502,90 +512,79 @@
                                         </svg>
                                     </div>
 
-                                    <div className="w-full bg-black/60 p-3 rounded-2xl border border-white/10 text-center relative overflow-hidden shadow-xl min-h-[140px] flex flex-col justify-center">
+                                    <div className="w-full bg-black/60 p-2 sm:p-3 rounded-2xl border border-white/10 text-center relative overflow-hidden shadow-xl min-h-[90px] flex flex-col justify-center">
                                         
                                         {turnPhase === 'SOLVING' && (
-                                            <div className="absolute inset-0 z-20 bg-black/95 rounded-2xl flex flex-col items-center justify-center p-4 backdrop-blur-md animate-pop-in border border-[#00D166]/30">
-                                                <div className="text-[#00D166] font-black mb-2 uppercase text-xs tracking-widest">{ui.solvePrompt}</div>
-                                                <input type="text" autoFocus value={solveInput} onChange={e=>setSolveInput(e.target.value)} className="w-full p-3 rounded-xl bg-white/5 border border-white/20 text-white text-center font-black uppercase outline-none focus:border-[#00D166] text-lg mb-3 shadow-inner" />
+                                            <div className="absolute inset-0 z-20 bg-black/95 rounded-2xl flex flex-col items-center justify-center p-3 backdrop-blur-md animate-pop-in border border-[#00D166]/30">
+                                                <div className="text-[#00D166] font-black mb-1 uppercase text-[10px] tracking-widest">{ui.solvePrompt}</div>
+                                                <input type="text" autoFocus value={solveInput} onChange={e=>setSolveInput(e.target.value)} className="w-full p-2 rounded-xl bg-white/5 border border-white/20 text-white text-center font-black uppercase outline-none focus:border-[#00D166] text-sm sm:text-lg mb-2 shadow-inner" />
                                                 <div className="flex gap-2 w-full">
-                                                    <button onClick={()=>setTurnPhase('IDLE')} className="flex-1 py-2 bg-red-900/40 text-red-400 rounded-xl font-bold uppercase text-xs border border-red-500/20">{ui.cancel}</button>
-                                                    <button onClick={handleSolveSubmit} className="flex-1 py-2 bg-[#00D166] text-black rounded-xl font-bold uppercase text-xs shadow-[0_3px_0_#00994d] active:translate-y-1 active:shadow-none">{ui.submit}</button>
+                                                    <button onClick={()=>setTurnPhase('IDLE')} className="flex-1 py-1.5 bg-red-900/40 text-red-400 rounded-xl font-bold uppercase text-[10px] border border-red-500/20">{ui.cancel}</button>
+                                                    <button onClick={handleSolveSubmit} className="flex-1 py-1.5 bg-[#00D166] text-black rounded-xl font-bold uppercase text-[10px] shadow-[0_2px_0_#00994d] active:translate-y-1 active:shadow-none">{ui.submit}</button>
                                                 </div>
                                             </div>
                                         )}
 
                                         {turnPhase === 'IDLE' ? (
-                                            <div className="flex flex-col gap-3 animate-fade-in-up items-center w-full">
-                                                <div className="flex items-center justify-between w-full px-2">
-                                                    <h3 className="font-black text-[#FFB805] uppercase tracking-widest text-[10px] flex items-center gap-1 bg-black/40 px-3 py-1 rounded-full border border-white/5">
-                                                        <Icon name="User" size={14}/> {ui.turnPrefix}{currentPlayer+1}
+                                            <div className="flex flex-col gap-2 animate-fade-in-up items-center w-full">
+                                                <div className="flex items-center justify-between w-full px-1">
+                                                    <h3 className="font-black text-[#FFB805] uppercase tracking-widest text-[9px] sm:text-[10px] flex items-center gap-1 bg-black/40 px-2 py-1 rounded-full border border-white/5">
+                                                        <Icon name="User" size={12}/> {ui.turnPrefix}{currentPlayer+1}
                                                     </h3>
-                                                    <button onClick={()=>setTurnPhase('SOLVING')} className="px-4 py-1.5 bg-[#00D166] rounded-full font-black text-[10px] text-black shadow-[0_3px_0_#00994d] active:translate-y-1 active:shadow-none tracking-widest uppercase">
+                                                    <button onClick={()=>setTurnPhase('SOLVING')} className="px-3 py-1 bg-[#00D166] rounded-full font-black text-[9px] sm:text-[10px] text-black shadow-[0_2px_0_#00994d] active:translate-y-1 active:shadow-none tracking-widest uppercase">
                                                         {ui.solve}
                                                     </button>
                                                 </div>
                                                 
-                                                <button onClick={spinWheel} className="w-full py-4 rounded-xl slot-button flex items-center justify-center text-white font-black text-sm uppercase shadow-[0_5px_0_#990000] active:translate-y-1 active:shadow-none tracking-widest">
+                                                <button onClick={spinWheel} className="w-full py-2.5 sm:py-4 rounded-xl slot-button flex items-center justify-center text-white font-black text-xs sm:text-sm uppercase shadow-[0_4px_0_#990000] active:translate-y-1 active:shadow-none tracking-widest">
                                                     {ui.spinWheel}
                                                 </button>
 
                                                 <div className="flex gap-2 w-full">
-                                                    <button onClick={buyHint} disabled={scores[currentPlayer]<100} className={`flex-1 py-2.5 rounded-xl font-black text-[10px] flex items-center justify-center gap-1 transition-all ${scores[currentPlayer]>=100?'bg-[#8B5CF6] text-white shadow-[0_4px_0_#5B21B6] active:translate-y-1 active:shadow-none':'bg-white/5 text-white/20 border border-white/5 cursor-not-allowed'}`}>
-                                                        <Icon name="Lightbulb" size={14}/> {ui.hint}
+                                                    <button onClick={buyHint} disabled={scores[currentPlayer]<100} className={`flex-1 py-1.5 sm:py-2.5 rounded-xl font-black text-[9px] sm:text-[10px] flex items-center justify-center gap-1 transition-all ${scores[currentPlayer]>=100?'bg-[#8B5CF6] text-white shadow-[0_3px_0_#5B21B6] active:translate-y-1 active:shadow-none':'bg-white/5 text-white/20 border border-white/5 cursor-not-allowed'}`}>
+                                                        <Icon name="Lightbulb" size={12}/> {ui.hint}
                                                     </button>
-                                                    <button onClick={buyVowel} disabled={scores[currentPlayer]<250} className={`flex-1 py-2.5 rounded-xl font-black text-[10px] flex items-center justify-center gap-1 transition-all ${scores[currentPlayer]>=250?'bg-[#2E9DDF] text-white shadow-[0_4px_0_#0284C7] active:translate-y-1 active:shadow-none':'bg-white/5 text-white/20 border border-white/5 cursor-not-allowed'}`}>
+                                                    <button onClick={buyVowel} disabled={scores[currentPlayer]<250} className={`flex-1 py-1.5 sm:py-2.5 rounded-xl font-black text-[9px] sm:text-[10px] flex items-center justify-center gap-1 transition-all ${scores[currentPlayer]>=250?'bg-[#2E9DDF] text-white shadow-[0_3px_0_#0284C7] active:translate-y-1 active:shadow-none':'bg-white/5 text-white/20 border border-white/5 cursor-not-allowed'}`}>
                                                         {ui.buyVowel}
                                                     </button>
                                                 </div>
                                             </div>
                                         ) : (
                                             <div className="flex flex-col items-center justify-center h-full">
-                                                {turnPhase==='SPINNING' && <div className="text-sm font-black text-[#FFB805] animate-pulse uppercase tracking-widest">In Attesa...</div>}
+                                                {turnPhase==='SPINNING' && <div className="text-xs font-black text-[#FFB805] animate-pulse uppercase tracking-widest">In Attesa...</div>}
                                                 {turnPhase==='WAITING_CONSONANT' && spinValue && (
-                                                    <div className="animate-fade-in-up">
-                                                        <div className="text-[10px] font-black text-white/60 uppercase mb-1">{ui.consonantPrompt}</div>
-                                                        <div className="text-3xl font-black drop-shadow-[0_2px_10px_rgba(255,255,255,0.2)]" style={{color: spinValue.color}}>{spinValue.val}</div>
+                                                    <div className="animate-fade-in-up flex flex-col items-center">
+                                                        <div className="text-[9px] font-black text-white/60 uppercase mb-0">{ui.consonantPrompt}</div>
+                                                        <div className="text-2xl sm:text-3xl font-black drop-shadow-[0_2px_10px_rgba(255,255,255,0.2)] leading-none" style={{color: spinValue.color}}>{spinValue.val}</div>
                                                     </div>
                                                 )}
-                                                {turnPhase==='WAITING_VOWEL' && <div className="text-sm font-black text-[#2E9DDF] uppercase animate-fade-in-up">{ui.vowelPrompt}</div>}
+                                                {turnPhase==='WAITING_VOWEL' && <div className="text-[10px] font-black text-[#2E9DDF] uppercase animate-fade-in-up">{ui.vowelPrompt}</div>}
                                             </div>
                                         )}
                                         
                                         {modalMessage && (
                                             <div className="absolute inset-0 z-30 bg-black/90 flex flex-col items-center justify-center p-2 animate-pop-in rounded-2xl">
-                                                <Icon name={modalMessage.type==='success'?'CheckCircle':'AlertCircle'} size={32} className={modalMessage.type==='success'?'text-[#00D166]':'text-red-500'} />
-                                                <div className="text-sm font-black uppercase text-center mt-2 text-white">{modalMessage.text}</div>
+                                                <Icon name={modalMessage.type==='success'?'CheckCircle':'AlertCircle'} size={24} className={modalMessage.type==='success'?'text-[#00D166]':'text-red-500'} />
+                                                <div className="text-[10px] font-black uppercase text-center mt-1 text-white">{modalMessage.text}</div>
                                             </div>
                                         )}
                                     </div>
                                 </div>
 
                                 {/* COLONNA DESTRA: Tabellone e Tastiera */}
-                                <div className="lg:w-2/3 flex flex-col lg:justify-between lg:h-full lg:overflow-y-auto gap-4 pb-4 lg:pb-0">
-                                    <div className="flex justify-center gap-3 w-full max-w-sm mx-auto">
-                                        {[...Array(numPlayers)].map((_, i) => (
-                                            <div key={i} className={`flex-1 p-2 rounded-2xl border-2 text-center transition-all flex flex-col items-center justify-center ${currentPlayer===i && gameState==='PLAYING'?'border-[#FFB805] bg-gradient-to-b from-[#FFB805]/20 to-black scale-105 shadow-[0_0_15px_rgba(255,184,5,0.3)]':'opacity-40 border-white/10 bg-black/40'}`}>
-                                                <div className="text-[9px] font-black uppercase text-white/50 flex items-center gap-1 mb-1">
-                                                    <Icon name="User" size={12}/> P{i + 1}
-                                                </div>
-                                                <div className="text-xl sm:text-2xl font-black text-white">{scores[i]}</div>
-                                            </div>
-                                        ))}
-                                    </div>
-
-                                    <div className="flex flex-col items-center gap-3 w-full flex-1 min-h-[180px]">
-                                        <div className="bg-black/80 px-6 py-2 rounded-full border border-[#FFB805]/30 shadow-[0_0_10px_rgba(255,184,5,0.1)] flex justify-center w-full max-w-md mx-auto">
-                                            <span className="text-[#FFB805] font-black text-sm sm:text-base uppercase tracking-widest text-center">{phraseData.topic}</span>
+                                <div className="lg:w-2/3 flex flex-col lg:justify-between lg:h-full gap-2 lg:gap-4 pb-2 lg:pb-0">
+                                    <div className="flex flex-col items-center gap-2 w-full flex-1">
+                                        <div className="bg-black/80 px-4 py-1 sm:px-6 sm:py-2 rounded-full border border-[#FFB805]/30 shadow-[0_0_10px_rgba(255,184,5,0.1)] flex justify-center w-full max-w-md mx-auto">
+                                            <span className="text-[#FFB805] font-black text-[11px] sm:text-sm uppercase tracking-widest text-center">{phraseData.topic}</span>
                                         </div>
                                         
-                                        <div className="relative w-full p-4 sm:p-6 rounded-[2rem] border-4 border-[#374151] bg-gradient-to-b from-[#0F2027] to-[#111827] flex flex-col items-center shadow-2xl overflow-hidden min-h-[160px] sm:min-h-[220px] justify-center flex-1">
-                                            <div className="flex flex-wrap justify-center gap-y-3 gap-x-4 sm:gap-x-8">
+                                        <div className="relative w-full p-2 sm:p-4 rounded-3xl border-[3px] sm:border-4 border-[#374151] bg-gradient-to-b from-[#0F2027] to-[#111827] flex flex-col items-center shadow-2xl overflow-hidden min-h-[100px] sm:min-h-[220px] justify-center flex-1">
+                                            <div className="flex flex-wrap justify-center gap-y-2 sm:gap-y-3 gap-x-3 sm:gap-x-8">
                                                 {phraseData.phrase.split(' ').map((w, wi)=>(
-                                                    <div key={wi} className="flex gap-1.5 sm:gap-2">
+                                                    <div key={wi} className="flex gap-1 sm:gap-2">
                                                         {w.split('').map((c, ci)=>(
-                                                            <div key={ci} style={{perspective: '1000px'}} className="w-7 h-10 sm:w-10 sm:h-14 md:w-12 md:h-16 relative">
-                                                                <div className={`w-full h-full flex items-center justify-center text-lg sm:text-2xl md:text-3xl font-black uppercase rounded-lg sm:rounded-xl shadow-md transition-all absolute inset-0 backface-hidden ${guessedLetters.includes(c) ? 'bg-white text-black border-b-4 border-gray-300 animate-flip-in' : 'bg-white/5 border border-white/10 text-transparent'}`}>
+                                                            <div key={ci} style={{perspective: '1000px'}} className="w-6 h-8 sm:w-10 sm:h-14 md:w-12 md:h-16 relative">
+                                                                <div className={`w-full h-full flex items-center justify-center text-base sm:text-2xl md:text-3xl font-black uppercase rounded-lg shadow-md transition-all absolute inset-0 backface-hidden ${guessedLetters.includes(c) ? 'bg-white text-black border-b-2 sm:border-b-4 border-gray-300 animate-flip-in' : 'bg-white/5 border border-white/10 text-transparent'}`}>
                                                                     {guessedLetters.includes(c) ? c : ''}
                                                                 </div>
                                                             </div>
@@ -596,9 +595,9 @@
                                         </div>
                                     </div>
 
-                                    {/* TASTIERA */}
-                                    <div className="w-full bg-black/40 p-2 sm:p-3 rounded-2xl border border-white/5 shadow-inner backdrop-blur-sm mt-auto shrink-0">
-                                        <div className="flex flex-col gap-2 w-full max-w-3xl mx-auto">
+                                    {/* TASTIERA COMPATTATA */}
+                                    <div className="w-full bg-black/40 p-1.5 sm:p-3 rounded-2xl border border-white/5 shadow-inner backdrop-blur-sm mt-auto shrink-0">
+                                        <div className="flex flex-col gap-1.5 sm:gap-2 w-full max-w-3xl mx-auto">
                                             {QWERTY.map((row, ri) => (
                                                 <div key={ri} className="flex justify-center gap-1 sm:gap-2 w-full">
                                                     {row.map(l => {
@@ -606,16 +605,15 @@
                                                         const isGuessed = guessedLetters.includes(l);
                                                         const disabled = turnPhase==='IDLE' || turnPhase==='SPINNING' || turnPhase==='SOLVING' || (turnPhase==='WAITING_CONSONANT' && isV) || (turnPhase==='WAITING_VOWEL' && !isV);
                                                         
-                                                        // Aggiustata la larghezza dei tasti su mobile per adattarsi meglio
-                                                        let btnClass = "relative flex-1 max-w-[32px] sm:max-w-[50px] h-10 sm:h-12 rounded-lg font-black text-[14px] sm:text-base flex items-center justify-center transition-all duration-75 select-none ";
+                                                        let btnClass = "relative flex-1 max-w-[28px] sm:max-w-[40px] md:max-w-[50px] h-9 sm:h-12 rounded sm:rounded-lg font-black text-[12px] sm:text-base flex items-center justify-center transition-all duration-75 select-none ";
                                                         
                                                         if (isGuessed) {
                                                             const inPhrase = phraseData.phrase.includes(l);
-                                                            btnClass += inPhrase ? "bg-[#374151] text-white/30 translate-y-[3px] shadow-none" : "bg-red-950/40 text-red-500/50 border border-red-900/30 translate-y-[3px] shadow-none";
+                                                            btnClass += inPhrase ? "bg-[#374151] text-white/30 translate-y-[2px] shadow-none" : "bg-red-950/40 text-red-500/50 border border-red-900/30 translate-y-[2px] shadow-none";
                                                         } else if (disabled) {
                                                             btnClass += "bg-white/5 text-white/20 opacity-50 shadow-none";
                                                         } else {
-                                                            btnClass += "bg-white text-[#111827] shadow-[0_4px_0_#9CA3AF] hover:translate-y-[2px] hover:shadow-[0_2px_0_#9CA3AF] active:translate-y-[4px] active:shadow-none cursor-pointer";
+                                                            btnClass += "bg-white text-[#111827] shadow-[0_3px_0_#9CA3AF] hover:translate-y-[1px] hover:shadow-[0_2px_0_#9CA3AF] active:translate-y-[3px] active:shadow-none cursor-pointer";
                                                         }
 
                                                         return (
