@@ -1,0 +1,1222 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { Settings, Play, Users, User, RotateCcw, CheckCircle, AlertCircle, ChevronDown } from 'lucide-react';
+
+// --- CONFIGURAZIONE AZIENDALE BETFAIR STYLE ---
+const COLORS = {
+  primary: '#1A1A1A',
+  secondary: '#FFB805',
+  backBlue: '#2E9DDF',
+  layPink: '#F48EAD',
+  text: '#FFFFFF',
+  boardBg: '#0F2027',
+};
+
+// --- CORSO ZERO TO HERO: 30 GIORNI SULL'EXCHANGE ---
+const phrasesDictionary = [
+  // DAY 1-10: LE BASI
+  {
+    id: 1,
+    en: { topic: "WHAT IS IT", phrase: "BETTING EXCHANGE", explanation: "Lesson: A peer-to-peer platform. Example: Instead of playing against a bookmaker, your €10 bet is matched against another user with the opposite prediction." },
+    it: { topic: "COS È", phrase: "BETTING EXCHANGE", explanation: "Lezione: Una piattaforma peer-to-peer. Esempio: Invece di giocare contro il banco, la tua scommessa di 10€ viene abbinata a quella di un altro utente con l'idea opposta." },
+    es: { topic: "QUÉ ES", phrase: "BETTING EXCHANGE", explanation: "Lección: Una plataforma peer-to-peer. Ejemplo: En lugar de jugar contra la casa, tu apuesta de 10€ se iguala con otro usuario con la predicción opuesta." },
+    pt: { topic: "O QUE É", phrase: "BETTING EXCHANGE", explanation: "Lição: Uma plataforma peer-to-peer. Exemplo: Em vez de jogar contra a casa de apostas, a sua aposta de 10€ é correspondida com outro utilizador com a ideia oposta." }
+  },
+  {
+    id: 2,
+    en: { topic: "BACKING", phrase: "BACK A SELECTION", explanation: "Lesson: Betting that an event WILL happen. Example: Backing Juventus at odds 2.00 for €10 means you win €10 net if they win." },
+    it: { topic: "PUNTARE (BACK)", phrase: "PUNTARE UNA QUOTA", explanation: "Lezione: Scommettere che un evento ACCADA. Esempio: Puntando 10€ sulla Juventus a quota 2.00, vinci 10€ netti se vince." },
+    es: { topic: "APOSTAR A FAVOR", phrase: "APUESTA A FAVOR", explanation: "Lección: Apostar a que un evento OCURRIRÁ. Ejemplo: Apostar 10€ a favor de la Juventus a cuota 2.00 significa que ganas 10€ netos si gana." },
+    pt: { topic: "APOSTAR A FAVOR", phrase: "APOSTAR A FAVOR", explanation: "Lição: Apostar que um evento VAI acontecer. Exemplo: Apostar 10€ a favor da Juventus a odd 2.00 significa que ganha 10€ líquidos se ela vencer." }
+  },
+  {
+    id: 3,
+    en: { topic: "LAYING", phrase: "LAY A BET", explanation: "Lesson: Betting that an event will NOT happen (acting as a bookmaker). Example: Laying a Draw means you win if Team A or Team B wins the match." },
+    it: { topic: "BANCARE (LAY)", phrase: "BANCARE UNA QUOTA", explanation: "Lezione: Scommettere che un evento NON accada (fai tu il bookmaker). Esempio: Bancando il Pareggio, tu vinci se la Squadra A o la Squadra B vincono la partita." },
+    es: { topic: "APOSTAR EN CONTRA", phrase: "APUESTA EN CONTRA", explanation: "Lección: Apostar a que un evento NO ocurrirá. Ejemplo: Apostar en contra del Empate significa que ganas si gana el Equipo A o el Equipo B." },
+    pt: { topic: "APOSTAR CONTRA", phrase: "APOSTAR CONTRA", explanation: "Lição: Apostar que um evento NÃO vai acontecer. Exemplo: Apostar contra o Empate significa que ganha se a Equipa A ou a Equipa B vencerem." }
+  },
+  {
+    id: 4,
+    en: { topic: "MATCHING", phrase: "MATCHED BET", explanation: "Lesson: A bet is active only when matched by someone else. Example: You place a €50 back bet at 3.00. It stays 'Unmatched' until another user lays it." },
+    it: { topic: "ABBINAMENTO", phrase: "SCOMMESSA ABBINATA", explanation: "Lezione: Una scommessa è attiva solo se abbinata. Esempio: Inserisci una Puntata di 50€ a quota 3.00. Rimane 'Non abbinata' finché un altro utente non la banca." },
+    es: { topic: "IGUALACIÓN", phrase: "APUESTA IGUALADA", explanation: "Lección: Una apuesta solo está activa cuando es igualada. Ejemplo: Pides apostar 50€ a 3.00, queda 'No igualada' hasta que otro usuario apueste en contra." },
+    pt: { topic: "CORRESPONDÊNCIA", phrase: "APOSTA CORRESPONDIDA", explanation: "Lição: Uma aposta só está ativa quando correspondida. Exemplo: Pede para apostar 50€ a 3.00, fica 'Não correspondida' até outro utilizador apostar contra." }
+  },
+  {
+    id: 5,
+    en: { topic: "LIQUIDITY", phrase: "MARKET LIQUIDITY", explanation: "Lesson: The total money waiting to be matched. Example: A market with €1,000,000 liquidity allows you to match a €5,000 bet instantly without moving the odds." },
+    it: { topic: "LIQUIDITÀ", phrase: "LIQUIDITA DI MERCATO", explanation: "Lezione: I soldi totali in attesa di abbinamento. Esempio: Un mercato con 1.000.000€ di liquidità ti permette di abbinare una scommessa di 5.000€ all'istante senza sbalzi." },
+    es: { topic: "LIQUIDEZ", phrase: "LIQUIDEZ DEL MERCADO", explanation: "Lección: El dinero total esperando ser igualado. Ejemplo: Un mercado con 1.000.000€ te permite igualar una apuesta de 5.000€ al instante sin alterar cuotas." },
+    pt: { topic: "LIQUIDEZ", phrase: "LIQUIDEZ DO MERCADO", explanation: "Lição: O dinheiro total à espera de correspondência. Exemplo: Um mercado com 1.000.000€ permite corresponder uma aposta de 5.000€ instantaneamente sem saltos." }
+  },
+  {
+    id: 6,
+    en: { topic: "RISK", phrase: "LIABILITY", explanation: "Lesson: The money you risk losing when laying. Example: Laying €10 at odds 3.00 means your liability is €20. You risk €20 to win €10." },
+    it: { topic: "RISCHIO", phrase: "RESPONSABILITA", explanation: "Lezione: I soldi che rischi di perdere quando banchi. Esempio: Bancando 10€ a quota 3.00, la tua responsabilità è 20€. Rischi 20€ per vincerne 10€." },
+    es: { topic: "RIESGO", phrase: "RESPONSABILIDAD", explanation: "Lección: El dinero que arriesgas al apostar en contra. Ejemplo: Apostar en contra 10€ a 3.00 significa un riesgo de 20€. Arriesgas 20€ para ganar 10€." },
+    pt: { topic: "RISCO", phrase: "RESPONSABILIDADE", explanation: "Lição: O dinheiro que arrisca ao apostar contra. Exemplo: Apostar contra 10€ a 3.00 significa uma responsabilidade de 20€. Arrisca 20€ para ganhar 10€." }
+  },
+  {
+    id: 7,
+    en: { topic: "PRICE TICK", phrase: "TICK SIZE", explanation: "Lesson: The minimum price movement. Example: From odds 2.00 to 3.00, the tick is 0.02 (e.g., 2.00 to 2.02). From 3.00 to 4.00, it is 0.05." },
+    it: { topic: "SCATTO QUOTA", phrase: "TICK SIZE", explanation: "Lezione: Il movimento minimo della quota. Esempio: Tra quota 2.00 e 3.00, il tick è 0.02 (es. da 2.00 a 2.02). Tra 3.00 e 4.00 è 0.05." },
+    es: { topic: "TICK DE PRECIO", phrase: "TAMANO DEL TICK", explanation: "Lección: El movimiento mínimo de cuota. Ejemplo: Entre cuota 2.00 y 3.00, el tick es 0.02 (ej. de 2.00 a 2.02). Entre 3.00 y 4.00 es 0.05." },
+    pt: { topic: "SALTO DE PREÇO", phrase: "TAMANHO DO TICK", explanation: "Lição: O movimento mínimo da cota. Exemplo: Entre a cota 2.00 e 3.00, o tick é 0.02 (ex. de 2.00 para 2.02). Entre 3.00 e 4.00 é 0.05." }
+  },
+  {
+    id: 8,
+    en: { topic: "FEES", phrase: "COMMISSION", explanation: "Lesson: Exchanges take a small percentage only on your NET winnings. Example: If you win €100 and the exchange commission is 5%, you keep €95." },
+    it: { topic: "TARIFFE", phrase: "COMMISSIONE", explanation: "Lezione: L'exchange trattiene una piccola % solo sulle vincite NETTE. Esempio: Se vinci 100€ in un mercato e la commissione è del 5%, incassi 95€." },
+    es: { topic: "TARIFAS", phrase: "COMISION", explanation: "Lección: El exchange toma un % solo de tus ganancias NETAS. Ejemplo: Si ganas 100€ y la comisión es 5%, te quedas con 95€." },
+    pt: { topic: "TAXAS", phrase: "COMISSAO", explanation: "Lição: O exchange cobra uma % apenas nos seus ganhos LÍQUIDOS. Exemplo: Se ganhar 100€ e a comissão for 5%, fica com 95€." }
+  },
+  {
+    id: 9,
+    en: { topic: "CANCELLATION", phrase: "VOID BET", explanation: "Lesson: Bets canceled due to rules. Example: If a tennis match is abandoned in the 1st set, matched bets on the winner are voided and stakes returned." },
+    it: { topic: "ANNULLAMENTO", phrase: "SCOMMESSA NULLA", explanation: "Lezione: Scommesse annullate. Esempio: Se in una partita di tennis un giocatore si ritira nel 1° set, le puntate sul vincitore sono dichiarate Void (rimborsate)." },
+    es: { topic: "CANCELACIÓN", phrase: "APUESTA NULA", explanation: "Lección: Apuestas devueltas. Ejemplo: Si un tenista se retira en el 1er set, las apuestas al ganador se anulan y se devuelve el importe." },
+    pt: { topic: "CANCELAMENTO", phrase: "APOSTA NULA", explanation: "Lição: Apostas devolvidas. Exemplo: Se um tenista desistir no 1º set, as apostas no vencedor são anuladas e o valor devolvido." }
+  },
+  {
+    id: 10,
+    en: { topic: "CASHING OUT", phrase: "CASH OUT", explanation: "Lesson: Closing a trade before the event ends. Example: You back at 2.00, your team leads and odds drop to 1.50. You Cash Out to secure profit immediately." },
+    it: { topic: "USCIRE DAL MERCATO", phrase: "CASH OUT", explanation: "Lezione: Chiudere una posizione in anticipo. Esempio: Punti a 2.00, la squadra segna e la quota scende a 1.50. Fai Cash Out per blindare il profitto sicuro." },
+    es: { topic: "SALIR DEL MERCADO", phrase: "CERRAR APUESTA", explanation: "Lección: Cerrar una posición antes de tiempo. Ejemplo: Apuestas a 2.00, tu equipo marca y la cuota baja a 1.50. Cierras para asegurar ganancias." },
+    pt: { topic: "SAIR DO MERCADO", phrase: "ENCERRAR APOSTA", explanation: "Lição: Fechar uma posição antecipadamente. Exemplo: Aposta a 2.00, a sua equipa marca e a odd desce para 1.50. Encerra para garantir lucro seguro." }
+  },
+
+  // DAY 11-20: INTERMEDIATE
+  {
+    id: 11,
+    en: { topic: "TRADING 101", phrase: "BACK TO LAY", explanation: "Lesson: Backing at high odds, laying later at lower odds. Example: Backing a horse at 10.0 pre-race, laying it at 5.0 in-play for a guaranteed profit." },
+    it: { topic: "TRADING 101", phrase: "BACK TO LAY", explanation: "Lezione: Puntare a quota alta per bancare a quota bassa. Esempio: Punti un cavallo a 10.0 prima della gara, e lo banchi a 5.0 in-play quando è primo." },
+    es: { topic: "TRADING 101", phrase: "BACK TO LAY", explanation: "Lección: Apostar a favor a cuota alta y en contra a cuota baja. Ejemplo: Apostar a un caballo a 10.0 y luego en contra a 5.0 en carrera para asegurar beneficio." },
+    pt: { topic: "TRADING 101", phrase: "BACK TO LAY", explanation: "Lição: Apostar a favor a cota alta para apostar contra a cota baixa. Exemplo: Apostar num cavalo a 10.0 e depois contra a 5.0 durante a corrida." }
+  },
+  {
+    id: 12,
+    en: { topic: "TRADING 102", phrase: "LAY TO BACK", explanation: "Lesson: Laying at low odds, backing later at high odds. Example: Laying a favorite football team at 1.20, and backing them at 2.00 if they concede an early goal." },
+    it: { topic: "TRADING 102", phrase: "LAY TO BACK", explanation: "Lezione: Bancare a quota bassa per puntare a quota alta. Esempio: Banchi la squadra favorita a 1.20. Se subisce gol, la quota sale a 2.00 e tu ci punti sopra." },
+    es: { topic: "TRADING 102", phrase: "LAY TO BACK", explanation: "Lección: Apostar en contra a cuota baja y a favor a cuota alta. Ejemplo: Apostar en contra del favorito a 1.20 y luego a favor a 2.00 si recibe un gol." },
+    pt: { topic: "TRADING 102", phrase: "LAY TO BACK", explanation: "Lição: Apostar contra a cota baixa para apostar a favor a cota alta. Exemplo: Apostar contra o favorito a 1.20 e depois a favor a 2.00 se sofrer um golo." }
+  },
+  {
+    id: 13,
+    en: { topic: "PROFIT SCREEN", phrase: "GREEN BOOK", explanation: "Lesson: Spreading profits equally. Example: After trading, regardless of whether Team A, B or Draw wins, your screen mathematically shows +€15 on all outcomes." },
+    it: { topic: "PROFITTO ASSOLUTO", phrase: "IL GREEN BOOK", explanation: "Lezione: Distribuire il profitto. Esempio: Dopo un trade perfetto, a prescindere che vinca la Squadra A, B o ci sia Pareggio, vincerai +15€ su ogni esito (Tutto Verde)." },
+    es: { topic: "BENEFICIO TOTAL", phrase: "LIBRO VERDE", explanation: "Lección: Distribuir ganancias. Ejemplo: Después de hacer trading, sin importar el resultado final, la pantalla muestra +15€ en todas las opciones matemáticamente." },
+    pt: { topic: "LUCRO TOTAL", phrase: "LIVRO VERDE", explanation: "Lição: Distribuir lucros. Exemplo: Após fazer trading, independentemente do resultado final, o ecrã mostra +15€ em todas as opções matematicamente." }
+  },
+  {
+    id: 14,
+    en: { topic: "LOSS SCREEN", phrase: "RED BOOK", explanation: "Lesson: Accepting and spreading a loss. Example: A trade goes wrong. Instead of losing €50 on one outcome, you hedge to lose exactly -€5 on any outcome." },
+    it: { topic: "PERDITA GESTITA", phrase: "RED BOOK", explanation: "Lezione: Accettare e spalmare una perdita. Esempio: Un trade va male. Invece di perdere 50€ su un esito, ti copri per perdere esattamente -5€ su qualsiasi risultato." },
+    es: { topic: "PÉRDIDA GESTIONADA", phrase: "LIBRO ROJO", explanation: "Lección: Aceptar y distribuir una pérdida. Ejemplo: Un trade sale mal. En lugar de perder 50€, te cubres para perder exactamente -5€ en cualquier resultado." },
+    pt: { topic: "PERDA GERIDA", phrase: "LIVRO VERMELHO", explanation: "Lição: Aceitar e distribuir uma perda. Exemplo: Um trade corre mal. Em vez de perder 50€, cobre-se para perder exatamente -5€ em qualquer resultado." }
+  },
+  {
+    id: 15,
+    en: { topic: "PROTECTION", phrase: "STOP LOSS", explanation: "Lesson: Pre-planned exit to limit damage. Example: You back at 2.00. If odds rise against you to 2.50, you lay to exit and cut your loss mathematically." },
+    it: { topic: "PROTEZIONE", phrase: "STOP LOSS", explanation: "Lezione: Uscita pianificata per limitare i danni. Esempio: Punti a 2.00. Se la quota sale contro di te a 2.50, banchi per uscire e tagliare matematicamente la perdita." },
+    es: { topic: "PROTECCIÓN", phrase: "STOP LOSS", explanation: "Lección: Salida planificada para limitar daños. Ejemplo: Apuestas a 2.00. Si la cuota sube en tu contra a 2.50, apuestas en contra para salir y recortar pérdidas." },
+    pt: { topic: "PROTEÇÃO", phrase: "STOP LOSS", explanation: "Lição: Saída planeada para limitar danos. Exemplo: Aposta a favor a 2.00. Se a cota subir contra si para 2.50, aposta contra para sair e cortar a perda matematicamente." }
+  },
+  {
+    id: 16,
+    en: { topic: "TIMING", phrase: "IN PLAY", explanation: "Lesson: Betting while the match is running. Example: Trading 'In Play' is highly volatile. A goal immediately drops the scoring team's odds drastically." },
+    it: { topic: "TEMPISTICHE", phrase: "MERCATO IN PLAY", explanation: "Lezione: Operare durante lo svolgimento. Esempio: Il mercato In Play è iper-volatile. Un gol fa crollare immediatamente la quota della squadra in vantaggio." },
+    es: { topic: "TIEMPOS", phrase: "MERCADO EN VIVO", explanation: "Lección: Operar durante el evento. Ejemplo: El mercado 'En Vivo' es muy volátil. Un gol hace caer drásticamente la cuota del equipo que anota." },
+    pt: { topic: "TEMPOS", phrase: "MERCADO AO VIVO", explanation: "Lição: Operar durante o evento. Exemplo: O mercado 'Ao Vivo' é hiper-volátil. Um golo faz cair drasticamente a cota da equipa que marca." }
+  },
+  {
+    id: 17,
+    en: { topic: "TIMING", phrase: "PRE MATCH", explanation: "Lesson: Trading before the event starts. Example: Pre-match trading relies on news. If a star player is injured, the team's odds will steadily drift higher." },
+    it: { topic: "TEMPISTICHE", phrase: "PRE PARTITA", explanation: "Lezione: Trading prima del fischio d'inizio. Esempio: Basato sulle notizie. Se il bomber si infortuna, la quota della sua squadra salirà gradualmente (Drift)." },
+    es: { topic: "TIEMPOS", phrase: "PRE PARTIDO", explanation: "Lección: Trading antes del inicio. Ejemplo: Basado en noticias. Si el goleador se lesiona, la cuota del equipo subirá gradualmente." },
+    pt: { topic: "TEMPOS", phrase: "PRÉ JOGO", explanation: "Lição: Trading antes do apito inicial. Exemplo: Baseado em notícias. Se o craque se lesiona, a cota da equipa subirá gradualmente (Drift)." }
+  },
+  {
+    id: 18,
+    en: { topic: "DISTRIBUTION", phrase: "DUTCHING", explanation: "Lesson: Spreading stakes over multiple selections. Example: Backing 3 correct scores (1-0, 2-0, 2-1) calculated so that if ANY of the 3 hits, your profit is identical." },
+    it: { topic: "DISTRIBUZIONE", phrase: "DUTCHING", explanation: "Lezione: Dividere il capitale su più esiti. Esempio: Puntare su 3 risultati esatti (1-0, 2-0, 2-1) calcolando gli importi per avere identico profitto se esce uno dei 3." },
+    es: { topic: "DISTRIBUCIÓN", phrase: "DUTCHING", explanation: "Lección: Dividir el capital en varias opciones. Ejemplo: Apostar a 3 resultados exactos calculando importes para tener el mismo beneficio gane cual gane." },
+    pt: { topic: "DISTRIBUIÇÃO", phrase: "DUTCHING", explanation: "Lição: Dividir o capital por várias opções. Exemplo: Apostar em 3 resultados exatos calculando valores para ter o mesmo lucro idêntico caso um dos 3 saia." }
+  },
+  {
+    id: 19,
+    en: { topic: "STRATEGY", phrase: "SCALPING", explanation: "Lesson: Making many trades for tiny 1-tick profits. Example: Backing at 2.02 and laying at 2.00 repeatedly in a highly liquid and stable pre-match market." },
+    it: { topic: "STRATEGIA VELOCE", phrase: "SCALPING", explanation: "Lezione: Fare tanti trade veloci per rubare 1 o 2 tick. Esempio: Puntare a 2.02 e bancare a 2.00 ripetutamente in un mercato pre-match molto liquido e stabile." },
+    es: { topic: "ESTRATEGIA RÁPIDA", phrase: "SCALPING", explanation: "Lección: Hacer muchos trades para ganar 1 tick. Ejemplo: Apostar a 2.02 y en contra a 2.00 repetidamente en un mercado estable de alta liquidez." },
+    pt: { topic: "ESTRATÉGIA RÁPIDA", phrase: "SCALPING", explanation: "Lição: Fazer muitos trades para ganhar 1 tick. Exemplo: Apostar a favor a 2.02 e contra a 2.00 repetidamente num mercado pré-jogo muito líquido e estável." }
+  },
+  {
+    id: 20,
+    en: { topic: "STRATEGY", phrase: "SWING TRADING", explanation: "Lesson: Anticipating large odds movements. Example: Laying a horse in the morning at 6.00 and backing it at 12.00 before the race, capturing a massive margin." },
+    it: { topic: "STRATEGIA LUNGA", phrase: "SWING TRADING", explanation: "Lezione: Anticipare grandi movimenti di quote. Esempio: Bancare un cavallo al mattino a 6.00 e puntarlo a 12.00 prima della gara, catturando un enorme margine." },
+    es: { topic: "ESTRATEGIA LARGA", phrase: "SWING TRADING", explanation: "Lección: Anticipar grandes movimientos de cuota. Ejemplo: Apostar en contra a las 10am a 6.00 y a favor a las 3pm a 12.00 capturando un gran margen." },
+    pt: { topic: "ESTRATÉGIA LONGA", phrase: "SWING TRADING", explanation: "Lição: Antecipar grandes movimentos de cota. Exemplo: Apostar contra de manhã a 6.00 e a favor à tarde a 12.00 capturando uma enorme margem." }
+  },
+
+  // DAY 21-30: ADVANCED
+  {
+    id: 21,
+    en: { topic: "PROFIT CALCULATION", phrase: "HEDGING", explanation: "Lesson: Reducing risk by taking the opposite position. Example: Instead of clicking Cash Out, you manually calculate the exact lay stake to balance profits precisely." },
+    it: { topic: "CALCOLO PROFITTO", phrase: "COPERTURA", explanation: "Lezione: Ridurre il rischio coprendosi (Hedging). Esempio: Invece di usare il tasto Cash Out, calcoli manualmente l'esatto importo da bancare per bilanciare i profitti." },
+    es: { topic: "CÁLCULO DE BENEFICIO", phrase: "COBERTURA", explanation: "Lección: Reducir riesgo tomando la posición contraria. Ejemplo: En lugar de usar Cash Out, calculas manualmente la apuesta exacta en contra para equilibrar beneficios." },
+    pt: { topic: "CÁLCULO DE LUCRO", phrase: "COBERTURA", explanation: "Lição: Reduzir risco assumindo a posição oposta. Exemplo: Em vez de usar Cash Out, calcula manualmente a aposta exata contra para equilibrar os lucros." }
+  },
+  {
+    id: 22,
+    en: { topic: "EXECUTION", phrase: "DRIP FEEDING", explanation: "Lesson: Entering a market with small stakes gradually. Example: Instead of placing a €1,000 bet at once and alerting the market, you place €100 ten times." },
+    it: { topic: "ESECUZIONE", phrase: "DRIP FEEDING", explanation: "Lezione: Entrare a mercato a piccole dosi. Esempio: Invece di piazzare 1.000€ in una sola volta allertando i bot, piazzi piccoli ordini da 100€ per 10 volte." },
+    es: { topic: "EJECUCIÓN", phrase: "DRIP FEEDING", explanation: "Lección: Entrar al mercado gradualmente. Ejemplo: En lugar de colocar 1.000€ de golpe alertando al mercado, colocas 100€ diez veces." },
+    pt: { topic: "EXECUÇÃO", phrase: "DRIP FEEDING", explanation: "Lição: Entrar no mercado gradualmente. Exemplo: Em vez de colocar 1.000€ de uma vez alertando os bots, coloca ordens de 100€ dez vezes." }
+  },
+  {
+    id: 23,
+    en: { topic: "MARKET DYNAMICS", phrase: "WEIGHT OF MONEY", explanation: "Lesson: Volume indicating market pressure. Example: If there is €10k waiting to Back and only €2k waiting to Lay, the strong demand pushes the odds down." },
+    it: { topic: "DINAMICHE", phrase: "PESO DEL DENARO", explanation: "Lezione: Volume che indica pressione di mercato. Esempio: Se ci sono 10k€ in attesa di Puntare e solo 2k€ da Bancare, la forte domanda spinge la quota giù." },
+    es: { topic: "DINÁMICAS", phrase: "PESO DEL DINERO", explanation: "Lección: Volumen que indica presión del mercado. Ejemplo: Si hay 10k€ esperando para Apostar a favor y solo 2k€ en contra, la fuerte demanda empuja la cuota hacia abajo." },
+    pt: { topic: "DINÂMICAS", phrase: "PESO DO DINHEIRO", explanation: "Lição: Volume que indica pressão do mercado. Exemplo: Se há 10k€ à espera para Apostar a favor e apenas 2k€ contra, a forte procura empurra a cota para baixo." }
+  },
+  {
+    id: 24,
+    en: { topic: "TECHNICAL", phrase: "FILL RATE", explanation: "Lesson: The speed at which your unmatched bets get matched. Example: In highly liquid Premier League matches, the fill rate is usually measured in milliseconds." },
+    it: { topic: "TECNICISMI", phrase: "TASSO DI RIEMPIMENTO", explanation: "Lezione: La velocità con cui i tuoi ordini vengono abbinati. Esempio: Nei match di Premier League la liquidità è così alta che il fill rate è misurato in millisecondi." },
+    es: { topic: "TECNICISMOS", phrase: "TASA DE LLENADO", explanation: "Lección: La velocidad con que tus órdenes se igualan. Ejemplo: En la Premier League la liquidez es tan alta que se igualan en milisegundos." },
+    pt: { topic: "TECNICISMOS", phrase: "TAXA DE PREENCHIMENTO", explanation: "Lição: A velocidade com que as suas ordens são correspondidas. Exemplo: Na Premier League a liquidez é tão alta que o fill rate é medido em milissegundos." }
+  },
+  {
+    id: 25,
+    en: { topic: "EXCHANGE ENGINE", phrase: "CROSS MATCHING", explanation: "Lesson: Exchange algorithms matching bets across different markets. Example: You lay Under 2.5, and the system matches it securely against someone backing Over 2.5." },
+    it: { topic: "MOTORE EXCHANGE", phrase: "CROSS MATCHING", explanation: "Lezione: L'algoritmo che incrocia mercati diversi. Esempio: Tu banchi l'Under 2.5, e il sistema ti abbina in automatico e in sicurezza con chi punta l'Over 2.5." },
+    es: { topic: "MOTOR EXCHANGE", phrase: "CRUCE DE APUESTAS", explanation: "Lección: El algoritmo que cruza mercados. Ejemplo: Tú apuestas en contra del Under 2.5, y el sistema te iguala automáticamente con alguien apostando al Over 2.5." },
+    pt: { topic: "MOTOR EXCHANGE", phrase: "CRUZAMENTO DE APOSTAS", explanation: "Lição: O algoritmo que cruza mercados diferentes. Exemplo: Tu apostas contra o Under 2.5, e o sistema corresponde automaticamente com quem aposta no Over 2.5." }
+  },
+  {
+    id: 26,
+    en: { topic: "EVALUATION", phrase: "VALUE BET", explanation: "Lesson: Betting when odds are mathematically higher than reality. Example: True probability is 50% (odds 2.00), but the exchange offers 2.20. That's a pure value trade." },
+    it: { topic: "VALUTAZIONE", phrase: "SCOMMESSA DI VALORE", explanation: "Lezione: Operare su quote matematicamente alte. Esempio: La probabilità reale dell'evento è 50% (quota equa 2.00), ma l'exchange offre 2.20. Questo è puro Valore." },
+    es: { topic: "EVALUACIÓN", phrase: "APUESTA DE VALOR", explanation: "Lección: Operar en cuotas matemáticamente altas. Ejemplo: La probabilidad real es 50% (cuota 2.00), pero el exchange ofrece 2.20. Este trade tiene valor puro." },
+    pt: { topic: "AVALIAÇÃO", phrase: "APOSTA DE VALOR", explanation: "Lição: Operar em cotas matematicamente altas. Exemplo: A probabilidade real é 50% (cota justa 2.00), mas o exchange oferece 2.20. Isto é puro Valor." }
+  },
+  {
+    id: 27,
+    en: { topic: "MATH", phrase: "OVERROUND", explanation: "Lesson: The margin built into odds. Example: Traditional bookmakers have a 105% overround (5% house edge). Exchanges sit near 100%, offering much fairer odds." },
+    it: { topic: "MATEMATICA", phrase: "LAVAGNA", explanation: "Lezione: Il margine di profitto (Overround). Esempio: I bookmaker classici hanno lavagne al 105% (5% di svantaggio per te). Gli Exchange sono prossimi al 100% (quote eque)." },
+    es: { topic: "MATEMÁTICA", phrase: "MARGEN", explanation: "Lección: El margen de beneficio matemático. Ejemplo: Las casas clásicas tienen márgenes del 105%. Los exchanges rondan el 100%, ofreciendo cuotas más justas." },
+    pt: { topic: "MATEMÁTICA", phrase: "MARGEM", explanation: "Lição: A margem de lucro matemático. Exemplo: As casas clássicas têm margens de 105% (5% de desvantagem). Os exchanges rondam os 100% (cotas justas)." }
+  },
+  {
+    id: 28,
+    en: { topic: "OPPORTUNITY", phrase: "ARBITRAGE", explanation: "Lesson: Risk-free profit from price differences. Example: Backing a team on a traditional bookie at 2.10 and laying them on the Exchange at 2.00." },
+    it: { topic: "OPPORTUNITÀ", phrase: "ARBITRAGGIO", explanation: "Lezione: Profitto senza rischio da differenza di prezzi. Esempio: Puntare una squadra su un bookmaker classico a 2.10 e bancarla sull'Exchange a 2.00." },
+    es: { topic: "OPORTUNIDAD", phrase: "ARBITRAJE", explanation: "Lección: Beneficio sin riesgo por diferencia de precios. Ejemplo: Apostar a favor en una casa tradicional a 2.10 y en contra en el Exchange a 2.00." },
+    pt: { topic: "OPORTUNIDADE", phrase: "ARBITRAGEM", explanation: "Lição: Lucro sem risco por diferença de preços. Exemplo: Apostar a favor numa casa tradicional a 2.10 e contra no Exchange a 2.00." }
+  },
+  {
+    id: 29,
+    en: { topic: "MINDSET", phrase: "TRADING PLAN", explanation: "Lesson: Strict rules on entry, exit, and stakes. Example: 'I will only risk 2% of my bankroll per trade and exit at minute 75.' Never trade purely on emotion." },
+    it: { topic: "MINDSET", phrase: "PIANO DI TRADING", explanation: "Lezione: Regole rigide per entrare e uscire. Esempio: 'Rischierò solo il 2% della mia cassa e farò cash out al minuto 75.' Mai fare trading in preda alle emozioni." },
+    es: { topic: "MENTALIDAD", phrase: "PLAN DE TRADING", explanation: "Lección: Reglas estrictas. Ejemplo: 'Solo arriesgaré el 2% de mi capital por trade y saldré en el minuto 75.' Nunca operar basado en emociones." },
+    pt: { topic: "MENTALIDADE", phrase: "PLANO DE TRADING", explanation: "Lição: Regras rígidas. Exemplo: 'Só arriscarei 2% da minha banca por trade e sairei ao minuto 75.' Nunca fazer trading baseado em emoções." }
+  },
+  {
+    id: 30,
+    en: { topic: "THE ULTIMATE", phrase: "DISCIPLINE", explanation: "Lesson: The only secret to long-term success. Example: Taking a planned €5 loss without chasing it blindly by doubling your next stake. You are now a pro!" },
+    it: { topic: "IL SEGRETO", phrase: "DISCIPLINA", explanation: "Lezione: L'unico vero segreto del successo. Esempio: Incassare uno Stop Loss di 5€ senza cercare di recuperarli scommettendo a caso. Sei pronto per i mercati reali!" },
+    es: { topic: "EL SECRETO", phrase: "DISCIPLINA", explanation: "Lección: El único secreto real a largo plazo. Ejemplo: Aceptar un Stop Loss de 5€ sin intentar recuperarlos apostando el doble. ¡Eres un profesional!" },
+    pt: { topic: "O SEGREDO", phrase: "DISCIPLINA", explanation: "Lição: O único verdadeiro segredo do sucesso. Exemplo: Aceitar um Stop Loss de 5€ sem tentar recuperá-los apostando ao calhas. Estás pronto para os mercados reais!" }
+  }
+];
+
+// --- TRADUZIONI UI ---
+const uiTranslations = {
+  en: {
+    title: "⚽ BETTING EXCHANGE ROOM",
+    tagline: "Spin the odds and learn the Exchange!",
+    players1: "1 Player",
+    players2: "2 Players",
+    selectLesson: "Select Lesson (Day 1 - 30)",
+    startGame: "Start Course",
+    spinWheel: "Spin",
+    buyVowel: "Vowel (250)",
+    solve: "Solve",
+    player: "Player",
+    score: "Score",
+    turnPrefix: "Player",
+    turnSuffix: "'s Turn",
+    bankrupt: "BANKRUPT!",
+    loseTurn: "LOSE TURN!",
+    consonantPrompt: "Consonant for Odds:",
+    vowelPrompt: "Choose Vowel",
+    solvePrompt: "Solution:",
+    submit: "Send",
+    cancel: "Cancel",
+    correct: "Correct!",
+    wrong: "Wrong!",
+    concept: "Lesson Example:",
+    nextRound: "Play Next Topic",
+    gameOver: "Course Completed!",
+    winner: "Top Trader",
+    playAgain: "Restart Course",
+    day: "Day",
+    wheelValues: { BANKRUPT: "BANKRUPT", LOSE_TURN: "LOSE TURN" }
+  },
+  it: {
+    title: "⚽ BETTING EXCHANGE ROOM",
+    tagline: "Gira le quote e impara il Betting Exchange!",
+    players1: "1 Giocatore",
+    players2: "2 Giocatori",
+    selectLesson: "Seleziona Lezione (Giorno 1 - 30)",
+    startGame: "Inizia Corso",
+    spinWheel: "Gira",
+    buyVowel: "Vocale (250)",
+    solve: "Risolvi",
+    player: "Giocatore",
+    score: "Punti",
+    turnPrefix: "Tocca al Giocatore",
+    turnSuffix: "!",
+    bankrupt: "BANCAROTTA!",
+    loseTurn: "PASSO!",
+    consonantPrompt: "Consonante a Quota:",
+    vowelPrompt: "Scegli Vocale",
+    solvePrompt: "Soluzione:",
+    submit: "Invia",
+    cancel: "Annulla",
+    correct: "Esatto!",
+    wrong: "Sbagliato!",
+    concept: "Esempio Lezione:",
+    nextRound: "Gioca Prossima Lezione",
+    gameOver: "Corso Completato!",
+    winner: "Top Trader",
+    playAgain: "Ricomincia Corso",
+    day: "Giorno",
+    wheelValues: { BANKRUPT: "BANCAROTTA", LOSE_TURN: "PASSO" }
+  },
+  es: {
+    title: "⚽ BETTING EXCHANGE ROOM",
+    tagline: "¡Gira las cuotas y aprende Betting Exchange!",
+    players1: "1 Jugador",
+    players2: "2 Jugadores",
+    selectLesson: "Seleccionar Lección (Día 1 - 30)",
+    startGame: "Iniciar Curso",
+    spinWheel: "Girar",
+    buyVowel: "Vocal (250)",
+    solve: "Resolver",
+    player: "Jugador",
+    score: "Puntos",
+    turnPrefix: "Turno del Jugador",
+    turnSuffix: "",
+    bankrupt: "¡BANCARROTA!",
+    loseTurn: "¡PASO!",
+    consonantPrompt: "Consonante a Cuota:",
+    vowelPrompt: "Elige Vocal",
+    solvePrompt: "Solución:",
+    submit: "Enviar",
+    cancel: "Cancelar",
+    correct: "¡Correcto!",
+    wrong: "¡Incorrecto!",
+    concept: "Ejemplo Lección:",
+    nextRound: "Jugar Siguiente Tema",
+    gameOver: "¡Curso Completado!",
+    winner: "Top Trader",
+    playAgain: "Reiniciar Curso",
+    day: "Día",
+    wheelValues: { BANKRUPT: "BANCARROTA", LOSE_TURN: "PIERDE TURNO" }
+  },
+  pt: {
+    title: "⚽ BETTING EXCHANGE ROOM",
+    tagline: "Gire as cotas e aprenda Betting Exchange!",
+    players1: "1 Jogador",
+    players2: "2 Jogadores",
+    selectLesson: "Selecionar Lição (Dia 1 - 30)",
+    startGame: "Iniciar Curso",
+    spinWheel: "Girar",
+    buyVowel: "Vogal (250)",
+    solve: "Resolver",
+    player: "Jogador",
+    score: "Pontos",
+    turnPrefix: "Vez do Jogador",
+    turnSuffix: "",
+    bankrupt: "FALÊNCIA!",
+    loseTurn: "PASSO!",
+    consonantPrompt: "Consoante para Cota:",
+    vowelPrompt: "Escolha Vogal",
+    solvePrompt: "Solução:",
+    submit: "Enviar",
+    cancel: "Cancelar",
+    correct: "Correto!",
+    wrong: "Errado!",
+    concept: "Exemplo Lição:",
+    nextRound: "Jogar Próximo Tópico",
+    gameOver: "Curso Concluído!",
+    winner: "Top Trader",
+    playAgain: "Reiniciar Curso",
+    day: "Dia",
+    wheelValues: { BANKRUPT: "FALÊNCIA", LOSE_TURN: "PERDE A VEZ" }
+  }
+};
+
+const WHEEL_SEGMENTS = [
+  { type: 'value', val: '1.50', multiplier: 150, color: COLORS.backBlue, textColor: '#FFFFFF' },
+  { type: 'value', val: '2.00', multiplier: 200, color: COLORS.layPink, textColor: '#000000' },
+  { type: 'value', val: '3.50', multiplier: 350, color: COLORS.backBlue, textColor: '#FFFFFF' },
+  { type: 'BANKRUPT', val: '0', multiplier: 0, color: '#000000', textColor: '#EF4444' },
+  { type: 'value', val: '1.20', multiplier: 120, color: COLORS.layPink, textColor: '#000000' },
+  { type: 'value', val: '5.00', multiplier: 500, color: COLORS.backBlue, textColor: '#FFFFFF' },
+  { type: 'value', val: '2.50', multiplier: 250, color: COLORS.layPink, textColor: '#000000' },
+  { type: 'LOSE_TURN', val: '0', multiplier: 0, color: '#FFFFFF', textColor: '#000000' },
+  { type: 'value', val: '4.00', multiplier: 400, color: COLORS.backBlue, textColor: '#FFFFFF' },
+  { type: 'value', val: '10.0', multiplier: 1000, color: COLORS.layPink, textColor: '#000000' },
+  { type: 'value', val: '1.80', multiplier: 180, color: COLORS.backBlue, textColor: '#FFFFFF' },
+  { type: 'value', val: '6.00', multiplier: 600, color: COLORS.layPink, textColor: '#000000' }
+];
+
+const VOWELS = ['A', 'E', 'I', 'O', 'U'];
+const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+
+const flagImages = {
+  en: 'https://flagcdn.com/w80/gb.png',
+  it: 'https://flagcdn.com/w80/it.png',
+  es: 'https://flagcdn.com/w80/es.png',
+  pt: 'https://flagcdn.com/w80/pt.png'
+};
+
+export default function App() {
+  const [lang, setLang] = useState('it');
+  const [gameState, setGameState] = useState('SETUP');
+  const [numPlayers, setNumPlayers] = useState(2);
+  const [startTopicIndex, setStartTopicIndex] = useState(0); 
+  const [scores, setScores] = useState([0, 0]);
+  const [currentPlayer, setCurrentPlayer] = useState(0);
+  
+  const [currentRoundIndex, setCurrentRoundIndex] = useState(0);
+  const [phraseData, setPhraseData] = useState(null);
+  const [guessedLetters, setGuessedLetters] = useState([]);
+  
+  const [turnPhase, setTurnPhase] = useState('IDLE');
+  const [spinValue, setSpinValue] = useState(null);
+  
+  // Safe declaration of local states
+  const [solveInput, setSolveInput] = useState('');
+  const [modalMessage, setModalMessage] = useState(null);
+  
+  // Safe refs preventing Vercel build crashes
+  const wheelRef = useRef(null);
+  const flipperRef = useRef(null);
+  const rotationRef = useRef(0);
+  const audioCtxRef = useRef(null);
+
+  const ui = uiTranslations[lang];
+
+  // Preloading ottimizzato e Server-Side Rendering safe
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const assets = [
+        'La-Ruota-della-Fortuna-2-1024x576.webp',
+        'logo-tondo.jpeg',
+        ...Object.values(flagImages)
+      ];
+      assets.forEach(src => {
+        const img = new Image();
+        img.src = src;
+      });
+    }
+  }, []);
+
+  // Audio engine sicuro per browser restrittivi (iOS Safari / Vercel Edge)
+  const initAudio = () => {
+    if (typeof window === 'undefined') return;
+    if (!audioCtxRef.current) {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (AudioContext) {
+        audioCtxRef.current = new AudioContext();
+      }
+    }
+    if (audioCtxRef.current?.state === 'suspended') {
+      audioCtxRef.current.resume();
+    }
+  };
+
+  const playTick = () => {
+    if (typeof window === 'undefined') return;
+    if (!audioCtxRef.current || audioCtxRef.current.state !== 'running') return;
+    try {
+      const osc = audioCtxRef.current.createOscillator();
+      const gainNode = audioCtxRef.current.createGain();
+
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(250 + Math.random() * 50, audioCtxRef.current.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(50, audioCtxRef.current.currentTime + 0.05);
+
+      gainNode.gain.setValueAtTime(0.4, audioCtxRef.current.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtxRef.current.currentTime + 0.05);
+
+      osc.connect(gainNode);
+      gainNode.connect(audioCtxRef.current.destination);
+      osc.start();
+      osc.stop(audioCtxRef.current.currentTime + 0.05);
+    } catch(e) {
+      // Catch silente per evitare alert all'utente su dispositivi non supportati
+    }
+  };
+
+  const startGame = () => {
+    initAudio();
+    setScores([0, 0]);
+    setCurrentPlayer(0);
+    setCurrentRoundIndex(startTopicIndex); 
+    startRound(startTopicIndex);
+    setGameState('PLAYING');
+  };
+
+  const startRound = (index) => {
+    if (index >= phrasesDictionary.length) {
+      setGameState('GAME_OVER');
+      return;
+    }
+    const data = phrasesDictionary[index];
+    setPhraseData({
+      topic: data[lang].topic,
+      phrase: data[lang].phrase,
+      explanation: data[lang].explanation,
+      originalData: data,
+      day: index + 1
+    });
+    setGuessedLetters([]);
+    setTurnPhase('IDLE');
+    setSpinValue(null);
+  };
+
+  const handleNextRound = () => {
+    const nextIdx = currentRoundIndex + 1;
+    setCurrentRoundIndex(nextIdx);
+    setScores([0, 0]); 
+    setCurrentPlayer(0); 
+    startRound(nextIdx);
+    if (nextIdx < phrasesDictionary.length) {
+      setGameState('PLAYING'); 
+    }
+  };
+
+  const nextTurn = () => {
+    if (numPlayers > 1) {
+      setCurrentPlayer(prev => (prev === 0 ? 1 : 0));
+    }
+    setTurnPhase('IDLE');
+  };
+
+  const spinWheel = () => {
+    if (turnPhase !== 'IDLE') return;
+    setTurnPhase('SPINNING');
+    initAudio(); 
+
+    const segmentIndex = Math.floor(Math.random() * WHEEL_SEGMENTS.length);
+    const anglePerSegment = 360 / WHEEL_SEGMENTS.length;
+    const segmentCenterAngle = segmentIndex * anglePerSegment;
+    
+    const startRotation = rotationRef.current;
+    const currentMod = startRotation % 360;
+    const baseTarget = 360 - segmentCenterAngle;
+    let delta = baseTarget - currentMod;
+    if (delta <= 0) delta += 360; 
+    const targetRotation = startRotation + delta + (4 * 360); 
+
+    const duration = 4000; 
+    const startTime = performance.now();
+    let lastTick = Math.floor((startRotation + 15) / 30);
+    let flipperCurrentAngle = 0;
+
+    // requestAnimationFrame per 60FPS fluidi via GPU
+    const animate = (time) => {
+      const elapsed = time - startTime;
+      let t = elapsed / duration;
+      if (t > 1) t = 1;
+
+      const easeOutQuart = 1 - Math.pow(1 - t, 4);
+      const currentR = startRotation + (targetRotation - startRotation) * easeOutQuart;
+      
+      rotationRef.current = currentR;
+      if (wheelRef.current) {
+        wheelRef.current.style.transform = `rotate(${currentR}deg) translateZ(0)`;
+      }
+
+      const currentTick = Math.floor((currentR + 15) / 30);
+      if (currentTick > lastTick) {
+        playTick();
+        lastTick = currentTick;
+        flipperCurrentAngle = -35; 
+      }
+
+      if (flipperCurrentAngle < 0) {
+        flipperCurrentAngle += 2.5; 
+        if (flipperCurrentAngle > 0) flipperCurrentAngle = 0;
+      }
+      if (flipperRef.current) {
+        flipperRef.current.style.transform = `rotate(${flipperCurrentAngle}deg) translateZ(0)`;
+      }
+
+      if (t < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        const result = WHEEL_SEGMENTS[segmentIndex];
+        setSpinValue(result);
+
+        if (result.type === 'BANKRUPT') {
+          const newScores = [...scores];
+          newScores[currentPlayer] = 0;
+          setScores(newScores);
+          showTemporaryModal(String(ui.bankrupt), 'error');
+          setTimeout(nextTurn, 2000);
+        } else if (result.type === 'LOSE_TURN') {
+          showTemporaryModal(String(ui.loseTurn), 'error');
+          setTimeout(nextTurn, 2000);
+        } else {
+          setTurnPhase('WAITING_CONSONANT');
+        }
+      }
+    };
+
+    requestAnimationFrame(animate);
+  };
+
+  const handleLetterClick = (letter) => {
+    initAudio(); 
+    if (guessedLetters.includes(letter)) return;
+    
+    const isVowel = VOWELS.includes(letter);
+    if (turnPhase === 'WAITING_CONSONANT' && isVowel) return;
+    if (turnPhase === 'WAITING_VOWEL' && !isVowel) return;
+
+    setGuessedLetters(prev => [...prev, letter]);
+
+    const occurrences = phraseData.phrase.split('').filter(char => char === letter).length;
+
+    if (occurrences > 0) {
+      if (turnPhase === 'WAITING_CONSONANT' && spinValue) {
+        const pointsWon = occurrences * spinValue.multiplier;
+        const newScores = [...scores];
+        newScores[currentPlayer] += pointsWon;
+        setScores(newScores);
+        showTemporaryModal(`+${String(pointsWon)}`, 'success');
+      } else {
+        showTemporaryModal(String(ui.correct), 'success');
+      }
+      setTurnPhase('IDLE');
+      checkWinCondition([...guessedLetters, letter]);
+    } else {
+      showTemporaryModal(String(ui.wrong), 'error');
+      setTimeout(nextTurn, 1500);
+    }
+  };
+
+  const buyVowel = () => {
+    initAudio();
+    if (scores[currentPlayer] >= 250 && turnPhase === 'IDLE') {
+      const newScores = [...scores];
+      newScores[currentPlayer] -= 250;
+      setScores(newScores);
+      setTurnPhase('WAITING_VOWEL');
+      showTemporaryModal("-250", "info"); 
+    }
+  };
+
+  const handleSolveSubmit = () => {
+    const isCorrect = solveInput.toUpperCase() === phraseData.phrase.toUpperCase();
+    if (isCorrect) {
+      setGuessedLetters(ALPHABET);
+      showTemporaryModal(String(ui.correct), 'success');
+      setTimeout(() => {
+        setGameState('SOLVED');
+        setTurnPhase('IDLE');
+      }, 1500);
+    } else {
+      showTemporaryModal(String(ui.wrong), 'error');
+      setTimeout(() => {
+        setTurnPhase('IDLE');
+        nextTurn();
+      }, 1500);
+    }
+    setSolveInput('');
+  };
+
+  const checkWinCondition = (currentGuessed) => {
+    const lettersInPhrase = phraseData.phrase.replace(/[^A-Z]/g, '').split('');
+    const allFound = lettersInPhrase.every(l => currentGuessed.includes(l));
+    if (allFound) {
+      setTimeout(() => {
+        setGameState('SOLVED');
+        setTurnPhase('IDLE');
+      }, 1000);
+    }
+  };
+
+  const showTemporaryModal = (text, type = 'info') => {
+    setModalMessage({ text, type });
+    setTimeout(() => setModalMessage(null), 1500);
+  };
+
+  const changeLanguage = (newLang) => {
+    setLang(newLang);
+    if (phraseData) {
+      setPhraseData({
+        topic: phraseData.originalData[newLang].topic,
+        phrase: phraseData.originalData[newLang].phrase,
+        explanation: phraseData.originalData[newLang].explanation,
+        originalData: phraseData.originalData,
+        day: currentRoundIndex + 1
+      });
+    }
+  };
+
+  // --- RENDERERS ---
+  const renderSetup = () => (
+    <div className="flex flex-col items-center justify-center min-h-[75vh] w-full max-w-lg text-white p-6 sm:p-8 rounded-3xl bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl animate-pop-in mx-auto my-6 relative overflow-hidden">
+      <div className="absolute top-[-50px] left-[-50px] w-40 h-40 bg-blue-500 rounded-full mix-blend-screen filter blur-[80px] opacity-40"></div>
+      <div className="absolute bottom-[-50px] right-[-50px] w-40 h-40 bg-pink-500 rounded-full mix-blend-screen filter blur-[80px] opacity-40"></div>
+
+      <div className="mb-6 z-10 w-full flex justify-center">
+        <img 
+            src="La-Ruota-della-Fortuna-2-1024x576.webp" 
+            alt="Ruota della Fortuna" 
+            decoding="async"
+            fetchpriority="high"
+            className="w-full max-w-[350px] h-auto rounded-2xl shadow-[0_0_30px_rgba(46,157,223,0.5)] border-4 border-[#2E9DDF] object-cover aspect-video bg-[#1A1A1A]"
+            onError={(e) => {
+                e.target.onerror = null; 
+                e.target.src = "logo-tondo.jpeg";
+                e.target.className = "w-32 h-32 object-contain rounded-full mx-auto shadow-[0_0_40px_rgba(255,184,5,0.3)]";
+            }}
+        />
+      </div>
+      
+      <p className="text-base sm:text-lg md:text-xl mb-6 text-white/90 text-center font-bold z-10">{String(ui.tagline)}</p>
+      
+      <div className="flex gap-4 mb-8 z-10">
+        {['en', 'it', 'es', 'pt'].map(l => (
+          <button 
+            key={l}
+            onClick={() => changeLanguage(l)}
+            className={`w-12 h-12 md:w-14 md:h-14 rounded-full overflow-hidden border-2 transition-all duration-300 ${lang === l ? 'border-[#FFB805] scale-110 shadow-[0_0_20px_rgba(255,184,5,0.8)]' : 'border-white/20 opacity-50 hover:opacity-100 hover:scale-105'}`}
+          >
+            <img src={flagImages[l]} alt={l} className="w-full h-full object-cover" decoding="async" />
+          </button>
+        ))}
+      </div>
+
+      <div className="flex flex-row justify-center gap-3 w-full mb-6 z-10">
+        <button 
+          onClick={() => setNumPlayers(1)}
+          className={`flex-1 flex flex-col items-center gap-2 p-3 sm:p-4 rounded-2xl font-semibold transition-all ${numPlayers === 1 ? 'bg-[#2E9DDF] border-2 border-[#1181B1] shadow-[0_0_15px_rgba(46,157,223,0.5)]' : 'bg-black/40 border-2 border-transparent hover:bg-black/60'}`}
+        >
+          <User size={24} /> <span className="text-sm sm:text-base">{String(ui.players1)}</span>
+        </button>
+        <button 
+          onClick={() => setNumPlayers(2)}
+          className={`flex-1 flex flex-col items-center gap-2 p-3 sm:p-4 rounded-2xl font-semibold transition-all ${numPlayers === 2 ? 'bg-[#2E9DDF] border-2 border-[#1181B1] shadow-[0_0_15px_rgba(46,157,223,0.5)]' : 'bg-black/40 border-2 border-transparent hover:bg-black/60'}`}
+        >
+          <Users size={24} /> <span className="text-sm sm:text-base">{String(ui.players2)}</span>
+        </button>
+      </div>
+
+      <div className="w-full mb-8 z-10 text-left">
+        <label className="block text-white/80 font-bold mb-2 text-xs sm:text-sm uppercase tracking-wider pl-2">{String(ui.selectLesson)}</label>
+        <div className="relative">
+          <select 
+            value={startTopicIndex} 
+            onChange={(e) => setStartTopicIndex(Number(e.target.value))}
+            className="w-full p-4 rounded-2xl bg-black/50 border-2 border-white/20 text-white font-bold outline-none focus:border-[#FFB805] appearance-none shadow-inner cursor-pointer"
+          >
+            {phrasesDictionary.map((item, idx) => (
+              <option key={idx} value={idx} className="bg-[#1A1A1A] text-white">
+                {String(ui.day)} {idx + 1}: {item[lang].topic}
+              </option>
+            ))}
+          </select>
+          <div className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none text-white/50">
+             <ChevronDown size={24} />
+          </div>
+        </div>
+      </div>
+
+      <button 
+        onClick={startGame}
+        className="flex items-center gap-2 px-8 py-4 sm:px-10 sm:py-5 rounded-full font-extrabold text-lg sm:text-xl md:text-2xl transition-transform hover:scale-105 shadow-[0_0_30px_rgba(255,184,5,0.4)] active:scale-95 z-10 w-full sm:w-auto justify-center"
+        style={{ backgroundColor: COLORS.secondary, color: COLORS.primary }}
+      >
+        <Play fill="currentColor" size={24} /> {String(ui.startGame)}
+      </button>
+    </div>
+  );
+
+  const renderBoard = () => {
+    if (!phraseData) return null;
+    const words = phraseData.phrase.split(' ');
+
+    return (
+      <div className="relative w-full max-w-5xl mx-auto my-4 px-2 pt-10 pb-4 sm:p-12 md:p-14 rounded-2xl sm:rounded-[3rem] md:rounded-[4rem] border-[4px] sm:border-[8px] md:border-[12px] border-gray-300 shadow-[0_0_20px_rgba(46,157,223,0.3),inset_0_0_30px_rgba(0,0,0,0.9)] overflow-hidden flex flex-col justify-center items-center bg-[#0F2027]">
+        
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 bg-[#FFB805] text-[#1A1A1A] border-b-4 border-l-4 border-r-4 border-yellow-700 px-4 md:px-8 py-1 md:py-2 rounded-b-xl md:rounded-b-2xl shadow-[0_5px_15px_rgba(0,0,0,0.6)] z-20 flex gap-2 items-center">
+           <span className="font-bold text-[10px] sm:text-xs md:text-sm bg-black text-[#FFB805] px-2 py-0.5 rounded-md whitespace-nowrap">{String(ui.day)} {phraseData.day}</span>
+           <span className="font-black text-[10px] sm:text-xs md:text-xl tracking-widest uppercase drop-shadow-sm whitespace-nowrap">
+             {String(phraseData.topic)}
+           </span>
+        </div>
+
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/60 pointer-events-none"></div>
+        <div className="absolute inset-1 sm:inset-2 border-[1px] sm:border-[2px] border-[#2E9DDF] rounded-[1rem] md:rounded-[3.5rem] opacity-30 pointer-events-none shadow-[0_0_10px_#2E9DDF]"></div>
+        
+        <div className="relative z-10 flex flex-wrap justify-center gap-y-2 md:gap-y-3 gap-x-3 md:gap-x-10 w-full px-1 mt-2">
+          {words.map((word, wIdx) => (
+            <div key={wIdx} className="flex gap-1 md:gap-2">
+              {word.split('').map((char, cIdx) => {
+                const isGuessed = guessedLetters.includes(char);
+                return (
+                  <div 
+                    key={cIdx} 
+                    className={`
+                      w-[7vw] max-w-[36px] h-[10vw] max-h-[52px]
+                      sm:w-10 sm:h-14 md:w-14 md:h-20 
+                      flex items-center justify-center 
+                      text-lg sm:text-3xl md:text-5xl font-extrabold uppercase 
+                      rounded shadow-[0_2px_4px_rgba(0,0,0,0.5)] 
+                      transition-all duration-300 transform
+                      ${isGuessed 
+                        ? 'bg-white text-black border-2 border-gray-300 scale-100' 
+                        : 'bg-white text-transparent border border-gray-400 scale-[0.98] shadow-inner'
+                      }
+                    `}
+                  >
+                    {isGuessed ? char : ''}
+                  </div>
+                );
+              })}
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
+  const renderWheel = () => {
+    const anglePerSegment = 360 / WHEEL_SEGMENTS.length;
+
+    return (
+      <div className="relative w-full max-w-[90vw] sm:max-w-[350px] md:max-w-[450px] aspect-square mx-auto flex-shrink-0 my-2 md:my-4">
+        <svg viewBox="0 0 400 400" className="w-full h-full overflow-visible drop-shadow-2xl">
+          <defs>
+            <radialGradient id="wheelShadow" cx="50%" cy="50%" r="50%">
+              <stop offset="70%" stopColor="rgba(0,0,0,0)" />
+              <stop offset="100%" stopColor="rgba(0,0,0,0.6)" />
+            </radialGradient>
+            <radialGradient id="pegGrad" cx="30%" cy="30%" r="70%">
+              <stop offset="0%" stopColor="#ffffff" />
+              <stop offset="100%" stopColor="#888888" />
+            </radialGradient>
+            <linearGradient id="rimGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#e6e6e6" />
+              <stop offset="50%" stopColor="#999999" />
+              <stop offset="100%" stopColor="#ffffff" />
+            </linearGradient>
+            <radialGradient id="hubOuter" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="#FFB805" />
+              <stop offset="100%" stopColor="#B37C00" />
+            </radialGradient>
+            <clipPath id="logoClip">
+              <circle cx="200" cy="200" r="32" />
+            </clipPath>
+          </defs>
+
+          <circle cx="201" cy="202" r="195" fill="rgba(0,0,0,0.4)" />
+          <circle cx="200" cy="200" r="195" fill="#111" stroke="url(#rimGrad)" strokeWidth="12" />
+
+          {/* Accelerazione Hardware Pura */}
+          <g 
+            ref={wheelRef}
+            style={{ 
+              transform: `rotate(${rotationRef.current}deg) translateZ(0)`, 
+              transformOrigin: '200px 200px',
+              willChange: 'transform',
+              backfaceVisibility: 'hidden'
+            }}
+          >
+            {WHEEL_SEGMENTS.map((seg, i) => {
+              const rot = i * anglePerSegment - 90;
+              let label = seg.type === 'value' ? seg.val : ui.wheelValues[seg.type] || seg.type;
+              const labelStr = String(label);
+              const isQuote = seg.type === 'value';
+              
+              let fontSize = "20";
+              let xPos = "355"; 
+              let letterSpacing = "1.5";
+              let strokeThickness = "2.5";
+              
+              if (isQuote) {
+                 fontSize = "36"; 
+                 xPos = "365";    
+                 letterSpacing = "0";
+                 strokeThickness = "2";
+              } else {
+                 if (labelStr.length > 9) {
+                    fontSize = "16"; 
+                    xPos = "375";    
+                    letterSpacing = "2"; 
+                    strokeThickness = "1"; // Testi lunghi (Bancarotta, Pierde Turno) ora hanno stroke sottile e nitidissimo
+                 } else if (labelStr.length > 5) {
+                    fontSize = "18"; 
+                    xPos = "365"; 
+                    letterSpacing = "1.5";
+                    strokeThickness = "1.5";
+                 } else {
+                    fontSize = "22"; 
+                    xPos = "360"; 
+                    letterSpacing = "1.5";
+                    strokeThickness = "2";
+                 }
+              }
+
+              let textStroke = "#000000"; 
+              if (seg.textColor === '#000000') textStroke = "rgba(255,255,255,0.7)"; 
+              if (seg.textColor === '#EF4444') textStroke = "#FFFFFF"; 
+              
+              return (
+                <g key={i} transform={`rotate(${rot}, 200, 200)`}>
+                  <path 
+                    d="M 200 200 L 383.53 150.82 A 190 190 0 0 1 383.53 249.18 Z" 
+                    fill={seg.color} 
+                    stroke="rgba(0,0,0,0.6)" 
+                    strokeWidth="2" 
+                  />
+                  <text 
+                    x={xPos} 
+                    y="200" 
+                    dominantBaseline="central" 
+                    textAnchor="end" 
+                    fill={seg.textColor || '#FFFFFF'} 
+                    stroke={textStroke}
+                    strokeWidth={strokeThickness}
+                    strokeLinejoin="round"
+                    paintOrder="stroke fill"
+                    fontSize={fontSize} 
+                    fontWeight="900" 
+                    letterSpacing={letterSpacing}
+                  >
+                    {labelStr}
+                  </text>
+                  <circle cx="374.5" cy="247.5" r="4.5" fill="rgba(0,0,0,0.6)" />
+                  <circle cx="373.86" cy="246.58" r="4.5" fill="url(#pegGrad)" stroke="#555" strokeWidth="0.5" />
+                </g>
+              );
+            })}
+            
+            <circle cx="200" cy="200" r="190" fill="url(#wheelShadow)" pointerEvents="none" />
+
+            <g>
+              <circle cx="201" cy="202" r="36" fill="rgba(0,0,0,0.5)" /> 
+              <circle cx="200" cy="200" r="36" fill="url(#hubOuter)" />
+              <circle cx="200" cy="200" r="32" fill="#fff" />
+              <image 
+                href="logo-tondo.jpeg" 
+                x="168" 
+                y="168" 
+                width="64" 
+                height="64" 
+                clipPath="url(#logoClip)" 
+                preserveAspectRatio="xMidYMid slice" 
+                decoding="async"
+              />
+              <circle cx="200" cy="200" r="32" fill="none" stroke="url(#rimGrad)" strokeWidth="3" />
+            </g>
+          </g>
+
+          <g 
+            ref={flipperRef}
+            style={{ 
+              transformOrigin: '200px 10px', 
+              willChange: 'transform',
+              transform: 'translateZ(0)',
+              backfaceVisibility: 'hidden'
+            }}
+          >
+            <path d="M 186 7 L 216 7 L 201 47 Z" fill="rgba(0,0,0,0.6)" />
+            <path d="M 185 5 L 215 5 L 200 45 Z" fill="#EF4444" stroke="#7F1D1D" strokeWidth="2" strokeLinejoin="round" />
+            <path d="M 192 8 L 208 8 L 200 38 Z" fill="#FCA5A5" opacity="0.6" />
+            <circle cx="200" cy="12" r="5" fill="url(#pegGrad)" stroke="#333" strokeWidth="1" />
+          </g>
+        </svg>
+      </div>
+    );
+  };
+
+  const renderKeyboard = () => {
+    return (
+      <div className="w-full max-w-4xl mx-auto mt-2 mb-8 bg-white/5 p-2 sm:p-4 md:p-6 rounded-2xl md:rounded-[2rem] backdrop-blur-md border border-white/10 shadow-lg">
+        <div className="flex flex-wrap justify-center gap-[1.5%] sm:gap-2">
+          {ALPHABET.map(letter => {
+            const isGuessed = guessedLetters.includes(letter);
+            const isVowel = VOWELS.includes(letter);
+            
+            let isDisabled = isGuessed || turnPhase === 'IDLE' || turnPhase === 'SPINNING' || turnPhase === 'SOLVING';
+            let isHighlight = false;
+
+            if (turnPhase === 'WAITING_CONSONANT') {
+              if (isVowel) isDisabled = true;
+              else if (!isGuessed) isHighlight = true;
+            } else if (turnPhase === 'WAITING_VOWEL') {
+              if (!isVowel) isDisabled = true;
+              else if (!isGuessed) isHighlight = true;
+            }
+
+            return (
+              <button
+                key={letter}
+                disabled={isDisabled}
+                onClick={() => handleLetterClick(letter)}
+                className={`
+                  flex-grow-0 flex-shrink-0 basis-[12.5%] sm:basis-[auto] 
+                  min-w-[32px] sm:min-w-[40px] md:min-w-[48px] 
+                  min-h-[44px] md:min-h-[56px] 
+                  rounded-lg md:rounded-xl font-bold text-lg sm:text-xl md:text-2xl 
+                  transition-all touch-manipulation flex items-center justify-center mb-1
+                  ${isDisabled ? 'bg-black/40 text-white/20 cursor-not-allowed shadow-none border border-white/5' : 
+                    isHighlight ? 'bg-[#FFB805] hover:bg-yellow-400 text-black shadow-[0_4px_12px_rgba(255,184,5,0.5)] scale-[1.05] border border-yellow-300 active:scale-95 z-10' : 
+                    'bg-white/15 hover:bg-white/30 text-white active:scale-95 border border-white/20'}
+                `}
+              >
+                {letter}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <div className="min-h-screen font-sans overflow-x-hidden flex flex-col" style={{ backgroundColor: COLORS.primary }}>
+      
+      <header className="px-4 py-3 flex justify-between items-center border-b border-white/10 bg-black/60 backdrop-blur-md z-50 sticky top-0">
+        <div className="flex items-center gap-3">
+          <img 
+              src="logo-tondo.jpeg" 
+              alt="Logo" 
+              className="w-8 h-8 md:w-10 md:h-10 rounded-full shadow-[0_0_10px_rgba(255,184,5,0.2)] object-cover"
+              onError={(e) => { e.target.style.display = 'none'; }}
+              decoding="async"
+              fetchpriority="high"
+          />
+          <span className="text-[#FFB805] font-extrabold text-sm sm:text-base md:text-lg tracking-widest uppercase drop-shadow-md line-clamp-1">{String(ui.title)}</span>
+        </div>
+        {gameState !== 'SETUP' && (
+          <button onClick={() => setGameState('SETUP')} className="text-white/70 hover:text-white transition-colors p-2 rounded-full bg-white/5 hover:bg-white/20 active:scale-90 touch-manipulation flex-shrink-0" title="Settings">
+            <Settings size={20} />
+          </button>
+        )}
+      </header>
+
+      <main className="flex-1 flex flex-col items-center w-full max-w-7xl mx-auto pb-6 relative z-10 px-2 sm:px-4">
+        
+        {gameState === 'SETUP' && renderSetup()}
+
+        {gameState === 'GAME_OVER' && (
+          <div className="text-center text-white py-12 px-4 sm:px-6 bg-[#1A1A1A] rounded-[2rem] backdrop-blur-xl border border-white/10 mt-auto mb-auto animate-pop-in w-full max-w-md shadow-2xl">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black mb-8 text-[#FFB805] drop-shadow-[0_0_15px_rgba(255,184,5,0.5)]">{String(ui.gameOver)}</h2>
+            {numPlayers === 2 ? (
+              <div className="mb-10">
+                <p className="text-xl sm:text-2xl font-bold mb-4">
+                  {scores[0] > scores[1] ? `🏆 ${String(ui.winner)}: ${String(ui.player)} 1` : scores[1] > scores[0] ? `🏆 ${String(ui.winner)}: ${String(ui.player)} 2` : "🤝 Parità!"}
+                </p>
+                <div className="flex justify-center gap-4 sm:gap-6 text-lg sm:text-xl bg-black/50 py-4 rounded-2xl border border-white/5 w-full">
+                   <div className="text-center flex-1"><span className="text-xs sm:text-sm opacity-70 block">{String(ui.player)} 1</span> <span className="font-bold text-[#2E9DDF]">{String(scores[0])}</span></div>
+                   <div className="w-px bg-white/20"></div>
+                   <div className="text-center flex-1"><span className="text-xs sm:text-sm opacity-70 block">{String(ui.player)} 2</span> <span className="font-bold text-[#F48EAD]">{String(scores[1])}</span></div>
+                </div>
+              </div>
+            ) : (
+              <p className="text-xl sm:text-2xl mb-10">{String(ui.score)}: <span className="font-black text-3xl sm:text-4xl text-[#FFB805] block mt-2 drop-shadow-md">{String(scores[0])}</span></p>
+            )}
+            <button 
+              onClick={() => setGameState('SETUP')}
+              className="flex items-center justify-center gap-2 w-full py-4 rounded-full font-bold text-lg sm:text-xl bg-[#2E9DDF] hover:bg-[#1181B1] transition-transform active:scale-95 shadow-[0_5px_15px_rgba(46,157,223,0.4)] touch-manipulation"
+            >
+              <RotateCcw size={24}/> {String(ui.playAgain)}
+            </button>
+          </div>
+        )}
+
+        {(gameState === 'PLAYING' || gameState === 'SOLVED') && (
+          <div className="w-full flex flex-col overflow-hidden">
+            
+            <div className="flex justify-center gap-2 sm:gap-3 w-full mt-4">
+              {[...Array(numPlayers)].map((_, i) => (
+                <div 
+                  key={i} 
+                  className={`flex-1 max-w-[200px] py-2 px-2 sm:px-4 rounded-xl sm:rounded-2xl border-2 transition-all duration-300 relative overflow-hidden flex flex-col items-center justify-center
+                    ${currentPlayer === i && gameState === 'PLAYING' 
+                      ? 'border-[#FFB805] bg-[#FFB805]/20 shadow-[0_0_20px_rgba(255,184,5,0.3)] scale-[1.02]' 
+                      : 'border-white/10 bg-black/40 opacity-80'}`}
+                >
+                  <span className="text-white/60 text-[9px] sm:text-[10px] md:text-xs font-bold uppercase tracking-widest">{String(ui.player)} {i + 1}</span>
+                  <span className="text-white text-lg sm:text-xl md:text-2xl font-black">{String(scores[i])}</span>
+                </div>
+              ))}
+            </div>
+
+            {renderBoard()}
+
+            {gameState === 'PLAYING' && (
+              <div className="flex flex-col lg:flex-row items-center lg:items-stretch justify-center gap-4 sm:gap-6 w-full max-w-5xl mx-auto mb-4">
+                
+                <div className="flex-shrink-0 w-full flex justify-center lg:w-auto">
+                   {renderWheel()}
+                </div>
+
+                <div className="w-full lg:w-1/3 bg-[#1A1A1A] p-4 md:p-6 rounded-2xl sm:rounded-3xl border border-white/10 text-center relative overflow-hidden shadow-xl flex flex-col justify-center min-h-[180px] sm:min-h-[220px]">
+                  
+                  {turnPhase === 'IDLE' ? (
+                    <div className="flex flex-col gap-2 sm:gap-3 relative z-10 animate-fade-in h-full justify-center">
+                      <h3 className="text-white font-bold text-base sm:text-lg md:text-xl mb-1 flex justify-center items-center gap-2">
+                         <span className="text-[#FFB805]">▶</span> {String(ui.turnPrefix)} {currentPlayer + 1}{String(ui.turnSuffix)}
+                      </h3>
+                      <button 
+                        onClick={spinWheel}
+                        className="w-full py-3 sm:py-4 md:py-5 rounded-xl sm:rounded-2xl font-black text-lg sm:text-xl text-black shadow-[0_5px_15px_rgba(255,184,5,0.3)] transition-transform hover:scale-[1.03] active:scale-95 uppercase tracking-wider touch-manipulation"
+                        style={{ backgroundColor: COLORS.secondary }}
+                      >
+                        {String(ui.spinWheel)}
+                      </button>
+                      <div className="flex gap-2 sm:gap-3">
+                        {(() => {
+                          const allVowelsGuessed = VOWELS.every(v => guessedLetters.includes(v));
+                          const canBuyVowel = scores[currentPlayer] >= 250 && !allVowelsGuessed;
+                          return (
+                            <button 
+                              onClick={buyVowel}
+                              disabled={!canBuyVowel}
+                              className={`flex-1 py-2 sm:py-3 rounded-lg sm:rounded-xl font-bold text-xs sm:text-sm md:text-base transition-all active:scale-95 touch-manipulation
+                                ${canBuyVowel ? 'bg-[#2E9DDF] text-white shadow-md' : 'bg-white/5 text-white/20 cursor-not-allowed border border-white/10'}`}
+                            >
+                              {String(ui.buyVowel)}
+                            </button>
+                          );
+                        })()}
+                        <button 
+                          onClick={() => setTurnPhase('SOLVING')}
+                          className="flex-1 py-2 sm:py-3 rounded-lg sm:rounded-xl font-bold text-xs sm:text-sm md:text-base bg-purple-600 text-white transition-all active:scale-95 shadow-md touch-manipulation"
+                        >
+                          {String(ui.solve)}
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="relative z-10 flex flex-col items-center h-full justify-center w-full">
+                       {turnPhase === 'SPINNING' && <p className="text-xl sm:text-2xl md:text-3xl text-[#FFB805] font-black animate-pulse tracking-widest uppercase drop-shadow-md">Gira...</p>}
+                       {turnPhase === 'WAITING_CONSONANT' && spinValue && (
+                         <div className="animate-fade-in-up text-center w-full">
+                           <p className="text-white/80 text-[10px] sm:text-xs md:text-sm uppercase tracking-widest font-semibold mb-1">{String(ui.consonantPrompt)}</p>
+                           <div className="inline-block bg-white/10 px-4 sm:px-6 py-1 sm:py-2 rounded-lg sm:rounded-xl border border-white/20">
+                             <p className="text-4xl sm:text-5xl md:text-6xl font-black" style={{ color: spinValue.color }}>{String(spinValue.val)}</p>
+                           </div>
+                         </div>
+                       )}
+                       {turnPhase === 'WAITING_VOWEL' && (
+                         <div className="animate-fade-in-up">
+                           <p className="text-lg sm:text-xl md:text-2xl text-[#2E9DDF] font-black uppercase tracking-widest drop-shadow-md">{String(ui.vowelPrompt)}</p>
+                         </div>
+                       )}
+                       {turnPhase === 'SOLVING' && (
+                         <div className="w-full animate-fade-in-up flex flex-col gap-2 sm:gap-3">
+                           <input 
+                              type="text" 
+                              value={solveInput}
+                              onChange={(e) => setSolveInput(e.target.value)}
+                              placeholder={String(ui.solvePrompt)}
+                              autoComplete="off"
+                              autoCorrect="off"
+                              spellCheck="false"
+                              autoCapitalize="characters"
+                              className="w-full p-3 sm:p-4 rounded-lg sm:rounded-xl bg-white/10 border-2 border-white/20 text-white uppercase font-bold text-center text-base sm:text-lg outline-none focus:border-[#FFB805] focus:bg-white/20 transition-all shadow-inner placeholder-white/30"
+                           />
+                           <div className="flex gap-2 sm:gap-3 w-full">
+                             <button onClick={() => setTurnPhase('IDLE')} className="flex-1 py-2 sm:py-3 bg-red-500/20 text-red-400 rounded-lg sm:rounded-xl font-bold active:scale-95 touch-manipulation text-sm sm:text-base">{String(ui.cancel)}</button>
+                             <button onClick={handleSolveSubmit} className="flex-1 py-2 sm:py-3 bg-[#00D166] text-black rounded-lg sm:rounded-xl font-bold shadow-md active:scale-95 touch-manipulation text-sm sm:text-base">{String(ui.submit)}</button>
+                           </div>
+                         </div>
+                       )}
+                    </div>
+                  )}
+
+                  {modalMessage && (
+                    <div className={`absolute inset-0 z-20 flex items-center justify-center bg-black/90 backdrop-blur-sm animate-fade-in rounded-2xl sm:rounded-3xl
+                      ${modalMessage.type === 'success' ? 'text-[#00D166]' : modalMessage.type === 'error' ? 'text-red-500' : 'text-[#2E9DDF]'}`}>
+                      <div className="flex flex-col items-center transform animate-pop-in p-2 text-center">
+                        {modalMessage.type === 'success' && <CheckCircle size={56} className="mb-2 drop-shadow-[0_0_15px_rgba(0,209,102,0.5)]" />}
+                        {modalMessage.type === 'error' && <AlertCircle size={56} className="mb-2 drop-shadow-[0_0_15px_rgba(239,68,68,0.5)]" />}
+                        <span className="text-xl sm:text-2xl md:text-3xl font-black uppercase tracking-widest leading-tight">{String(modalMessage.text)}</span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {gameState === 'PLAYING' && renderKeyboard()}
+
+            {gameState === 'SOLVED' && (
+              <div className="w-full max-w-4xl mx-auto bg-gradient-to-br from-[#1A1A1A] to-[#0F2027] p-4 sm:p-6 md:p-10 rounded-2xl md:rounded-[2rem] border border-[#00D166]/30 shadow-2xl animate-pop-in mt-2 mb-8">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4 sm:pb-6 mb-4 sm:mb-6">
+                  <div className="flex items-center gap-2 sm:gap-3 text-[#00D166] justify-center sm:justify-start">
+                    <CheckCircle size={32} className="drop-shadow-md sm:w-10 sm:h-10" />
+                    <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-white">{String(ui.correct)}</h2>
+                  </div>
+                  <button 
+                    onClick={handleNextRound}
+                    className="w-full sm:w-auto px-6 py-3 sm:px-8 sm:py-4 bg-[#FFB805] text-black rounded-full font-black text-base sm:text-lg md:text-xl shadow-[0_0_20px_rgba(255,184,5,0.2)] active:scale-95 transition-all flex items-center justify-center gap-2 touch-manipulation"
+                  >
+                    {String(ui.nextRound)} <Play size={20} fill="currentColor" />
+                  </button>
+                </div>
+                
+                <div className="relative overflow-hidden text-center sm:text-left">
+                  <h3 className="text-xs sm:text-sm md:text-base text-[#FFB805] font-bold mb-2 sm:mb-3 uppercase tracking-widest">{String(ui.concept)}</h3>
+                  <p className="text-white text-lg sm:text-xl md:text-2xl leading-relaxed font-medium relative z-10">
+                    {String(phraseData.explanation)}
+                  </p>
+                </div>
+              </div>
+            )}
+
+          </div>
+        )}
+      </main>
+
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes fadeInUp {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        @keyframes popIn {
+          0% { opacity: 0; transform: scale(0.97); }
+          50% { transform: scale(1.01); }
+          100% { opacity: 1; transform: scale(1); }
+        }
+        .animate-fade-in-up { animation: fadeInUp 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+        .animate-fade-in { animation: fadeIn 0.2s ease-out forwards; }
+        .animate-pop-in { animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        /* Reset Input iOS per impedire lo zoom fastidioso */
+        input[type="text"] { 
+          font-size: 16px !important; 
+          border-radius: 0.75rem;
+          -webkit-appearance: none;
+        }
+        /* Touch action vitale per l'estrema fluidità mobile (zero delay) */
+        button, a, input, select { touch-action: manipulation; }
+      `}} />
+    </div>
+  );
+}
