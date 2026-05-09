@@ -40,8 +40,14 @@
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes popIn { 0% { opacity: 0; transform: scale(0.97); } 50% { transform: scale(1.01); } 100% { opacity: 1; transform: scale(1); } }
         
+        @keyframes pulse-gentle {
+            0%, 100% { transform: scale(1); box-shadow: 0 4px 0 #660000, 0 8px 15px rgba(0,0,0,0.5); }
+            50% { transform: scale(1.06); box-shadow: 0 4px 20px rgba(255,77,77,0.4), 0 8px 25px rgba(0,0,0,0.6); }
+        }
+
         .animate-fade-in-up { animation: fadeInUp 0.3s forwards; }
         .animate-pop-in { animation: popIn 0.4s forwards; }
+        .animate-pulse-button { animation: pulse-gentle 2s infinite ease-in-out; }
         
         input[type="text"] { font-size: 16px !important; }
         button { touch-action: manipulation; }
@@ -61,15 +67,14 @@
             align-items: center;
         }
 
-        /* Pulsante Slot Machine Style */
         .slot-button {
             background: radial-gradient(circle at 30% 30%, #ff4d4d, #990000);
-            box-shadow: 0 4px 0 #660000, 0 8px 15px rgba(0,0,0,0.5);
             transition: all 0.1s;
         }
         .slot-button:active {
-            transform: translateY(3px);
-            box-shadow: 0 1px 0 #660000, 0 2px 5px rgba(0,0,0,0.5);
+            transform: translateY(3px) scale(0.95) !important;
+            box-shadow: 0 1px 0 #660000, 0 2px 5px rgba(0,0,0,0.5) !important;
+            animation: none;
         }
 
         @media (min-width: 1024px) {
@@ -93,7 +98,6 @@
                 Settings: <path d="M12.22 2h-.44a2 2 0 0 0-2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2a2 2 0 0 0-2-2h-.44a2 2 0 0 0-2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2a2 2 0 0 0-2-2h-.44a2 2 0 0 0-2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2a2 2 0 0 0-2-2" />,
                 Play: <path d="m7 4 12 8-12 8V4z" />,
                 User: <Fragment><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></Fragment>,
-                Users: <Fragment><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></Fragment>,
                 RotateCcw: <Fragment><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" /><path d="M3 3v5h5" /></Fragment>,
                 CheckCircle: <Fragment><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></Fragment>,
                 AlertCircle: <Fragment><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></Fragment>,
@@ -160,15 +164,28 @@
                 ex1: "Lesson: Peer-to-peer betting. Example: You match your €10 back bet against another user's lay bet at the same odds.",
                 ex15: "Lesson: Exit point to limit loss. Example: Exit your back bet if odds hit 3.00 to prevent losing your full stake.",
                 ex30: "Lesson: Staying consistent. Example: Accepting a loss without chasing it. You are now a master of the Exchange!"
+            },
+            es: {
+                ex1: "Lección: Plataforma peer-to-peer. Ejemplo: Tu apuesta se iguala con la de otro usuario, no contra la casa.",
+                ex30: "Lección: Ser constante. Ejemplo: Aceptar una pérdida sin perseguirla. ¡Ya eres un Maestro del Exchange!"
+            },
+            pt: {
+                ex1: "Lição: Plataforma peer-to-peer. Exemplo: A sua aposta é correspondida com a de outro utilizador.",
+                ex30: "Lição: Ser constante. Exemplo: Aceitar uma perda sem a perseguir. Já é um Mestre do Exchange!"
             }
         };
 
         const uiTranslations = {
-            en: { title: "BETTING EXCHANGE ROOM", tagline: "Zero to Hero Course!", players1: "1 Player", players2: "2 Players", selectLesson: "Topic", startGame: "Gira la ruota", spinWheel: "Spin", buyVowel: "Buy Vowel (250)", solve: "Solve", turnPrefix: "Player ", turnSuffix: "", bankrupt: "BANKRUPT!", loseTurn: "MISS TURN", consonantPrompt: "Consonant @ Odds:", vowelPrompt: "Choose Vowel", solvePrompt: "Solution:", submit: "Send", cancel: "Cancel", correct: "Correct!", wrong: "Not found!", concept: "Recap:", nextRound: "Next Lesson", gameOver: "Graduated!", winner: "Top Trader", playAgain: "Restart", day: "", wheelValues: { BANKRUPT: "BANKRUPT", LOSE_TURN: "MISS TURN" } },
-            it: { title: "BETTING EXCHANGE ROOM", tagline: "Corso Zero to Hero!", players1: "1 Giocatore", players2: "2 Giocatori", selectLesson: "Tema", startGame: "Gira la ruota", spinWheel: "Gira", buyVowel: "Compro Vocale (250)", solve: "Risolvi", turnPrefix: "P", turnSuffix: "", bankrupt: "BANCAROTTA!", loseTurn: "PASSO", consonantPrompt: "Consonante a Quota:", vowelPrompt: "Scegli Vocale", solvePrompt: "Soluzione:", submit: "Invia", cancel: "Annulla", correct: "Esatto!", wrong: "Non c'è!", concept: "Recap:", nextRound: "Prossima Lezione", gameOver: "Diplomato!", winner: "Top Trader", playAgain: "Ricomincia", day: "", wheelValues: { BANKRUPT: "BANCAROTTA", LOSE_TURN: "PASSO" } },
-            es: { title: "BETTING EXCHANGE ROOM", tagline: "¡Curso Zero to Hero!", players1: "1 Jugador", players2: "2 Jugadores", selectLesson: "Tema", startGame: "Gira la rueda", spinWheel: "Girar", buyVowel: "Comprar Vocal (250)", solve: "Resolver", turnPrefix: "Jugador ", turnSuffix: "", bankrupt: "¡BANCARROTA!", loseTurn: "¡PASO!", consonantPrompt: "Consonante a Cuota:", vowelPrompt: "Elegir Vocal", solvePrompt: "Solución:", submit: "Enviar", cancel: "Cancelar", correct: "¡Correcto!", wrong: "¡No está!", concept: "Recap:", nextRound: "Siguiente Tema", gameOver: "¡Graduado!", winner: "Top Trader", playAgain: "Reiniciar", day: "", wheelValues: { BANKRUPT: "BANCARROTA", LOSE_TURN: "PASSO" } },
-            pt: { title: "BETTING EXCHANGE ROOM", tagline: "Curso Zero to Hero!", players1: "1 Jogador", players2: "2 Jogadores", selectLesson: "Tema", startGame: "Gira a roda", spinWheel: "Girar", buyVowel: "Comprar Vogal (250)", solve: "Resolver", turnPrefix: "Jogador ", turnSuffix: "", bankrupt: "FALÊNCIA!", loseTurn: "PASSO!", consonantPrompt: "Consoante @ Cota:", vowelPrompt: "Escolha Vogal", solvePrompt: "Solução:", submit: "Enviar", cancel: "Cancelar", correct: "Correto!", wrong: "Não está!", concept: "Recap:", nextRound: "Próxima Lição", gameOver: "Diplomado!", winner: "Top Trader", playAgain: "Reiniciar", day: "", wheelValues: { BANKRUPT: "FALÊNCIA", LOSE_TURN: "PASSO" } }
+            en: { title: "BETTING EXCHANGE ROOM", tagline: "Zero to Hero Course!", players1: "1 Player", players2: "2 Players", selectLesson: "Topic", startGame: "Spin the wheel", spinWheel: "Spin the wheel", buyVowel: "Compro Vocale (250)", solve: "Solve", turnPrefix: "Turn for player ", turnSuffix: "", bankrupt: "BANKRUPT!", loseTurn: "MISS TURN", consonantPrompt: "Consonant @ Odds:", vowelPrompt: "Choose Vowel", solvePrompt: "Solution:", submit: "Send", cancel: "Cancel", correct: "Correct!", wrong: "Not found!", concept: "Recap:", nextRound: "Next Lesson", gameOver: "Graduated!", winner: "Top Trader", playAgain: "Restart", day: "", wheelValues: { BANKRUPT: "BANKRUPT", LOSE_TURN: "MISS TURN" } },
+            it: { title: "BETTING EXCHANGE ROOM", tagline: "Corso Zero to Hero!", players1: "1 Giocatore", players2: "2 Giocatori", selectLesson: "Tema", startGame: "Gira la ruota", spinWheel: "Gira la ruota", buyVowel: "Compro Vocale (250)", solve: "Risolvi", turnPrefix: "Tocca al giocatore numero ", turnSuffix: "", bankrupt: "BANCAROTTA!", loseTurn: "PASSO", consonantPrompt: "Consonante a Quota:", vowelPrompt: "Scegli Vocale", solvePrompt: "Soluzione:", submit: "Invia", cancel: "Annulla", correct: "Esatto!", wrong: "Non c'è!", concept: "Recap:", nextRound: "Prossima Lezione", gameOver: "Diplomato!", winner: "Top Trader", playAgain: "Ricomincia", day: "", wheelValues: { BANKRUPT: "BANCAROTTA", LOSE_TURN: "PASSO" } },
+            es: { title: "BETTING EXCHANGE ROOM", tagline: "¡Curso Zero to Hero!", players1: "1 Jugador", players2: "2 Jugadores", selectLesson: "Tema", startGame: "Gira la rueda", spinWheel: "Gira la rueda", buyVowel: "Compro Vocale (250)", solve: "Resolver", turnPrefix: "Turno del jugador ", turnSuffix: "", bankrupt: "¡BANCARROTA!", loseTurn: "¡PASO!", consonantPrompt: "Consonante a Cuota:", vowelPrompt: "Elegir Vocal", solvePrompt: "Solución:", submit: "Enviar", cancel: "Cancelar", correct: "¡Correcto!", wrong: "¡No está!", concept: "Recap:", nextRound: "Siguiente Tema", gameOver: "¡Graduado!", winner: "Top Trader", playAgain: "Reiniciar", day: "", wheelValues: { BANKRUPT: "BANCARROTA", LOSE_TURN: "PASSO" } },
+            pt: { title: "BETTING EXCHANGE ROOM", tagline: "Curso Zero to Hero!", players1: "1 Jogador", players2: "2 Jogadores", selectLesson: "Tema", startGame: "Gira a roda", spinWheel: "Gira a roda", buyVowel: "Compro Vocale (250)", solve: "Resolver", turnPrefix: "Vez do jogador ", turnSuffix: "", bankrupt: "FALÊNCIA!", loseTurn: "PASSO!", consonantPrompt: "Consoante @ Cota:", vowelPrompt: "Escolha Vogal", solvePrompt: "Solução:", submit: "Enviar", cancel: "Cancelar", correct: "Correto!", wrong: "Não sta!", concept: "Recap:", nextRound: "Próxima Lição", gameOver: "Diplomado!", winner: "Top Trader", playAgain: "Reiniciar", day: "", wheelValues: { BANKRUPT: "FALÊNCIA", LOSE_TURN: "PASSO" } }
         };
+
+        // Aggiornamento etichette tradotte specifiche
+        uiTranslations.en.buyVowel = "Buy Vowel (250)";
+        uiTranslations.es.buyVowel = "Comprar Vocal (250)";
+        uiTranslations.pt.buyVowel = "Comprar Vogal (250)";
 
         const WHEEL_SEGMENTS = [
             { type: 'value', val: '1.50', multiplier: 150, color: COLORS.backBlue, textColor: '#FFFFFF' },
@@ -360,7 +377,7 @@
                                 <div className="absolute top-[-50px] left-[-50px] w-40 h-40 bg-green-500/20 rounded-full blur-[80px]"></div>
                                 <div className="absolute bottom-[-50px] right-[-50px] w-40 h-40 bg-blue-500/20 rounded-full blur-[80px]"></div>
                                 
-                                <div className="mb-4 flex justify-center"><Icon name="TelegramBall" size={60} className="drop-shadow-lg"/></div>
+                                <h1 className="text-3xl sm:text-5xl font-black text-[#00D166] text-center mb-6 tracking-tighter italic drop-shadow-[0_2px_10px_rgba(0,209,102,0.3)]">ZERO TO HERO ACADEMY</h1>
                                 
                                 <p className="text-center font-bold mb-4 text-white/90 text-sm sm:text-base">{ui.tagline}</p>
                                 
@@ -372,23 +389,22 @@
                                     ))}
                                 </div>
                                 <div className="flex gap-2 w-full mb-4">
-                                    <button onClick={()=>setNumPlayers(1)} className={`flex-1 p-3 rounded-xl flex flex-col items-center gap-1 text-xs ${numPlayers===1?'bg-[#2E9DDF] border-2 border-blue-300 shadow-md':'bg-black/40'}`}><Icon name="User" size={16}/>{ui.players1}</button>
-                                    <button onClick={()=>setNumPlayers(2)} className={`flex-1 p-3 rounded-xl flex flex-col items-center gap-1 text-xs ${numPlayers===2?'bg-[#2E9DDF] border-2 border-blue-300 shadow-md':'bg-black/40'}`}><Icon name="Users" size={16}/>{ui.players2}</button>
+                                    <button onClick={()=>setNumPlayers(1)} className={`flex-1 p-3 rounded-xl flex flex-col items-center gap-1 text-xs ${numPlayers===1?'bg-[#2E9DDF] border-2 border-blue-300 shadow-md font-black text-white':'bg-black/40 font-bold opacity-60'}`}><Icon name="User" size={16}/>{ui.players1}</button>
+                                    <button onClick={()=>setNumPlayers(2)} className={`flex-1 p-3 rounded-xl flex flex-col items-center gap-1 text-xs ${numPlayers===2?'bg-[#2E9DDF] border-2 border-blue-300 shadow-md font-black text-white':'bg-black/40 font-bold opacity-60'}`}><Icon name="Users" size={16}/>{ui.players2}</button>
                                 </div>
                                 <div className="w-full mb-6 text-center">
-                                    <label className="block text-[8px] uppercase font-black mb-1 opacity-70 tracking-widest">{ui.selectLesson}</label>
+                                    <label className="block text-[10px] uppercase font-black mb-1 opacity-100 tracking-widest text-[#FFB805]">{ui.selectLesson}</label>
                                     <div className="relative">
-                                        <select value={startTopicIndex} onChange={e=>setStartTopicIndex(Number(e.target.value))} className="w-full p-3 pr-10 rounded-xl bg-black/60 border-2 border-white/10 text-white font-bold outline-none appearance-none cursor-pointer text-xs">
+                                        <select value={startTopicIndex} onChange={e=>setStartTopicIndex(Number(e.target.value))} className="w-full p-3 pr-10 rounded-xl bg-black border-2 border-white/20 text-white font-black outline-none appearance-none cursor-pointer text-xs">
                                             {phrasesDictionary.map((p,i)=><option key={i} value={i} className="text-black">{(i+1).toString().padStart(2, '0')} - {p[lang].topic}</option>)}
                                         </select>
                                         <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none opacity-50"><Icon name="ChevronDown" size={16}/></div>
                                     </div>
                                 </div>
 
-                                {/* Pulsante Gira di Inizio */}
                                 <button 
                                     onClick={startGame} 
-                                    className="w-20 h-20 sm:w-24 sm:h-24 rounded-full slot-button text-white font-black text-[10px] sm:text-xs flex flex-col items-center justify-center gap-1 active:scale-95 transition-all uppercase border-4 border-white/20"
+                                    className="w-20 h-20 sm:w-24 sm:h-24 rounded-full slot-button text-white font-black text-[10px] sm:text-xs flex flex-col items-center justify-center gap-1 active:scale-95 transition-all uppercase border-4 border-white/20 animate-pulse-button"
                                 >
                                     <Icon name="Play" size={16} className="fill-current"/>
                                     {ui.startGame}
@@ -431,53 +447,52 @@
                                         <div className="w-full max-w-sm bg-[#1A1A1A] p-2 rounded-xl border border-white/10 text-center relative overflow-hidden shadow-lg min-h-[110px] flex flex-col justify-center">
                                             {turnPhase === 'IDLE' ? (
                                                 <div className="flex flex-col gap-1.5 animate-fade-in-up items-center">
-                                                    <h3 className="font-black text-[#FFB805] uppercase tracking-widest text-[8px] flex items-center gap-1">
-                                                        <Icon name="User" size={10}/> {ui.turnPrefix}{currentPlayer+1}
+                                                    <h3 className="font-black text-[#FFB805] uppercase tracking-widest text-[10px] flex items-center gap-1 drop-shadow-md">
+                                                        <Icon name="User" size={12}/> {ui.turnPrefix}{currentPlayer+1}
                                                     </h3>
                                                     
-                                                    {/* Pulsante Tondo Slot Machine */}
-                                                    <button onClick={spinWheel} className="w-16 h-16 sm:w-20 sm:h-20 rounded-full slot-button flex items-center justify-center text-white font-black text-[10px] sm:text-xs uppercase border-4 border-white/10 active:scale-95 transition-all">
+                                                    <button onClick={spinWheel} className="w-16 h-16 sm:w-20 sm:h-20 rounded-full slot-button flex items-center justify-center text-white font-black text-[10px] sm:text-xs uppercase border-4 border-white/10 animate-pulse-button drop-shadow-lg">
                                                         {ui.spinWheel}
                                                     </button>
 
-                                                    <div className="flex gap-2 w-full">
+                                                    <div className="flex gap-2 w-full mt-1 px-1">
                                                         <button 
                                                             onClick={buyVowel} 
                                                             disabled={scores[currentPlayer]<250} 
-                                                            className={`flex-1 py-1.5 rounded-lg font-bold text-[8px] ${scores[currentPlayer]>=250?'bg-[#2E9DDF] text-white shadow-md':'bg-white/5 opacity-30 cursor-not-allowed'}`}
+                                                            className={`flex-1 py-2 rounded-lg font-black text-[10px] sm:text-xs transition-all ${scores[currentPlayer]>=250?'bg-[#2E9DDF] text-black shadow-[0_3px_0_#1181B1]':'bg-white/10 text-white/40 cursor-not-allowed'}`}
                                                         >
                                                             {ui.buyVowel}
                                                         </button>
-                                                        <button onClick={()=>setTurnPhase('SOLVING')} className="flex-1 py-1.5 bg-purple-600 rounded-lg font-bold text-[8px] text-white shadow-md">
+                                                        <button onClick={()=>setTurnPhase('SOLVING')} className="flex-1 py-2 bg-purple-600 rounded-lg font-black text-[10px] sm:text-xs text-white shadow-[0_3px_0_#4c1d95] drop-shadow-md">
                                                             {ui.solve}
                                                         </button>
                                                     </div>
                                                 </div>
                                             ) : (
                                                 <div className="flex flex-col items-center justify-center h-full">
-                                                    {turnPhase==='SPINNING' && <div className="text-xs font-black text-[#FFB805] animate-pulse uppercase tracking-widest">GIRANDO...</div>}
+                                                    {turnPhase==='SPINNING' && <div className="text-sm font-black text-[#FFB805] animate-pulse uppercase tracking-widest drop-shadow-md">GIRANDO...</div>}
                                                     {turnPhase==='WAITING_CONSONANT' && spinValue && (
                                                         <div className="animate-fade-in-up">
-                                                            <div className="text-[7px] opacity-60 uppercase mb-0.5">{ui.consonantPrompt}</div>
-                                                            <div className="text-xl font-black" style={{color: spinValue.color}}>{spinValue.val}</div>
+                                                            <div className="text-[9px] font-black text-white uppercase mb-0.5 drop-shadow-lg bg-black/40 px-2 py-0.5 rounded-full">{ui.consonantPrompt}</div>
+                                                            <div className="text-3xl font-black drop-shadow-md" style={{color: spinValue.color}}>{spinValue.val}</div>
                                                         </div>
                                                     )}
-                                                    {turnPhase==='WAITING_VOWEL' && <div className="text-sm font-black text-[#2E9DDF] uppercase animate-fade-in-up">{ui.vowelPrompt}</div>}
+                                                    {turnPhase==='WAITING_VOWEL' && <div className="text-sm font-black text-[#2E9DDF] uppercase animate-fade-in-up drop-shadow-md bg-black/50 px-3 py-1 rounded-full">{ui.vowelPrompt}</div>}
                                                     {turnPhase==='SOLVING' && (
                                                         <div className="w-full animate-fade-in-up flex flex-col gap-1.5">
-                                                            <input type="text" value={solveInput} onChange={e=>setSolveInput(e.target.value)} placeholder={ui.solvePrompt} className="w-full p-1.5 rounded-lg bg-white/5 border border-white/20 text-white text-center font-black uppercase outline-none focus:border-[#FFB805] text-xs" />
+                                                            <input type="text" value={solveInput} onChange={e=>setSolveInput(e.target.value)} placeholder={ui.solvePrompt} className="w-full p-2 rounded-lg bg-white/10 border-2 border-[#FFB805] text-white text-center font-black uppercase outline-none focus:bg-black text-sm" />
                                                             <div className="flex gap-2">
-                                                                <button onClick={()=>setTurnPhase('IDLE')} className="flex-1 py-1 bg-red-500/20 text-red-400 rounded-lg font-bold text-[8px]">{ui.cancel}</button>
-                                                                <button onClick={handleSolveSubmit} className="flex-1 py-1 bg-[#00D166] text-black rounded-lg font-bold text-[8px]">{ui.submit}</button>
+                                                                <button onClick={()=>setTurnPhase('IDLE')} className="flex-1 py-1.5 bg-red-600 text-white rounded-lg font-black text-[9px] uppercase shadow-md">{ui.cancel}</button>
+                                                                <button onClick={handleSolveSubmit} className="flex-1 py-1.5 bg-[#00D166] text-black rounded-lg font-black text-[9px] uppercase shadow-md">{ui.submit}</button>
                                                             </div>
                                                         </div>
                                                     )}
                                                 </div>
                                             )}
                                             {modalMessage && (
-                                                <div className="absolute inset-0 z-50 bg-black/90 flex flex-col items-center justify-center p-2 animate-pop-in">
-                                                    <Icon name={modalMessage.type==='success'?'CheckCircle':'AlertCircle'} size={24} className={modalMessage.type==='success'?'text-green-500':'text-red-500'} />
-                                                    <div className="text-[10px] font-black uppercase text-center mt-1 text-white">{modalMessage.text}</div>
+                                                <div className="absolute inset-0 z-50 bg-black/95 flex flex-col items-center justify-center p-2 animate-pop-in">
+                                                    <Icon name={modalMessage.type==='success'?'CheckCircle':'AlertCircle'} size={32} className={modalMessage.type==='success'?'text-green-400':'text-red-500'} />
+                                                    <div className="text-sm font-black uppercase text-center mt-1 text-white drop-shadow-md">{modalMessage.text}</div>
                                                 </div>
                                             )}
                                         </div>
@@ -487,26 +502,26 @@
                                 <div className="lg:w-2/3 flex flex-col justify-between py-1 lg:h-full overflow-hidden">
                                     <div className="flex justify-center gap-2 w-full max-w-xs mx-auto mb-1">
                                         {[...Array(numPlayers)].map((_, i) => (
-                                            <div key={i} className={`flex-1 p-1 rounded-xl border-2 text-center transition-all ${currentPlayer===i && gameState==='PLAYING'?'border-[#FFB805] bg-[#FFB805]/10 scale-105 shadow-sm':'opacity-20'}`}>
-                                                <div className="text-[7px] font-black uppercase text-white/60 flex items-center justify-center gap-1">
+                                            <div key={i} className={`flex-1 p-1 rounded-xl border-2 text-center transition-all ${currentPlayer===i && gameState==='PLAYING'?'border-[#FFB805] bg-[#FFB805]/20 scale-105 shadow-md':'opacity-30 border-white/5 bg-black/40'}`}>
+                                                <div className="text-[7px] font-black uppercase text-white/80 flex items-center justify-center gap-1">
                                                     <Icon name="User" size={10}/> {i + 1}
                                                 </div>
-                                                <div className="text-base font-black text-white">{scores[i]}</div>
+                                                <div className="text-base font-black text-white drop-shadow-sm">{scores[i]}</div>
                                             </div>
                                         ))}
                                     </div>
 
                                     <div className="flex flex-col items-center gap-1.5 w-full mb-1">
-                                        <div className="bg-black/80 px-4 py-1 rounded-full font-black text-[9px] sm:text-xs shadow-md border border-white/10 flex gap-2">
+                                        <div className="bg-black/90 px-5 py-1.5 rounded-full font-black text-[10px] sm:text-xs shadow-[0_2px_10px_rgba(0,0,0,0.5)] border border-white/10 flex gap-2">
                                             <span className="text-[#00D166]">{phraseData.day}</span>
                                             <span className="text-[#FFB805] uppercase tracking-widest">{phraseData.topic}</span>
                                         </div>
-                                        <div className="relative w-full p-2 sm:p-4 rounded-[1.2rem] border-[4px] border-gray-400 bg-[#0F2027] flex flex-col items-center shadow-xl overflow-hidden min-h-[100px] sm:min-h-[140px] justify-center">
-                                            <div className="flex flex-wrap justify-center gap-y-2 gap-x-4 sm:gap-x-6">
+                                        <div className="relative w-full p-3 sm:p-5 rounded-[1.2rem] border-[4px] border-gray-500 bg-[#0F2027] flex flex-col items-center shadow-[inset_0_0_30px_rgba(0,0,0,0.8),0_10px_20px_rgba(0,0,0,0.5)] overflow-hidden min-h-[100px] sm:min-h-[150px] justify-center">
+                                            <div className="flex flex-wrap justify-center gap-y-3 gap-x-6 sm:gap-x-10">
                                                 {phraseData.phrase.split(' ').map((w, wi)=>(
-                                                    <div key={wi} className="flex gap-1">
+                                                    <div key={wi} className="flex gap-1.5">
                                                         {w.split('').map((c, ci)=>(
-                                                            <div key={ci} className={`w-5 h-7 sm:w-7 sm:h-10 md:w-9 md:h-12 flex items-center justify-center text-xs sm:text-lg font-black uppercase rounded bg-white border border-gray-300 transition-all shadow-sm ${guessedLetters.includes(c)?'text-black':'text-transparent'}`}>{c}</div>
+                                                            <div key={ci} className={`w-5 h-8 sm:w-8 sm:h-12 md:w-10 md:h-14 flex items-center justify-center text-sm sm:text-2xl font-black uppercase rounded-sm bg-white border border-gray-400 transition-all shadow-md ${guessedLetters.includes(c)?'text-black':'text-transparent'}`}>{c}</div>
                                                         ))}
                                                     </div>
                                                 ))}
@@ -515,24 +530,32 @@
                                     </div>
 
                                     {gameState==='PLAYING' && (
-                                        <div className="w-full bg-white/5 p-1.5 rounded-xl border border-white/10 mb-1">
+                                        <div className="w-full bg-black/60 p-2 rounded-xl border border-white/5 mb-1 shadow-inner">
                                             <div className="flex flex-wrap justify-center gap-1">
                                                 {'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map(l => {
                                                     const isV = ['A','E','I','O','U'].includes(l);
                                                     const isGuessed = guessedLetters.includes(l);
                                                     const disabled = turnPhase==='IDLE' || turnPhase==='SPINNING' || (turnPhase==='WAITING_CONSONANT' && isV) || (turnPhase==='WAITING_VOWEL' && !isV);
+                                                    
+                                                    let btnClass = "flex-grow-0 basis-[11.5%] lg:basis-[7.5%] h-8 sm:h-10 rounded-lg font-black text-[11px] sm:text-sm transition-all shadow-md ";
+                                                    
+                                                    if (isGuessed) {
+                                                        const inPhrase = phraseData.phrase.includes(l);
+                                                        btnClass += inPhrase 
+                                                            ? "bg-gray-700 text-white/20 border border-black/20" 
+                                                            : "bg-red-900/40 text-red-500/30 border border-red-950";
+                                                    } else if (disabled) {
+                                                        btnClass += "bg-white/5 text-white/30 opacity-40 border border-transparent";
+                                                    } else {
+                                                        btnClass += "bg-[#00D166] text-black border-b-4 border-[#009944] hover:brightness-110 active:border-b-0 active:translate-y-1";
+                                                    }
+
                                                     return (
                                                         <button 
                                                             key={l} 
                                                             disabled={disabled || isGuessed} 
                                                             onClick={()=>handleLetterClick(l)} 
-                                                            className={`flex-grow-0 basis-[11.5%] lg:basis-[7.5%] h-8 sm:h-10 rounded-lg font-black text-[10px] sm:text-sm transition-all shadow-sm
-                                                                ${isGuessed 
-                                                                    ? 'bg-black/50 text-white/5 opacity-10 cursor-not-allowed shadow-none' 
-                                                                    : disabled 
-                                                                        ? 'bg-white/5 text-white/20 opacity-30 cursor-not-allowed'
-                                                                        : 'bg-[#00D166]/15 text-[#00D166] border border-[#00D166]/30 hover:bg-[#00D166] hover:text-black active:scale-90'
-                                                                }`}
+                                                            className={btnClass}
                                                         >
                                                             {l}
                                                         </button>
@@ -543,16 +566,18 @@
                                     )}
 
                                     {gameState==='SOLVED' && (
-                                        <div className="w-full bg-gradient-to-br from-[#0F2027] to-black p-3 rounded-[1.2rem] border border-green-500/30 shadow-xl animate-pop-in mb-2 overflow-y-auto max-h-[120px]">
-                                            <div className="flex items-center justify-between gap-2 mb-1">
-                                                <div className="flex items-center gap-1 text-[#00D166]">
-                                                    <Icon name="CheckCircle" size={18}/>
-                                                    <h2 className="text-xs font-black text-white uppercase">{ui.correct}</h2>
+                                        <div className="w-full bg-gradient-to-br from-[#0F2027] to-black p-4 rounded-[1.2rem] border-2 border-[#00D166]/40 shadow-2xl animate-pop-in mb-2 overflow-y-auto max-h-[140px]">
+                                            <div className="flex items-center justify-between gap-2 mb-2">
+                                                <div className="flex items-center gap-2 text-[#00D166]">
+                                                    <Icon name="CheckCircle" size={24}/>
+                                                    <h2 className="text-sm font-black text-white uppercase drop-shadow-md">{ui.correct}</h2>
                                                 </div>
-                                                <button onClick={handleNextRound} className="px-4 py-1.5 bg-[#FFB805] text-black rounded-full font-black text-[9px] flex items-center justify-center gap-1 shadow-md active:scale-95 transition-transform hover:scale-105"><Icon name="Play" size={12}/>{ui.nextRound}</button>
+                                                <button onClick={handleNextRound} className="px-5 py-2 bg-[#FFB805] text-black rounded-full font-black text-[10px] flex items-center justify-center gap-1 shadow-lg active:scale-95 uppercase transition-transform hover:scale-105"><Icon name="Play" size={14}/>{ui.nextRound}</button>
                                             </div>
-                                            <h3 className="text-[#FFB805] font-black uppercase text-[7px] tracking-widest mb-0.5">{ui.concept}</h3>
-                                            <p className="text-white text-[10px] sm:text-[11px] leading-tight opacity-90">{phraseData.explanation}</p>
+                                            <div className="bg-white/5 p-2 rounded-lg border border-white/5">
+                                                <h3 className="text-[#FFB805] font-black uppercase text-[8px] tracking-widest mb-1">{ui.concept}</h3>
+                                                <p className="text-white text-[10px] sm:text-xs leading-relaxed opacity-100 font-bold">{phraseData.explanation}</p>
+                                            </div>
                                         </div>
                                     )}
                                 </div>
@@ -560,10 +585,11 @@
                         )}
 
                         {gameState === 'GAME_OVER' && (
-                            <div className="text-center text-white py-6 px-6 bg-white/5 rounded-3xl backdrop-blur-xl border border-white/10 mt-auto mb-auto animate-pop-in w-full max-w-sm shadow-2xl">
-                                <h2 className="text-xl font-black text-[#FFB805] mb-4">{ui.gameOver}</h2>
-                                <p className="text-base font-bold mb-4">🏆 {ui.winner}</p>
-                                <button onClick={()=>setGameState('SETUP')} className="w-full py-2 bg-[#2E9DDF] rounded-full font-black text-sm flex items-center justify-center gap-2 active:scale-95 shadow-lg"><Icon name="RotateCcw" size={16}/>{ui.playAgain}</button>
+                            <div className="text-center text-white py-10 px-8 bg-black/80 rounded-3xl backdrop-blur-xl border-2 border-[#00D166]/30 mt-auto mb-auto animate-pop-in w-full max-w-sm shadow-2xl">
+                                <Icon name="CheckCircle" size={60} className="text-[#00D166] mx-auto mb-4 drop-shadow-lg" />
+                                <h2 className="text-2xl font-black text-[#FFB805] mb-4 uppercase tracking-tighter">{ui.gameOver}</h2>
+                                <p className="text-lg font-bold mb-8 text-white/80">🏆 {ui.winner}</p>
+                                <button onClick={()=>setGameState('SETUP')} className="w-full py-4 bg-[#2E9DDF] text-black rounded-full font-black text-base flex items-center justify-center gap-2 active:scale-95 shadow-[0_5px_0_#1181B1] uppercase"><Icon name="RotateCcw" size={20}/>{ui.playAgain}</button>
                             </div>
                         )}
                     </main>
