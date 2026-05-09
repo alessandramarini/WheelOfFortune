@@ -59,6 +59,40 @@
         .animate-flip-in { animation: flipIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
         .animate-confetti { animation: confettiFall linear forwards; }
         
+        /* Nuove Animazioni e Stili per la Lezione Sbloccata Memorable */
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
+        .animate-float { animation: float 3.5s ease-in-out infinite; }
+        
+        @keyframes shine { 0% { background-position: 200% center; } 100% { background-position: -200% center; } }
+        .animate-shine { 
+            background: linear-gradient(120deg, transparent 20%, rgba(255,255,255,0.05) 40%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.05) 60%, transparent 80%); 
+            background-size: 200% auto; 
+            animation: shine 3s linear infinite; 
+        }
+
+        /* Stili Tipografici Dinamici per le keywords della Lezione */
+        .lesson-content b { 
+            color: #FFB805; 
+            font-weight: 900; 
+            background: rgba(255,184,5,0.15); 
+            padding: 2px 6px; 
+            border-radius: 6px; 
+            border: 1px solid rgba(255,184,5,0.3);
+            text-shadow: 0 0 10px rgba(255,184,5,0.4);
+            white-space: nowrap;
+        }
+        .lesson-content i { 
+            color: #00D166; 
+            font-style: normal; 
+            font-weight: 900; 
+            background: rgba(0,209,102,0.15); 
+            padding: 2px 6px; 
+            border-radius: 6px;
+            border: 1px solid rgba(0,209,102,0.3);
+            text-shadow: 0 0 10px rgba(0,209,102,0.4);
+            white-space: nowrap;
+        }
+        
         /* Compatibilità Cross-Browser per evitare sfarfallii in 3D su vecchi Safari/iOS */
         .backface-hidden {
             -webkit-backface-visibility: hidden;
@@ -173,7 +207,7 @@
 
         const uiTranslations = {
             en: { title: "ACADEMY", players1: "1 Player", players2: "2 Players", selectLesson: "Start From", startGame: "Start Journey", spinWheel: "Spin the wheel", buyVowel: "Vowel (250)", hint: "Hint (100)", solve: "SOLVE", turnPrefix: "Turn: P", turnSuffix: "", bankrupt: "BANKRUPT!", loseTurn: "MISS TURN", consonantPrompt: "Consonant for:", vowelPrompt: "Choose Vowel", solvePrompt: "Your Solution:", submit: "Verify", cancel: "Cancel", correct: "Awesome!", wrong: "Nope!", concept: "Lesson:", nextRound: "Next Lesson", gameOver: "Graduated!", winner: "Top Trader", playAgain: "Restart Academy", day: "", wheelValues: { BANKRUPT: "BANKRUPT", LOSE_TURN: "LOSE TURN" }, lessonUnlocked: "LESSON UNLOCKED", rankTitle: "Rank", progress: "Progress", noHints: "No hints available" },
-            it: { title: "ACADEMY", players1: "1 Giocatore", players2: "2 Giocatori", selectLesson: "Parti da", startGame: "Inizia Viaggio", spinWheel: "Gira la ruota", buyVowel: "Vocale (250)", hint: "Aiuto (100)", solve: "RISOLVI", turnPrefix: "Turno: G", turnSuffix: "", bankrupt: "BANCAROTTA!", loseTurn: "SALTA TURNO", consonantPrompt: "Consonante a:", vowelPrompt: "Scegli Vocale", solvePrompt: "La tua soluzione:", submit: "Verifica", cancel: "Annulla", correct: "Spettacolo!", wrong: "Sbagliato!", concept: "Lezione:", nextRound: "Prossima Lezione", gameOver: "Diplomato!", winner: "Top Trader", playAgain: "Ricomincia Academy", day: "", wheelValues: { BANKRUPT: "BANCAROTTA", LOSE_TURN: "SALTA TURNO" }, lessonUnlocked: "LEZIONE SBLOCCATA", rankTitle: "Rango", progress: "Progresso", noHints: "Nessun aiuto disponibile" },
+            it: { title: "ACADEMY", players1: "1 Giocatore", players2: "2 Giocatori", selectLesson: "Parti da", startGame: "Inizia Viaggio", spinWheel: "Gira la ruota", buyVowel: "Vocale (250)", hint: "Aiuto (100)", solve: "RISOLVI", turnPrefix: "Turno: G", turnSuffix: "", bankrupt: "BANCAROTTA!", loseTurn: "SALTA TURNO", consonantPrompt: "Consonante a:", vowelPrompt: "Scegli Vocale", solvePrompt: "La tua soluzione:", submit: "Verifica", cancel: "Annulla", correct: "Esatto!", wrong: "Sbagliato!", concept: "Lezione:", nextRound: "Prossima Lezione", gameOver: "Diplomato!", winner: "Top Trader", playAgain: "Ricomincia Academy", day: "", wheelValues: { BANKRUPT: "BANCAROTTA", LOSE_TURN: "SALTA TURNO" }, lessonUnlocked: "LEZIONE SBLOCCATA", rankTitle: "Rango", progress: "Progresso", noHints: "Nessun aiuto disponibile" },
             es: { title: "ACADEMY", players1: "1 Jugador", players2: "2 Jugadores", selectLesson: "Empezar en", startGame: "Iniciar Viaje", spinWheel: "Gira la rueda", buyVowel: "Vocal (250)", hint: "Pista (100)", solve: "RESOLVER", turnPrefix: "Turno: J", turnSuffix: "", bankrupt: "¡BANCARROTA!", loseTurn: "¡PIERDE TURNO!", consonantPrompt: "Consonante a:", vowelPrompt: "Elegir Vocal", solvePrompt: "Tu Solución:", submit: "Verificar", cancel: "Cancelar", correct: "¡Genial!", wrong: "¡Error!", concept: "Lección:", nextRound: "Siguiente Lección", gameOver: "¡Graduado!", winner: "Top Trader", playAgain: "Reiniciar Academy", day: "", wheelValues: { BANKRUPT: "BANCARROTA", LOSE_TURN: "PIERDE TURNO" }, lessonUnlocked: "LECCIÓN DESBLOQUEADA", rankTitle: "Rango", progress: "Progreso", noHints: "No hay pistas disponibles" },
             pt: { title: "ACADEMY", players1: "1 Jogador", players2: "2 Jogadores", selectLesson: "Começar em", startGame: "Iniciar Viagem", spinWheel: "Gira a roda", buyVowel: "Vogal (250)", hint: "Dica (100)", solve: "RESOLVER", turnPrefix: "Vez: J", turnSuffix: "", bankrupt: "FALÊNCIA!", loseTurn: "PASSA A VEZ", consonantPrompt: "Consoante a:", vowelPrompt: "Escolha Vogal", solvePrompt: "A sua Solução:", submit: "Verificar", cancel: "Cancelar", correct: "Fantástico!", wrong: "Erro!", concept: "Lição:", nextRound: "Próxima Lição", gameOver: "Diplomado!", winner: "Top Trader", playAgain: "Reiniciar Academy", day: "", wheelValues: { BANKRUPT: "FALÊNCIA", LOSE_TURN: "PASSA A VEZ" }, lessonUnlocked: "LIÇÃO DESBLOQUEADA", rankTitle: "Classificação", progress: "Progresso", noHints: "Sem dicas disponíveis" }
         };
@@ -259,7 +293,6 @@
                         osc.frequency.exponentialRampToValueAtTime(endFreq, startTime + duration);
                     }
                     
-                    // Inviluppo sonoro morbido (Attack, Decay) per suoni eleganti e non tagliati
                     gain.gain.setValueAtTime(0, startTime);
                     gain.gain.linearRampToValueAtTime(vol, startTime + duration * 0.1);
                     gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
@@ -270,23 +303,19 @@
                 } catch(e) {}
             };
 
-            // Suoni stile Cyborg UI / Sci-Fi
-            const playTick = () => playTone(800, 'sine', 0.05, 0.05, 0, 200); // Click olografico veloce
+            const playTick = () => playTone(800, 'sine', 0.05, 0.05, 0, 200);
             
             const playCorrect = () => { 
-                // Accordo ascendente cristallino
                 playTone(523.25, 'sine', 0.2, 0.08, 0); 
                 playTone(659.25, 'sine', 0.3, 0.08, 0.08); 
                 playTone(1046.50, 'sine', 0.4, 0.05, 0.15); 
             };
             
             const playWrong = () => {
-                // Sfumatura "power-down" dolce, niente ronzii fastidiosi
                 playTone(250, 'triangle', 0.4, 0.1, 0, 150); 
             };
             
             const playWin = () => { 
-                // Arpeggio C Major 9 stile "AI sbloccata" e accordo finale lungo
                 const notes = [523.25, 659.25, 783.99, 987.77, 1174.66];
                 notes.forEach((freq, i) => playTone(freq, 'sine', 0.3, 0.08, i * 0.08));
                 playTone(523.25, 'sine', 0.8, 0.08, 0.4);
@@ -355,7 +384,7 @@
                 if (scores[currentPlayer] >= 250 && turnPhase === 'IDLE') {
                     setTurnPhase('WAITING_VOWEL');
                     const ns = [...scores]; ns[currentPlayer] -= 250; setScores(ns);
-                    showTemporaryModal("-250", 'info');
+                    showTemporaryModal("-250", 'info', false);
                 }
             };
 
@@ -369,7 +398,7 @@
                         const ns = [...scores]; ns[currentPlayer] -= 100; setScores(ns);
                         setGuessedLetters(p => [...p, randomC]);
                         playCorrect();
-                        showTemporaryModal(`+${randomC}`, 'success');
+                        showTemporaryModal(`+${randomC}`, 'success', false);
                         
                         const allFound = phraseData.phrase.replace(/[^A-Z]/g, '').split('').every(l => [...guessedLetters, randomC].includes(l));
                         if (allFound) {
@@ -397,7 +426,7 @@
                     if (turnPhase === 'WAITING_CONSONANT') {
                         const win = occ * spinValue.multiplier;
                         const ns = [...scores]; ns[currentPlayer] += win; setScores(ns);
-                        showTemporaryModal(`+${win}`, 'success');
+                        showTemporaryModal(`+${win}`, 'success', false);
                     } else showTemporaryModal(ui.correct, 'success');
                     
                     setTurnPhase('IDLE');
@@ -414,7 +443,7 @@
 
             const nextTurn = () => { if (numPlayers > 1) setCurrentPlayer(p => p === 0 ? 1 : 0); setTurnPhase('IDLE'); };
 
-            const showTemporaryModal = (text, type) => { setModalMessage({ text, type }); setTimeout(() => setModalMessage(null), 1500); };
+            const showTemporaryModal = (text, type, isIcon = true) => { setModalMessage({ text, type, isIcon }); setTimeout(() => setModalMessage(null), 1500); };
 
             const handleNextRound = () => {
                 const next = currentRoundIndex + 1;
@@ -422,8 +451,14 @@
                 startRound(next); setGameState('PLAYING');
             };
 
+            // LOGICA DI SOLUZIONE MIGLIORATA
             const handleSolveSubmit = () => {
-                if (solveInput.trim().toUpperCase() === phraseData.phrase.toUpperCase()) {
+                const isCorrect = solveInput.trim().toUpperCase() === phraseData.phrase.toUpperCase();
+                
+                setTurnPhase('IDLE'); // Chiude ISTANTANEAMENTE il modal di inserimento
+                setSolveInput('');
+                
+                if (isCorrect) {
                     setGuessedLetters('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''));
                     playWin();
                     showTemporaryModal(ui.correct, 'success');
@@ -431,9 +466,8 @@
                 } else {
                     playWrong();
                     showTemporaryModal(ui.wrong, 'error');
-                    setTimeout(nextTurn, 1500);
+                    setTimeout(nextTurn, 1500); // Passa il turno in automatico dopo aver mostrato l'errore gigante
                 }
-                setSolveInput('');
             };
 
             const getCurrentRank = (index) => RANKS.find(r => index < r.max) || RANKS[RANKS.length - 1];
@@ -441,7 +475,7 @@
 
             return (
                 <div className="viewport-container bg-transparent text-white">
-                    {/* HEADER AGGIORNATO CON PUNTEGGI A DESTRA */}
+                    {/* HEADER */}
                     <header className="px-2 sm:px-4 py-2 flex justify-between items-center border-b border-white/10 bg-[#111827]/80 backdrop-blur-md sticky top-0 z-50 h-[55px] sm:h-[70px] shadow-lg">
                         <div className="flex items-center gap-2">
                             <img src="logo-tondo.jpeg" className="w-7 h-7 sm:w-10 sm:h-10 rounded-full object-cover shadow-[0_0_15px_rgba(0,209,102,0.4)]" />
@@ -510,10 +544,9 @@
                         )}
 
                         {gameState === 'PLAYING' && (
-                            /* LAYOUT OTTIMIZZATO PER EVITARE LO SCROLL */
                             <div className="w-full flex flex-col lg:flex-row gap-2 lg:gap-6 p-1 sm:p-4 max-w-7xl mx-auto flex-1 lg:h-full lg:overflow-hidden">
                                 
-                                {/* COLONNA SINISTRA: Ruota e Controlli */}
+                                {/* COLONNA SINISTRA */}
                                 <div className="lg:w-1/3 flex flex-col items-center justify-center gap-2 lg:h-full relative shrink-0">
                                     <div className="relative w-full max-w-[150px] sm:max-w-[280px] lg:max-w-[340px] aspect-square drop-shadow-2xl z-10">
                                         <svg viewBox="0 0 400 400" className="w-full h-full overflow-visible">
@@ -578,20 +611,12 @@
                                                     </div>
                                                 )}
                                                 {turnPhase==='WAITING_VOWEL' && <div className="text-[10px] font-black text-[#2E9DDF] uppercase animate-fade-in-up">{ui.vowelPrompt}</div>}
-                                                {turnPhase==='SOLVING' && <div className="text-[10px] font-black text-[#00D166] animate-pulse uppercase tracking-widest">{ui.solvePrompt}</div>}
-                                            </div>
-                                        )}
-                                        
-                                        {modalMessage && (
-                                            <div className="absolute inset-0 z-30 bg-black/90 flex flex-col items-center justify-center p-2 animate-pop-in rounded-2xl">
-                                                <Icon name={modalMessage.type==='success'?'CheckCircle':'AlertCircle'} size={24} className={modalMessage.type==='success'?'text-[#00D166]':'text-red-500'} />
-                                                <div className="text-[10px] font-black uppercase text-center mt-1 text-white">{modalMessage.text}</div>
                                             </div>
                                         )}
                                     </div>
                                 </div>
 
-                                {/* COLONNA DESTRA: Tabellone e Tastiera */}
+                                {/* COLONNA DESTRA */}
                                 <div className="lg:w-2/3 flex flex-col lg:justify-between lg:h-full gap-2 lg:gap-4 pb-2 lg:pb-0">
                                     <div className="flex flex-col items-center gap-2 w-full flex-1">
                                         <div className="bg-black/80 px-4 py-1 sm:px-6 sm:py-2 rounded-full border border-[#FFB805]/30 shadow-[0_0_10px_rgba(255,184,5,0.1)] flex justify-center w-full max-w-md mx-auto">
@@ -650,6 +675,7 @@
                             </div>
                         )}
 
+                        {/* MODALE DI INSERIMENTO SOLUZIONE (SOLVE) A SCHERMO INTERO */}
                         {turnPhase === 'SOLVING' && (
                             <div className="fixed inset-0 z-[9999] bg-black/95 flex flex-col items-center justify-center p-4 backdrop-blur-md animate-pop-in">
                                 <div className="w-full max-w-lg bg-gradient-to-b from-[#0F2027] to-black border border-[#00D166]/50 rounded-3xl p-6 sm:p-8 shadow-[0_0_40px_rgba(0,209,102,0.2)] flex flex-col items-center">
@@ -672,43 +698,69 @@
                             </div>
                         )}
 
+                        {/* MESSAGGIO MODALE GIGANTE GLOBALE (Es. Sbagliato, Bancarotta, +150) */}
+                        {modalMessage && (
+                            <div className="fixed inset-0 z-[10000] bg-black/60 flex flex-col items-center justify-center backdrop-blur-sm animate-pop-in pointer-events-none">
+                                <div className={`border-2 p-8 sm:p-12 rounded-[2rem] shadow-2xl flex flex-col items-center transform scale-110 ${modalMessage.type==='success'?'bg-green-950/90 border-green-500/50 text-[#00D166]':modalMessage.type==='error'?'bg-red-950/90 border-red-500/50 text-red-500':'bg-blue-950/90 border-blue-500/50 text-[#2E9DDF]'}`}>
+                                    {modalMessage.isIcon && (
+                                        <Icon name={modalMessage.type==='success'?'CheckCircle':'AlertCircle'} size={80} className="mb-4 drop-shadow-md" />
+                                    )}
+                                    <div className="text-3xl sm:text-6xl font-black uppercase text-center drop-shadow-lg tracking-widest">{modalMessage.text}</div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* SCHERMATA LEZIONE SBLOCCATA (MEMORABILE E RIFORMATTATA) */}
                         {gameState === 'SOLVED' && (
-                            <div className="flex flex-col items-center justify-center h-full w-full p-4 animate-pop-in absolute inset-0 bg-[#111827] z-50 overflow-y-auto">
+                            <div className="flex flex-col items-center justify-center h-full w-full p-4 animate-pop-in absolute inset-0 bg-[#111827]/95 backdrop-blur-xl z-[100] overflow-y-auto">
                                 <Confetti />
-                                <div className="w-full max-w-2xl bg-gradient-to-b from-[#0F2027] to-black p-6 sm:p-10 rounded-3xl border border-[#00D166]/50 shadow-[0_0_40px_rgba(0,209,102,0.2)] text-center relative z-10 my-auto">
-                                    
-                                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#00D166]/20 text-[#00D166] mb-4 shadow-[0_0_20px_rgba(0,209,102,0.4)]">
-                                        <Icon name="CheckCircle" size={32} />
-                                    </div>
-                                    
-                                    <h2 className="text-[#00D166] font-black text-sm sm:text-lg mb-2 tracking-[0.2em] uppercase">{ui.lessonUnlocked}</h2>
-                                    <div className="text-white text-3xl sm:text-5xl font-black mb-8 uppercase drop-shadow-lg tracking-tight leading-tight">{phraseData.phrase}</div>
-                                    
-                                    <div className="bg-gradient-to-br from-white/10 to-white/5 rounded-2xl p-5 sm:p-8 text-left border border-white/10 mb-8 shadow-inner relative overflow-hidden">
-                                        <div className="absolute top-0 left-0 w-1 h-full bg-[#FFB805]"></div>
-                                        <h3 className="text-[#FFB805] font-black uppercase text-xs sm:text-sm mb-3 tracking-widest flex items-center gap-2"><Icon name="Lightbulb" size={16}/> {phraseData.topic}</h3>
-                                        <p className="text-white/90 text-sm sm:text-lg leading-relaxed font-medium" dangerouslySetInnerHTML={{ __html: phraseData.explanation }}></p>
-                                    </div>
-
-                                    <div className="flex items-center justify-between bg-black/60 p-4 sm:p-5 rounded-2xl border border-white/5 mb-8">
-                                        <div className="text-left flex items-center gap-3">
-                                            <div className="w-10 h-10 rounded-full flex items-center justify-center bg-white/5 border border-white/10">
-                                                <Icon name={currentRank.icon} size={20} style={{color: currentRank.color}}/>
-                                            </div>
-                                            <div>
-                                                <div className="text-white/40 text-[10px] font-black uppercase tracking-widest">{ui.rankTitle}</div>
-                                                <div className="text-base sm:text-xl font-black" style={{color: currentRank.color}}>{currentRank.title[lang]}</div>
+                                <div className="w-full max-w-3xl bg-[#0F2027] p-1 rounded-3xl shadow-[0_0_50px_rgba(0,209,102,0.3)] relative z-10 my-auto border border-[#00D166]/50">
+                                    <div className="bg-gradient-to-b from-[#111827] to-[#0F2027] rounded-[1.4rem] p-6 sm:p-12 flex flex-col items-center text-center relative overflow-hidden">
+                                        
+                                        {/* Effetto Shimmer */}
+                                        <div className="absolute inset-0 animate-shine z-0 pointer-events-none"></div>
+                                        
+                                        <div className="relative z-10 animate-float mb-6">
+                                            <div className="inline-flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br from-[#00D166] to-green-800 text-[#111827] shadow-[0_0_30px_rgba(0,209,102,0.6)] border-4 border-[#111827]">
+                                                <Icon name="CheckCircle" size={48} />
                                             </div>
                                         </div>
-                                        <div className="text-right">
-                                            <div className="text-white/40 text-[10px] font-black uppercase tracking-widest">{ui.progress}</div>
-                                            <div className="text-base sm:text-xl font-black text-white">{currentRoundIndex + 1} <span className="text-white/30 text-sm">/ {phrasesDictionary.length}</span></div>
+                                        
+                                        <h2 className="text-[#00D166] font-black text-sm sm:text-xl mb-4 tracking-[0.3em] uppercase drop-shadow-md z-10">{ui.lessonUnlocked}</h2>
+                                        
+                                        <div className="text-white text-3xl sm:text-6xl font-black mb-10 uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)] tracking-tight leading-tight z-10">
+                                            {phraseData.phrase}
                                         </div>
-                                    </div>
+                                        
+                                        <div className="w-full bg-black/60 rounded-2xl p-6 sm:p-10 text-left border border-white/10 mb-8 shadow-2xl relative overflow-hidden z-10">
+                                            <div className="absolute top-0 left-0 w-1.5 h-full bg-[#FFB805]"></div>
+                                            <h3 className="text-[#FFB805] font-black uppercase text-sm sm:text-base mb-4 tracking-widest flex items-center gap-3">
+                                                <Icon name="Lightbulb" size={20} className="text-[#FFB805] animate-pulse"/> 
+                                                {phraseData.topic}
+                                            </h3>
+                                            <p className="lesson-content text-white/90 text-base sm:text-xl md:text-2xl leading-relaxed font-medium" dangerouslySetInnerHTML={{ __html: phraseData.explanation }}></p>
+                                        </div>
 
-                                    <button onClick={handleNextRound} className="w-full py-4 sm:py-5 bg-[#FFB805] text-black rounded-2xl font-black text-sm sm:text-base shadow-[0_6px_0_#CC9200] active:translate-y-1.5 active:shadow-none transition-all uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-[#ffc633]">
-                                        {ui.nextRound} <Icon name="Play" size={18}/>
-                                    </button>
+                                        <div className="w-full flex flex-col sm:flex-row items-center justify-between bg-white/5 p-5 rounded-2xl border border-white/10 mb-8 z-10 gap-4">
+                                            <div className="flex items-center gap-4">
+                                                <div className="w-12 h-12 rounded-full flex items-center justify-center bg-black/50 border-2" style={{borderColor: currentRank.color}}>
+                                                    <Icon name={currentRank.icon} size={24} style={{color: currentRank.color}}/>
+                                                </div>
+                                                <div className="text-left">
+                                                    <div className="text-white/40 text-[10px] sm:text-xs font-black uppercase tracking-widest">{ui.rankTitle}</div>
+                                                    <div className="text-lg sm:text-2xl font-black drop-shadow-md" style={{color: currentRank.color}}>{currentRank.title[lang]}</div>
+                                                </div>
+                                            </div>
+                                            <div className="text-center sm:text-right">
+                                                <div className="text-white/40 text-[10px] sm:text-xs font-black uppercase tracking-widest mb-1">{ui.progress}</div>
+                                                <div className="text-xl sm:text-3xl font-black text-white">{currentRoundIndex + 1} <span className="text-white/30 text-lg">/ {phrasesDictionary.length}</span></div>
+                                            </div>
+                                        </div>
+
+                                        <button onClick={handleNextRound} className="w-full py-5 sm:py-6 bg-gradient-to-r from-[#FFB805] to-yellow-600 text-black rounded-2xl font-black text-lg sm:text-xl shadow-[0_8px_0_#CC9200] active:translate-y-2 active:shadow-none transition-all uppercase tracking-[0.2em] flex items-center justify-center gap-3 hover:from-yellow-400 hover:to-yellow-500 z-10">
+                                            {ui.nextRound} <Icon name="Play" size={24} className="fill-current"/>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         )}
