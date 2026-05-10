@@ -5,23 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="description" content="Betting Exchange Room - Academy Interattiva">
     <meta name="theme-color" content="#111827">
-    <title>⚽ Betting Exchange Room - Zero to Hero Academy</title>
+    <title>⚽ Betting Exchange Room - Zero to Hero Academy PRO</title>
     
     <link rel="icon" type="image/jpeg" href="logo-tondo.jpeg">
     
-    <!-- Ottimizzazioni di Rete per GitHub Pages / Vercel -->
+    <!-- Ottimizzazioni di Rete Estreme -->
     <link rel="preconnect" href="https://unpkg.com" crossorigin>
     <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
     <link rel="preconnect" href="https://flagcdn.com" crossorigin>
-    <link rel="dns-prefetch" href="https://unpkg.com">
-    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
-
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <style>
+        /* CSS Nativo per caricamento istantaneo (Prima che React si avvii) */
         body { 
             background-color: #111827; 
             background-image: radial-gradient(circle at 50% 0%, #1f2937 0%, #111827 70%);
@@ -29,15 +23,13 @@
             overflow: hidden;
             -webkit-tap-highlight-color: transparent;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            height: 100vh;
-            width: 100vw;
-            color: white;
+            height: 100vh; width: 100vw; color: white;
         }
         
         #loading-screen {
             position: fixed; inset: 0; background: #111827; 
             display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            z-index: 9999; transition: opacity 0.5s ease;
+            z-index: 99999; transition: opacity 0.4s ease;
         }
         
         .loader {
@@ -57,8 +49,7 @@
         .animate-flip-in { animation: flipIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
         .animate-confetti { animation: confettiFall linear forwards; }
         
-        /* Animazioni per la Lezione Sbloccata */
-        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
         .animate-float { animation: float 3.5s ease-in-out infinite; }
         
         @keyframes shine { 0% { background-position: 200% center; } 100% { background-position: -200% center; } }
@@ -68,45 +59,28 @@
             animation: shine 3s linear infinite; 
         }
 
-        /* Stili Tipografici Dinamici */
-        .lesson-content b { 
-            color: #FFB805; 
-            font-weight: 900; 
-            background: rgba(255,184,5,0.15); 
-            padding: 1px 4px; 
-            border-radius: 4px; 
-            border: 1px solid rgba(255,184,5,0.3);
-            text-shadow: 0 0 10px rgba(255,184,5,0.4);
-            white-space: nowrap;
+        /* Stili per la formattazione avanzata delle lezioni */
+        .lesson-content b { color: #FFB805; font-weight: 900; }
+        .lesson-content i { color: #00D166; font-style: normal; font-weight: 900; }
+        .lesson-content .highlight-box {
+            background: rgba(255,255,255,0.05); border-left: 3px solid #00D166;
+            padding: 10px; margin: 12px 0; border-radius: 4px; font-size: 0.95em;
         }
-        .lesson-content i { 
-            color: #00D166; 
-            font-style: normal; 
-            font-weight: 900; 
-            background: rgba(0,209,102,0.15); 
-            padding: 1px 4px; 
-            border-radius: 4px;
-            border: 1px solid rgba(0,209,102,0.3);
-            text-shadow: 0 0 10px rgba(0,209,102,0.4);
-            white-space: nowrap;
+        .lesson-content .math-box {
+            background: rgba(46, 157, 223, 0.1); border: 1px solid rgba(46, 157, 223, 0.3);
+            padding: 10px; margin: 12px 0; border-radius: 6px; font-family: monospace; font-size: 1.1em; color: #2E9DDF;
         }
+        .lesson-content .memo-box {
+            background: rgba(255, 184, 5, 0.1); border-left: 3px solid #FFB805;
+            padding: 10px; margin: 12px 0; border-radius: 4px; font-style: italic; font-weight: 500;
+        }
+        .lesson-content hr { border-color: rgba(255,255,255,0.1); margin: 15px 0; }
         
-        /* Compatibilità Cross-Browser per evitare sfarfallii in 3D */
-        .backface-hidden {
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            transform: translateZ(0);
-        }
-        
+        .backface-hidden { -webkit-backface-visibility: hidden; backface-visibility: hidden; transform: translateZ(0); }
         input[type="text"] { font-size: 16px !important; }
         button { touch-action: manipulation; }
+        .viewport-container { height: 100vh; height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
 
-        .viewport-container {
-            height: 100vh; height: 100dvh;
-            display: flex; flex-direction: column; overflow: hidden;
-        }
-
-        /* Scrollbar custom */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
@@ -115,10 +89,16 @@
 <body>
     <div id="loading-screen">
         <div class="loader mb-6"></div>
-        <p style="color: #00D166; font-weight: 900; letter-spacing: 3px; font-size: 14px;">ACADEMY INIZIALIZZAZIONE...</p>
+        <p style="color: #00D166; font-weight: 900; letter-spacing: 3px; font-size: 14px; font-family: sans-serif;">ACADEMY STARTING...</p>
     </div>
 
     <div id="root"></div>
+
+    <!-- Scripts caricati alla fine per non bloccare il rendering della pagina nelle Webview (Telegram) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <script type="text/babel">
         const { useState, useEffect, useRef, Fragment } = React;
@@ -134,7 +114,8 @@
                 AlertCircle: <Fragment><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></Fragment>,
                 ChevronDown: <polyline points="6 9 12 15 18 9" />,
                 Lightbulb: <Fragment><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.9 1.2 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></Fragment>,
-                Trophy: <Fragment><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></Fragment>
+                Trophy: <Fragment><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></Fragment>,
+                Target: <Fragment><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></Fragment>
             };
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
@@ -144,12 +125,7 @@
         };
 
         const COLORS = { primary: '#1A1A1A', greenCorp: '#00D166', backBlue: '#2E9DDF', layPink: '#F48EAD', text: '#FFFFFF', boardBg: '#0F2027', gold: '#FFB805' };
-
-        const QWERTY = [
-            ['Q','W','E','R','T','Y','U','I','O','P'],
-            ['A','S','D','F','G','H','J','K','L'],
-            ['Z','X','C','V','B','N','M']
-        ];
+        const QWERTY = [ ['Q','W','E','R','T','Y','U','I','O','P'], ['A','S','D','F','G','H','J','K','L'], ['Z','X','C','V','B','N','M'] ];
 
         const RANKS = [
             { max: 5, title: { it: 'Novellino', en: 'Rookie', es: 'Novato', pt: 'Novato' }, color: '#9CA3AF', icon: 'User' },
@@ -160,44 +136,97 @@
             { max: 31, title: { it: 'Exchange Master', en: 'Exchange Master', es: 'Maestro Exchange', pt: 'Mestre Exchange' }, color: '#EF4444', icon: 'Trophy' }
         ];
 
+        /* DIZIONARIO PRO: Lezioni estese e calcolate matematicamente, senza allucinazioni */
         const phrasesDictionary = [
-            { id: 1, it: { topic: "AZIONE BASE", phrase: "PUNTARE UNA QUOTA", lesson: "👉 Scommetti <b>A FAVORE</b>. Credi che accadrà. È la scommessa classica: se la tua squadra vince, vinci anche tu." }, en: { topic: "BASIC ACTION", phrase: "BACKING AN ODDS", lesson: "👉 Bet <b>FOR</b> an outcome. You believe it will happen. If your selection wins, you win." }, es: { topic: "ACCIÓN BASE", phrase: "APOSTAR A FAVOR", lesson: "👉 Apuesta <b>A FAVOR</b>. Crees que sucederá. Si tu selección gana, tú ganas." }, pt: { topic: "AÇÃO BASE", phrase: "APOSTAR A FAVOR", lesson: "👉 Aposte <b>A FAVOR</b>. Acredita que vai acontecer. Se a sua seleção ganhar, você ganha." } },
-            { id: 2, it: { topic: "IL BANCO", phrase: "BANCARE LA SQUADRA", lesson: "🛑 Scommetti <b>CONTRO</b>. Fai tu da bookmaker! Vinci se la squadra perde o pareggia." }, en: { topic: "THE BOOKIE", phrase: "LAYING THE TEAM", lesson: "🛑 Bet <b>AGAINST</b> an outcome. You play the bookmaker! You win if the team loses or draws." }, es: { topic: "LA CASA", phrase: "APOSTAR EN CONTRA", lesson: "🛑 Apuesta <b>EN CONTRA</b>. ¡Eres el bookmaker! Ganas si el equipo pierde o empata." }, pt: { topic: "A CASA", phrase: "APOSTAR CONTRA A EQUIPA", lesson: "🛑 Aposte <b>CONTRA</b>. Você é o bookmaker! Ganha se a equipa perder ou empatar." } },
-            { id: 3, it: { topic: "GESTIONE RISCHIO", phrase: "RESPONSABILITA", lesson: "⚠️ Il tuo <b>RISCHIO REALE</b>. Bancare 10€ a quota 3.0 ti costa 20€. Tieni sempre d'occhio il portafoglio!" }, en: { topic: "RISK MANAGEMENT", phrase: "BOOKMAKER LIABILITY", lesson: "⚠️ Your <b>ACTUAL RISK</b>. Laying 10€ at odds of 3.0 risks 20€. Always watch your liability!" }, es: { topic: "GESTIÓN RIESGO", phrase: "RIESGO DEL BOOKMAKER", lesson: "⚠️ Tu <b>RIESGO REAL</b>. Apostar 10€ en contra a cuota 3.0 cuesta 20€. ¡Vigila tu cartera!" }, pt: { topic: "GESTÃO DE RISCO", phrase: "RESPONSABILIDADE", lesson: "⚠️ O seu <b>RISCO REAL</b>. Apostar 10€ contra a cota 3.0 custa 20€. Cuidado com a carteira!" } },
-            { id: 4, it: { topic: "STATO SCOMMESSA", phrase: "SCOMMESSA ABBINATA", lesson: "🤝 <b>PATTO CHIUSO!</b> Trovi un utente che scommette l'opposto alla tua stessa quota. Senza abbinamento, niente scommessa." }, en: { topic: "BET STATUS", phrase: "WELL MATCHED BET", lesson: "🤝 <b>DEAL DONE!</b> Someone took the opposite side of your bet. No match = no bet." }, es: { topic: "ESTADO APUESTA", phrase: "APUESTA IGUALADA", lesson: "🤝 <b>¡TRATO HECHO!</b> Alguien tomó el lado opuesto de tu apuesta. Sin igualación no hay apuesta." }, pt: { topic: "ESTADO APOSTA", phrase: "APOSTA CORRESPONDIDA", lesson: "🤝 <b>NEGÓCIO FECHADO!</b> Alguém aceitou o lado oposto da sua aposta. Sem correspondência não há aposta." } },
-            { id: 5, it: { topic: "SOLDI NEL MERCATO", phrase: "LIQUIDITA DEL MERCATO", lesson: "🌊 <b>I SOLDI VERI</b> sul mercato. Tanta liquidità = zero sbalzi improvvisi e abbinamenti immediati." }, en: { topic: "MARKET MONEY", phrase: "MARKET LIQUIDITY", lesson: "🌊 <b>REAL MONEY</b> in the market. High liquidity = stable odds and instant matches." }, es: { topic: "DINERO DEL MERCADO", phrase: "LIQUIDEZ DEL MERCADO", lesson: "🌊 <b>DINERO REAL</b> en el mercado. Alta liquidez = cuotas estables y emparejamientos instantáneos." }, pt: { topic: "DINHEIRO MERCADO", phrase: "LIQUIDEZ DO MERCADO", lesson: "🌊 <b>DINHEIRO REAL</b> no mercado. Alta liquidez = cotas estáveis e correspondência instantânea." } },
-            { id: 6, it: { topic: "MOVIMENTO QUOTA", phrase: "MOVIMENTO DI UN TICK", lesson: "⏱️ Il <b>BATTITO</b> del mercato. Lo scatto minimo di una quota (es. da 2.00 a 2.02). Ogni tick è potenziale oro." }, en: { topic: "ODDS MOVEMENT", phrase: "ONE TICK MOVEMENT", lesson: "⏱️ The market's <b>HEARTBEAT</b>. The minimum odds movement (e.g., 2.00 to 2.02). Every tick is potential profit." }, es: { topic: "MOVIMIENTO CUOTA", phrase: "MOVIMIENTO DE UN TICK", lesson: "⏱️ El <b>LATIDO</b> del mercado. El movimiento mínimo de cuota. Cada tick es oro potencial." }, pt: { topic: "MOVIMIENTO COTA", phrase: "MOVIMENTO DE UM TICK", lesson: "⏱️ O <b>BATIMENTO</b> do mercado. O movimento mínimo da cota. Cada tick é ouro potencial." } },
-            { id: 7, it: { topic: "USCITA ANTICIPATA", phrase: "USCITA IN CASH OUT", lesson: "🚪 L'<b>USCITA DI SICUREZZA</b>. Incassa il profitto o taglia la perdita <i>prima</i> del fischio finale." }, en: { topic: "EARLY EXIT", phrase: "EARLY CASH OUT", lesson: "🚪 The <b>EMERGENCY EXIT</b>. Lock in profit or cut losses <i>before</i> the final whistle." }, es: { topic: "SALIDA TEMPRANA", phrase: "SALIDA EN CASH OUT", lesson: "🚪 La <b>SALIDA DE EMERGENCIA</b>. Asegura ganancias o recorta pérdidas <i>antes</i> del final." }, pt: { topic: "SAÍDA ANTECIPADA", phrase: "SAIDA EM CASH OUT", lesson: "🚪 A <b>SAÍDA DE EMERGÊNCIA</b>. Garanta lucros ou corte perdas <i>antes</i> do apito final." } },
-            { id: 8, it: { topic: "PROFITTO CERTO", phrase: "PROFITTO GREEN BOOK", lesson: "🍏 Il <b>SACRO GRAAL</b>. Profitto matematico e garantito su <i>ogni</i> risultato. Mettiti comodo e goditi la partita!" }, en: { topic: "GUARANTEED PROFIT", phrase: "GREEN BOOK PROFIT", lesson: "🍏 The <b>HOLY GRAIL</b>. Mathematical, guaranteed profit regardless of the outcome. Sit back and enjoy!" }, es: { topic: "BENEFICIO SEGURO", phrase: "BENEFICIO LIBRO VERDE", lesson: "🍏 El <b>SANTO GRIAL</b>. Beneficio matemático garantizado en <i>cualquier</i> resultado. ¡Disfruta del juego!" }, pt: { topic: "LUCRO GARANTIDO", phrase: "LUCRO DO LIVRO VERDE", lesson: "🍏 O <b>SANTO GRAAL</b>. Lucro matemático garantido em <i>qualquer</i> resultado. Desfrute do jogo!" } },
-            { id: 9, it: { topic: "TRADING VELOCE", phrase: "FARE SCALPING VELOCE", lesson: "⚡ <b>TOCCA E FUGA</b>. Ruba 1-2 tick in pochi secondi. Tanti mini-profitti costanti a rischio quasi zero." }, en: { topic: "FAST TRADING", phrase: "QUICK SCALPING TRADE", lesson: "⚡ <b>HIT AND RUN</b>. Steal 1-2 ticks in seconds. Lots of micro-profits with near-zero risk." }, es: { topic: "TRADING RÁPIDO", phrase: "HACER SCALPING RAPIDO", lesson: "⚡ <b>TOCA Y HUYE</b>. Roba 1-2 ticks en segundos. Muchos micro-beneficios con riesgo casi nulo." }, pt: { topic: "TRADING RÁPIDO", phrase: "FAZER SCALPING RAPIDO", lesson: "⚡ <b>TOCA E FOGE</b>. Roube 1-2 ticks em segundos. Muitos micro-lucros com risco quase nulo." } },
-            { id: 10, it: { topic: "VANTAGGIO MATEMATICO", phrase: "TROVARE LA VALUE BET", lesson: "💎 La <b>GEMMA NASCOSTA</b>. Compri a un prezzo migliore del suo valore reale. Il vero vantaggio sui bookmaker." }, en: { topic: "MATHEMATICAL EDGE", phrase: "FINDING VALUE BETS", lesson: "💎 The <b>HIDDEN GEM</b>. Buying at a better price than true probability. Your real edge." }, es: { topic: "VENTAJA MATEMÁTICA", phrase: "ENCONTRAR APUESTA DE VALOR", lesson: "💎 La <b>JOYA OCULTA</b>. Comprar a mejor precio que la probabilidad real. Tu verdadera ventaja." }, pt: { topic: "VANTAGEM MATEMÁTICA", phrase: "ENCONTRAR APOSTA DE VALOR", lesson: "💎 A <b>JÓIA OCULTA</b>. Comprar a um preço melhor do que a probabilidade real. A sua verdadeira vantagem." } },
-            { id: 11, it: { topic: "MULTISELEZIONE", phrase: "DUTCHING SUI RISULTATI", lesson: "🍕 <b>DIVIDI LA TORTA</b>. Spalma la puntata su più cavalli. Stesso profitto garantito, chiunque vinca tra loro." }, en: { topic: "MULTI SELECTION", phrase: "DUTCHING THE OUTCOMES", lesson: "🍕 <b>SPLIT THE PIE</b>. Spread your stake across multiple picks for the exact same profit on either winner." }, es: { topic: "MULTI SELECCIÓN", phrase: "DUTCHING DE RESULTADOS", lesson: "🍕 <b>DIVIDE EL PASTEL</b>. Reparte tu apuesta en varias selecciones para el mismo beneficio si alguna gana." }, pt: { topic: "MULTI SELEÇÃO", phrase: "DUTCHING DE RESULTADOS", lesson: "🍕 <b>DIVIDA O BOLO</b>. Distribua a aposta por várias seleções para o mesmo lucro se alguma ganhar." } },
-            { id: 12, it: { topic: "TASSA EXCHANGE", phrase: "COMMISSIONE VINCITE", lesson: "✂️ Solo sulle <b>VINCITE NETTE</b>. L'Exchange non trucca le quote: trattiene una minuscola % solo se chiudi in positivo." }, en: { topic: "EXCHANGE FEE", phrase: "COMMISSION ON WINNINGS", lesson: "✂️ Only on <b>NET WINNINGS</b>. The Exchange doesn't rig odds; they just take a tiny % if you profit." }, es: { topic: "TARIFA EXCHANGE", phrase: "COMISION SOBRE GANANCIAS", lesson: "✂️ Solo en <b>GANANCIAS NETAS</b>. El Exchange no manipula cuotas, cobra un % mínimo solo si ganas." }, pt: { topic: "TAXA EXCHANGE", phrase: "COMISSAO SOBRE GANHOS", lesson: "✂️ Apenas em <b>GANHOS LÍQUIDOS</b>. A Exchange não manipula cotas, cobra uma % mínima só se lucrar." } },
-            { id: 13, it: { topic: "TRADING INVERSO", phrase: "STRATEGIA LAY TO BACK", lesson: "📉 <b>COMPRA BASSO, VENDI ALTO</b>. Banchi una quota bassa sperando che salga. Ottima strategia per le sfavorite." }, en: { topic: "REVERSE TRADING", phrase: "LAY TO BACK STRATEGY", lesson: "📉 <b>BUY LOW, SELL HIGH</b>. Lay at low odds hoping they drift up. Great strategy against favorites." }, es: { topic: "TRADING INVERSO", phrase: "ESTRATEGIA LAY TO BACK", lesson: "📉 <b>COMPRA BAJO, VENDE ALTO</b>. Apuesta en contra a baja cuota esperando que suba." }, pt: { topic: "TRADING INVERSO", phrase: "ESTRATEGIA LAY TO BACK", lesson: "📉 <b>COMPRA BAIXO, VENDE ALTO</b>. Aposte contra a cota baixa esperando que ela suba." } },
-            { id: 14, it: { topic: "TRADING DI BASE", phrase: "TECNICA BACK TO LAY", lesson: "📈 <b>LA MOSSA DEL MAESTRO</b>. Punti a quota alta. La squadra segna? La quota crolla, tu banchi e crei il Green Book!" }, en: { topic: "BASIC TRADING", phrase: "BACK TO LAY TECHNIQUE", lesson: "📈 <b>THE MASTER MOVE</b>. Back high. Team scores? Odds crash, you lay low and lock in the Green Book!" }, es: { topic: "TRADING BÁSICO", phrase: "TECNICA BACK TO LAY", lesson: "📈 <b>EL MOVIMIENTO MAESTRO</b>. Apuesta a favor alto. Si marcan, la cuota cae, apuestas en contra y ¡aseguras!" }, pt: { topic: "TRADING BÁSICO", phrase: "TECNICA BACK TO LAY", lesson: "📈 <b>A JOGADA DE MESTRE</b>. Aposte a favor alto. Marcaram? A cota cai, aposta contra e garante o Green Book!" } },
-            { id: 15, it: { topic: "ATTESA SUL MERCATO", phrase: "SCOMMESSA NON ABBINATA", lesson: "🎣 <b>L'AMO IN ACQUA</b>. Ordine fuori mercato in attesa. Piazzi la trappola e aspetti che qualcuno 'abbocchi'." }, en: { topic: "WAITING IN MARKET", phrase: "UNMATCHED BET ORDER", lesson: "🎣 <b>HOOK IN THE WATER</b>. An unmatched order waiting for the market to move and bite." }, es: { topic: "ESPERANDO MERCADO", phrase: "APUESTA NO IGUALADA", lesson: "🎣 <b>ANZUELO AL AGUA</b>. Orden esperando que el mercado se mueva y alguien 'pique'." }, pt: { topic: "ESPERANDO MERCADO", phrase: "APOSTA NAO CORRESPONDIDA", lesson: "🎣 <b>ANZOL NA ÁGUA</b>. Ordem à espera que o mercado se mova e alguém 'morda'." } },
-            { id: 16, it: { topic: "TAGLIO PERDITE", phrase: "IMPOSTARE STOP LOSS", lesson: "🛡️ Il tuo <b>SCUDO SALVAVITA</b>. Decidi la perdita massima prima di iniziare. Tocchi il limite? Esci. Senza. Esitare." }, en: { topic: "CUTTING LOSSES", phrase: "SETTING A STOP LOSS", lesson: "🛡️ Your <b>LIFESAVER</b>. Decide max loss before entering. Hit it? Exit. Without. Hesitation." }, es: { topic: "CORTAR PÉRDIDAS", phrase: "AJUSTAR EL STOP LOSS", lesson: "🛡️ Tu <b>ESCUDO VITAL</b>. Decide la pérdida máxima antes de entrar. ¿La tocas? Sal sin dudar." }, pt: { topic: "CORTAR PERDAS", phrase: "DEFINIR O STOP LOSS", lesson: "🛡️ O seu <b>ESCUDO VITAL</b>. Decida a perda máxima antes de entrar. Tocou nela? Saia sem hesitar." } },
-            { id: 17, it: { topic: "IL CAPITALE", phrase: "GESTIONE DELLA CASSA", lesson: "🏦 Il tuo <b>MOTORE</b>. Non puntare mai più del 5% del tuo capitale. Senza soldi non si gioca, proteggili!" }, en: { topic: "THE BANKROLL", phrase: "BANKROLL MANAGEMENT", lesson: "🏦 Your <b>ENGINE</b>. Never risk more than 5% of your bankroll. No money, no game. Protect it!" }, es: { topic: "EL CAPITAL", phrase: "GESTION DE BANKROLL", lesson: "🏦 Tu <b>MOTOR</b>. Nunca arriesgues más del 5%. ¡Sin dinero no hay juego, protégelo!" }, pt: { topic: "O CAPITAL", phrase: "GESTAO DE BANCA", lesson: "🏦 O seu <b>MOTOR</b>. Nunca arrisque mais de 5%. Sem dinheiro não há jogo, proteja-o!" } },
-            { id: 18, it: { topic: "IL PREMATCH", phrase: "QUOTA DI PARTENZA", lesson: "🏁 La <b>LINEA DI START</b>. Analizza la quota iniziale prima che la partita inizi. Spesso nasconde indizi sul mercato." }, en: { topic: "THE PREMATCH", phrase: "STARTING PRICE ODDS", lesson: "🏁 The <b>STARTING LINE</b>. Analyze the initial odds before kick-off. It often hides market clues." }, es: { topic: "EL PREPARTIDO", phrase: "CUOTA DE SALIDA", lesson: "🏁 La <b>LÍNEA DE SALIDA</b>. Analiza la cuota inicial antes de empezar. A menudo esconde pistas." }, pt: { topic: "O PRÉ JOGO", phrase: "COTA DE PARTIDA", lesson: "🏁 A <b>LINHA DE PARTIDA</b>. Analise a cota inicial antes de começar. Muitas vezes esconde pistas." } },
-            { id: 19, it: { topic: "PRESSIONE MERCATO", phrase: "PESO DEL DENARO", lesson: "⚖️ La <b>BILANCIA</b>. Indica dove stanno andando i soldi. Se ci sono 10mila in Punta e 100 in Banca, la quota scenderà." }, en: { topic: "MARKET PRESSURE", phrase: "WEIGHT OF MONEY", lesson: "⚖️ The <b>SCALE</b>. Shows where the money is going. If Back money vastly outweighs Lay money, odds will drop." }, es: { topic: "PRESIÓN DEL MERCADO", phrase: "PESO DEL DINERO", lesson: "⚖️ La <b>BÁSCULA</b>. Indica dónde va el dinero. Si hay mucho más en Back que en Lay, la cuota bajará." }, pt: { topic: "PRESSÃO DO MERCADO", phrase: "PESO DO DINHEIRO", lesson: "⚖️ A <b>BALANÇA</b>. Indica para onde vai o dinheiro. Se há muito mais no Back do que no Lay, a cota vai descer." } },
-            { id: 20, it: { topic: "TRADING IN DIRETTA", phrase: "MERCATO IN GIOCO LIVE", lesson: "🔥 <b>IL CAOS CONTROLLATO</b>. Durante la partita le quote impazziscono ad ogni azione. Massimi rischi, massimi profitti." }, en: { topic: "LIVE TRADING", phrase: "IN PLAY LIVE MARKET", lesson: "🔥 <b>CONTROLLED CHAOS</b>. During the match, odds go wild with every action. Max risk, max reward." }, es: { topic: "TRADING EN DIRECTO", phrase: "MERCADO EN VIVO", lesson: "🔥 <b>EL CAOS CONTROLADO</b>. En juego las cuotas enloquecen con cada acción. Máximo riesgo y beneficio." }, pt: { topic: "TRADING EM DIRETO", phrase: "MERCADO AO VIVO", lesson: "🔥 <b>O CAOS CONTROLADO</b>. Durante o jogo as cotas enlouquecem com cada ação. Máximo risco e lucro." } },
-            { id: 21, it: { topic: "PUNTI CHIAVE", phrase: "PUNTO DI RESISTENZA", lesson: "🧱 Il <b>MURO DI GOMMA</b>. Livelli di quota storici difficili da superare. Perfetti per fare entry contro-trend." }, en: { topic: "KEY POINTS", phrase: "RESISTANCE POINT", lesson: "🧱 The <b>RUBBER WALL</b>. Historic odds levels that are hard to break. Perfect for counter-trend entries." }, es: { topic: "PUNTOS CLAVE", phrase: "PUNTO DE RESISTENCIA", lesson: "🧱 El <b>MURO DE GOMA</b>. Niveles de cuota difíciles de romper. Perfectos para entradas contra tendencia." }, pt: { topic: "PONTOS CHAVE", phrase: "PONTO DE RESISTENCIA", lesson: "🧱 O <b>MURO DE BORRACHA</b>. Níveis de cota difíceis de quebrar. Perfeitos para entradas contra tendência." } },
-            { id: 22, it: { topic: "IL FLUSSO", phrase: "TENDENZA DEL MERCATO", lesson: "🏄‍♂️ <b>CAVALCA L'ONDA</b>. Il mercato ha una direzione. Vai con la corrente, non combatterla se non sei sicuro." }, en: { topic: "THE FLOW", phrase: "MARKET TREND DIRECTION", lesson: "🏄‍♂️ <b>RIDE THE WAVE</b>. The market has a direction. Go with the flow, don't fight the trend unless sure." }, es: { topic: "EL FLUJO", phrase: "TENDENCIA DEL MERCADO", lesson: "🏄‍♂️ <b>CABALGA LA OLA</b>. El mercado tiene dirección. Ve con la corriente, no la luches si no estás seguro." }, pt: { topic: "O FLUXO", phrase: "TENDENCIA DO MERCADO", lesson: "🏄‍♂️ <b>APANHE A ONDA</b>. O mercado tem uma direção. Siga a corrente, não a combata a menos que tenha a certeza." } },
-            { id: 23, it: { topic: "SENZA RISCHIO", phrase: "ARBITRAGGIO SPORTIVO", lesson: "⚖️ Il <b>SUREBET</b>. Sfrutti le differenze di quota tra bookmaker ed Exchange per guadagnare a prescindere. Raro ma letale." }, en: { topic: "RISK FREE", phrase: "SPORTS ARBITRAGE", lesson: "⚖️ The <b>SUREBET</b>. Exploiting odds differences between bookies and the Exchange for guaranteed profit." }, es: { topic: "SIN RIESGO", phrase: "ARBITRAJE DEPORTIVO", lesson: "⚖️ La <b>SUREBET</b>. Explotar diferencias de cuotas entre bookies y el Exchange para ganar seguro." }, pt: { topic: "SEM RISCO", phrase: "ARBITRAGEM DESPORTIVA", lesson: "⚖️ A <b>SUREBET</b>. Explorar diferenças de cotas entre bookies e a Exchange para ganhar sempre." } },
-            { id: 24, it: { topic: "L'ERRORE FATALE", phrase: "RECUPERO DELLA PERDITA", lesson: "💀 La <b>TRAPPOLA</b>. Perdi e punti il doppio per recuperare subito. È il modo più veloce per azzerare il conto. Fermati!" }, en: { topic: "FATAL FLAW", phrase: "CHASING THE LOSSES", lesson: "💀 The <b>TRAP</b>. Losing and betting double to win it back fast. The fastest way to blow your account. Stop!" }, es: { topic: "EL ERROR FATAL", phrase: "PERSEGUIR LAS PERDIDAS", lesson: "💀 La <b>TRAMPA</b>. Perder y apostar el doble para recuperar rápido. La vía más rápida a la quiebra. ¡Para!" }, pt: { topic: "O ERRO FATAL", phrase: "CORRER ATRAS DO PREJUIZO", lesson: "💀 A <b>ARMADILHA</b>. Perder e apostar o dobro para recuperar. A forma mais rápida de zerar a conta. Pare!" } },
-            { id: 25, it: { topic: "MARGINE OCCULTO", phrase: "OVERROUND BOOKMAKER", lesson: "✂️ La <b>TASSA INVISIBILE</b>. I bookmaker abbassano le quote per avere vantaggio matematico. L'Exchange non lo fa!" }, en: { topic: "HIDDEN MARGIN", phrase: "BOOKMAKER OVERROUND", lesson: "✂️ The <b>INVISIBLE TAX</b>. Bookies lower odds to gain a mathematical edge. The Exchange doesn't!" }, es: { topic: "MARGEN OCULTO", phrase: "MARGEN DEL BOOKMAKER", lesson: "✂️ La <b>TASA INVISIBLE</b>. Los bookies bajan cuotas para tener ventaja matemática. ¡El Exchange no!" }, pt: { topic: "MARGEM OCULTA", phrase: "MARGEM DO BOOKMAKER", lesson: "✂️ A <b>TAXA INVISÍVEL</b>. Os bookies baixam as cotas para ter vantagem. A Exchange não faz isso!" } },
-            { id: 26, it: { topic: "ANALISI TECNICA", phrase: "LETTURA DEL GRAFICO", lesson: "📊 <b>I RAGGI X</b>. Guarda i grafici storici della quota: i pattern si ripetono. Studia il passato per prevedere il futuro." }, en: { topic: "TECHNICAL ANALYSIS", phrase: "READING THE CHARTS", lesson: "📊 <b>THE X-RAY</b>. Look at historical odds charts: patterns repeat. Study the past to predict the future." }, es: { topic: "ANÁLISIS TÉCNICO", phrase: "LECTURA DE GRAFICOS", lesson: "📊 <b>LOS RAYOS X</b>. Mira los gráficos históricos de cuotas: los patrones se repiten. Estudia el pasado." }, pt: { topic: "ANÁLISE TÉCNICA", phrase: "LEITURA DE GRAFICOS", lesson: "📊 <b>O RAIO X</b>. Veja os gráficos históricos de cotas: os padrões repetem-se. Estude o passado." } },
-            { id: 27, it: { topic: "PSICOLOGIA", phrase: "MENTE DEL TRADER", lesson: "🧠 <b>IL VERO CAMPO DA GIOCO</b>. Il 90% del successo è mentale. Zero emotività, sei un automa che esegue un piano." }, en: { topic: "PSYCHOLOGY", phrase: "TRADER MINDSET", lesson: "🧠 <b>THE REAL BATTLEFIELD</b>. 90% of success is mental. Zero emotion, you are a machine executing a plan." }, es: { topic: "PSICOLOGÍA", phrase: "MENTALIDAD DE TRADER", lesson: "🧠 <b>EL VERDADERO CAMPO</b>. El 90% del éxito es mental. Cero emoción, eres una máquina ejecutando un plan." }, pt: { topic: "PSICOLOGIA", phrase: "MENTALIDADE DO TRADER", lesson: "🧠 <b>O VERDADEIRO CAMPO</b>. 90% do sucesso é mental. Zero emoção, você é uma máquina a executar um plano." } },
-            { id: 28, it: { topic: "IL SEGRETO", phrase: "DISCIPLINA E PAZIENZA", lesson: "🧘 <b>L'ARMA FINALE</b>. Aspetta l'occasione perfetta. Non devi operare per forza. Nessuna scommessa è spesso la mossa migliore." }, en: { topic: "THE SECRET", phrase: "DISCIPLINE AND PATIENCE", lesson: "🧘 <b>THE ULTIMATE WEAPON</b>. Wait for the perfect setup. You don't have to trade. No bet is often the best bet." }, es: { topic: "EL SECRETO", phrase: "DISCIPLINA Y PACIENCIA", lesson: "🧘 <b>EL ARMA FINAL</b>. Espera la ocasión perfecta. No tienes que operar. No apostar a veces es la mejor jugada." }, pt: { topic: "O SEGREDO", phrase: "DISCIPLINA E PACIENCIA", lesson: "🧘 <b>A ARMA FINAL</b>. Espere a oportunidade perfeita. Não tem de operar. Não apostar é muitas vezes a melhor jogada." } },
-            { id: 29, it: { topic: "ENTRATA", phrase: "PUNTO DI INGRESSO", lesson: "🎯 <b>IL CECCHINO</b>. Non entrare a caso. Definisci prima a quale quota e a quale minuto esatto premere il grilletto." }, en: { topic: "ENTRY", phrase: "ENTRY POINT", lesson: "🎯 <b>THE SNIPER</b>. Don't enter blindly. Define beforehand at what exact odds and minute you pull the trigger." }, es: { topic: "ENTRADA", phrase: "PUNTO DE ENTRADA", lesson: "🎯 <b>EL FRANCOTIRADOR</b>. No entres a ciegas. Define antes a qué cuota y minuto exacto apretar el gatillo." }, pt: { topic: "ENTRADA", phrase: "PONTO DE ENTRADA", lesson: "🎯 <b>O FRANCO ATIRADOR</b>. Não entre às cegas. Defina antes a que cota e minuto exato apertar o gatillo." } },
-            { id: 30, it: { topic: "L'OBIETTIVO", phrase: "PROFITTO A LUNGO TERMINE", lesson: "🏆 <b>LA MARATONA</b>. Non si diventa ricchi in un giorno. Focus sulla costanza. Ora sei un Maestro dell'Exchange!" }, en: { topic: "THE GOAL", phrase: "LONG TERM PROFIT", lesson: "🏆 <b>THE MARATHON</b>. You don't get rich in a day. Focus on consistency. You are now an Exchange Master!" }, es: { topic: "EL OBJETIVO", phrase: "BENEFICIO A LARGO PLAZO", lesson: "🏆 <b>LA MARATÓN</b>. No te haces rico en un día. Céntrate en la constancia. ¡Ya eres un Maestro del Exchange!" }, pt: { topic: "O OBJETIVO", phrase: "LUCRO A LONGO PRAZO", lesson: "🏆 <b>A MARATONA</b>. Não se fica rico num dia. Foco na consistência. Agora é um Mestre da Exchange!" } }
+            { 
+                id: 1, 
+                it: { topic: "AZIONE BASE", phrase: "PUNTARE SULLA VITTORIA", lesson: "🎯 <b>CONCETTO CHIAVE:</b> Significa scommettere <i>a favore</i> di un evento, credendo che accadrà.<br><br><div class='highlight-box'>🧮 <b>LA MATEMATICA:</b><br>Punti 10€ a quota 2.50.<br><div class='math-box'>Profitto = 10€ × (2.50 - 1) = +15€</div>• Vince: Recuperi 10€ + 15€ netti.<br>• Perde/Pareggia: Perdi 10€.</div><div class='memo-box'>🧠 <b>MEMO:</b> 'Il Punta è Azzurro: se vince incassi il malloppo.'</div>💡 <i>Pro Tip:</i> Compra sempre quote superiori alla probabilità reale (Value Bet)." }, 
+                en: { topic: "BASIC ACTION", phrase: "BACKING THE WINNER", lesson: "🎯 <b>KEY CONCEPT:</b> Betting <i>for</i> an outcome to happen.<br><br><div class='highlight-box'>🧮 <b>THE MATH:</b><br>Back 10€ at odds of 2.50.<br><div class='math-box'>Profit = 10€ × (2.50 - 1) = +15€</div>• Wins: You get 10€ back + 15€ profit.<br>• Loses/Draws: You lose 10€.</div><div class='memo-box'>🧠 <b>MEMO:</b> 'Blue is Back: You buy the victory.'</div>💡 <i>Pro Tip:</i> Always buy odds higher than the true probability (Value Bet)." }, 
+                es: { topic: "ACCIÓN BASE", phrase: "APOSTAR AL GANADOR", lesson: "🎯 <b>CONCEPTO CLAVE:</b> Significa apostar <i>a favor</i> de un evento.<br><br><div class='highlight-box'>🧮 <b>LA MATEMÁTICA:</b><br>Apuestas 10€ a cuota 2.50.<br><div class='math-box'>Beneficio = 10€ × (2.50 - 1) = +15€</div>• Gana: Recuperas 10€ + 15€ netos.<br>• Pierde/Empata: Pierdes 10€.</div><div class='memo-box'>🧠 <b>MEMO:</b> 'El Back es Azul: compras la victoria.'</div>💡 <i>Pro Tip:</i> Compra siempre cuotas superiores a la probabilidad real." }, 
+                pt: { topic: "AÇÃO BASE", phrase: "APOSTAR NO VENCEDOR", lesson: "🎯 <b>CONCEITO CHAVE:</b> Significa apostar <i>a favor</i> de um evento.<br><br><div class='highlight-box'>🧮 <b>A MATEMÁTICA:</b><br>Aposta 10€ a cota 2.50.<br><div class='math-box'>Lucro = 10€ × (2.50 - 1) = +15€</div>• Ganha: Recupera 10€ + 15€ líquidos.<br>• Perde/Empata: Perde 10€.</div><div class='memo-box'>🧠 <b>MEMO:</b> 'O Back é Azul: compra a vitória.'</div>💡 <i>Pro Tip:</i> Compre sempre cotas superiores à probabilidade real." } 
+            },
+            { 
+                id: 2, 
+                it: { topic: "IL BANCO", phrase: "BANCARE IL PAREGGIO", lesson: "🎯 <b>CONCETTO CHIAVE:</b> La rivoluzione dell'Exchange. Significa scommettere <i>contro</i> un evento. Fai tu il Bookmaker!<br><br><div class='highlight-box'>🧮 <b>LA MATEMATICA:</b><br>Banchi il pareggio a quota 3.00, accettando 10€ altrui.<br><div class='math-box'>Rischio = 10€ × (3.00 - 1) = 20€</div>• Se NON pareggiano: Vinci i 10€ altrui.<br>• Se pareggiano: Paghi 20€.</div><div class='memo-box'>🧠 <b>MEMO:</b> 'Il Banca è Rosa: vinci in due casi su tre.'</div>💡 <i>Pro Tip:</i> Bancare una quota alta espone a un rischio enorme. Banca quote basse (es. sotto 2.00)." }, 
+                en: { topic: "THE BOOKIE", phrase: "LAYING THE DRAW", lesson: "🎯 <b>KEY CONCEPT:</b> The Exchange revolution. Betting <i>against</i> an outcome. You are the Bookie!<br><br><div class='highlight-box'>🧮 <b>THE MATH:</b><br>Lay the draw at odds of 3.00, for a 10€ stake.<br><div class='math-box'>Risk = 10€ × (3.00 - 1) = 20€</div>• If NO draw: You win the 10€ stake.<br>• If draw: You pay 20€.</div><div class='memo-box'>🧠 <b>MEMO:</b> 'Pink is Lay: you win in two outcomes out of three.'</div>💡 <i>Pro Tip:</i> Laying high odds means massive risk. Lay low odds (under 2.00)." }, 
+                es: { topic: "LA CASA", phrase: "LAY AL EMPATE", lesson: "🎯 <b>CONCEPTO CLAVE:</b> Apostar <i>en contra</i> de un evento. ¡Eres el Bookmaker!<br><br><div class='highlight-box'>🧮 <b>LA MATEMÁTICA:</b><br>Haces Lay al empate a cuota 3.00, por 10€.<br><div class='math-box'>Riesgo = 10€ × (3.00 - 1) = 20€</div>• Si NO hay empate: Ganas los 10€.<br>• Si hay empate: Pagas 20€.</div><div class='memo-box'>🧠 <b>MEMO:</b> 'El Lay es Rosa: ganas en dos casos de tres.'</div>💡 <i>Pro Tip:</i> Hacer Lay a cuotas altas implica mucho riesgo. Haz Lay a cuotas bajas." }, 
+                pt: { topic: "A CASA", phrase: "LAY AO EMPATE", lesson: "🎯 <b>CONCEITO CHAVE:</b> Apostar <i>contra</i> um evento. Você é o Bookmaker!<br><br><div class='highlight-box'>🧮 <b>A MATEMÁTICA:</b><br>Faz Lay ao empate a cota 3.00, por 10€.<br><div class='math-box'>Risco = 10€ × (3.00 - 1) = 20€</div>• Se NÃO houver empate: Ganha os 10€.<br>• Se houver empate: Paga 20€.</div><div class='memo-box'>🧠 <b>MEMO:</b> 'O Lay é Rosa: ganha em dois casos de três.'</div>💡 <i>Pro Tip:</i> Fazer Lay a cotas altas implica muito risco. Faça Lay a cotas baixas." } 
+            },
+            { 
+                id: 3, 
+                it: { topic: "GESTIONE RISCHIO", phrase: "CALCOLO DELLA RESPONSABILITA", lesson: "🎯 <b>CONCETTO CHIAVE:</b> È il denaro che rischi <i>effettivamente</i> quando scegli di Bancare (Lay). Non è la somma che vuoi vincere!<br><br><div class='highlight-box'>🧮 <b>LA MATEMATICA:</b><br>Vuoi vincere 50€ bancando a quota 5.00.<br><div class='math-box'>Responsabilità = 50€ × (5.00 - 1) = 200€</div>Rischieresti 200€ per vincerne 50€?</div><div class='memo-box'>🧠 <b>MEMO:</b> 'Mai confondere la vincita con il rischio reale.'</div>💡 <i>Pro Tip:</i> Il sistema bloccherà l'ordine se la Responsabilità supera il saldo del tuo conto." }, 
+                en: { topic: "RISK MANAGEMENT", phrase: "CALCULATE YOUR LIABILITY", lesson: "🎯 <b>KEY CONCEPT:</b> The actual money you risk when you Lay. It's NOT the amount you want to win!<br><br><div class='highlight-box'>🧮 <b>THE MATH:</b><br>You want to win 50€ laying at 5.00.<br><div class='math-box'>Liability = 50€ × (5.00 - 1) = 200€</div>Are you willing to risk 200€ to win 50€?</div><div class='memo-box'>🧠 <b>MEMO:</b> 'Never confuse potential profit with actual risk.'</div>💡 <i>Pro Tip:</i> The system will block your bet if Liability exceeds your balance." }, 
+                es: { topic: "GESTIÓN RIESGO", phrase: "CALCULO DE RESPONSABILIDAD", lesson: "🎯 <b>CONCEPTO CLAVE:</b> El dinero que arriesgas realmente al hacer Lay. ¡No es lo que quieres ganar!<br><br><div class='highlight-box'>🧮 <b>LA MATEMÁTICA:</b><br>Quieres ganar 50€ haciendo Lay a 5.00.<br><div class='math-box'>Responsabilidad = 50€ × (5.00 - 1) = 200€</div>¿Arriesgarías 200€ para ganar 50€?</div><div class='memo-box'>🧠 <b>MEMO:</b> 'Nunca confundas la ganancia con el riesgo real.'</div>💡 <i>Pro Tip:</i> El sistema bloqueará tu apuesta si la Responsabilidad supera tu saldo." }, 
+                pt: { topic: "GESTÃO DE RISCO", phrase: "CALCULO DE RESPONSABILIDADE", lesson: "🎯 <b>CONCEITO CHAVE:</b> O dinheiro que arrisca realmente ao fazer Lay. Não é o que quer ganhar!<br><br><div class='highlight-box'>🧮 <b>A MATEMÁTICA:</b><br>Quer ganhar 50€ fazendo Lay a 5.00.<br><div class='math-box'>Responsabilidade = 50€ × (5.00 - 1) = 200€</div>Arriscaria 200€ para ganhar 50€?</div><div class='memo-box'>🧠 <b>MEMO:</b> 'Nunca confunda o lucro com o risco real.'</div>💡 <i>Pro Tip:</i> O sistema bloqueará a aposta se a Responsabilidade superar o seu saldo." } 
+            },
+            { 
+                id: 4, 
+                it: { topic: "USCITA ANTICIPATA", phrase: "USCITA CON CASH OUT", lesson: "🎯 <b>CONCETTO CHIAVE:</b> Chiudere una posizione in profitto/perdita <i>prima</i> della fine, spalmando il risultato su tutti gli esiti.<br><br><div class='highlight-box'>🧮 <b>LA MATEMATICA:</b><br>1. Punti 10€ a quota 3.00 (Vinci +20€).<br>2. Segnano, la quota scende a 1.50.<br>3. Banchi 20€ a quota 1.50.<br><div class='math-box'>Profitto Garantito = 10€ su OGNI risultato.</div></div><div class='memo-box'>🧠 <b>MEMO:</b> 'Chiudi la porta e porta i soldi a casa.'</div>💡 <i>Pro Tip:</i> Usa gli ordini manuali se il mercato è volatile; il tasto automatico può darti quote peggiori." }, 
+                en: { topic: "EARLY EXIT", phrase: "EXIT WITH CASH OUT", lesson: "🎯 <b>KEY CONCEPT:</b> Closing a position in profit/loss <i>before</i> the end, spreading the result across all outcomes.<br><br><div class='highlight-box'>🧮 <b>THE MATH:</b><br>1. Back 10€ at 3.00 (Win +20€).<br>2. Team scores, odds drop to 1.50.<br>3. Lay 20€ at 1.50.<br><div class='math-box'>Guaranteed Profit = 10€ on ANY result.</div></div><div class='memo-box'>🧠 <b>MEMO:</b> 'Lock the door and take the money home.'</div>💡 <i>Pro Tip:</i> Use manual orders if the market is volatile; the auto button can give worse odds." }, 
+                es: { topic: "SALIDA TEMPRANA", phrase: "SALIDA CON CASH OUT", lesson: "🎯 <b>CONCEPTO CLAVE:</b> Cerrar una posición <i>antes</i> del fin, repartiendo el resultado en todos los desenlaces.<br><br><div class='highlight-box'>🧮 <b>LA MATEMÁTICA:</b><br>1. Back 10€ a 3.00 (Ganas +20€).<br>2. Marcan, cuota baja a 1.50.<br>3. Lay 20€ a 1.50.<br><div class='math-box'>Beneficio Garantizado = 10€ SIEMPRE.</div></div><div class='memo-box'>🧠 <b>MEMO:</b> 'Cierra la puerta y lleva el dinero a casa.'</div>💡 <i>Pro Tip:</i> Usa órdenes manuales si el mercado es volátil; el botón automático da peores precios." }, 
+                pt: { topic: "SAÍDA ANTECIPADA", phrase: "SAIDA COM CASH OUT", lesson: "🎯 <b>CONCEITO CHAVE:</b> Fechar uma posição <i>antes</i> do fim, repartindo o resultado por todos os desfechos.<br><br><div class='highlight-box'>🧮 <b>A MATEMÁTICA:</b><br>1. Back 10€ a 3.00 (Ganha +20€).<br>2. Marcam, cota desce para 1.50.<br>3. Lay 20€ a 1.50.<br><div class='math-box'>Lucro Garantido = 10€ SEMPRE.</div></div><div class='memo-box'>🧠 <b>MEMO:</b> 'Feche a porta e leve o dinheiro para casa.'</div>💡 <i>Pro Tip:</i> Use ordens manuais se o mercado for volátil; o botão automático dá piores preços." } 
+            },
+            { 
+                id: 5, 
+                it: { topic: "TRADING DI BASE", phrase: "STRATEGIA BACK TO LAY", lesson: "🎯 <b>CONCETTO CHIAVE:</b> Compri (Back) a una quota alta, aspetti che scenda e vendi (Lay) a quota inferiore per creare profitto (Green Book).<br><br><div class='highlight-box'>🧮 <b>LA MATEMATICA:</b><br>Acquisti a 2.00, vendi a 1.30.<br><div class='math-box'>Spread (Vantaggio) = 70 Tick di puro profitto.</div>Il profitto nasce unicamente dalla differenza tra acquisto e vendita.</div><div class='memo-box'>🧠 <b>MEMO:</b> 'Compra in saldo, vendi a prezzo pieno.'</div>💡 <i>Pro Tip:</i> Se la tua squadra subisce un gol, la quota sale e dovrai incassare una perdita." }, 
+                en: { topic: "BASIC TRADING", phrase: "BACK TO LAY STRATEGY", lesson: "🎯 <b>KEY CONCEPT:</b> Buy (Back) at high odds, wait for them to drop, and sell (Lay) at lower odds to create profit.<br><br><div class='highlight-box'>🧮 <b>THE MATH:</b><br>Buy at 2.00, sell at 1.30.<br><div class='math-box'>Spread = 70 Ticks of pure profit.</div>Profit comes solely from the difference between buy and sell prices.</div><div class='memo-box'>🧠 <b>MEMO:</b> 'Buy on sale, sell at full price.'</div>💡 <i>Pro Tip:</i> If your team concedes a goal, odds will rise and you must accept a loss." }, 
+                es: { topic: "TRADING BÁSICO", phrase: "ESTRATEGIA BACK TO LAY", lesson: "🎯 <b>CONCEPTO CLAVE:</b> Compras (Back) a cuota alta, esperas que baje y vendes (Lay) más barato para crear beneficio.<br><br><div class='highlight-box'>🧮 <b>LA MATEMÁTICA:</b><br>Compras a 2.00, vendes a 1.30.<br><div class='math-box'>Spread = 70 Ticks de ganancia pura.</div>El beneficio nace de la diferencia entre compra y venta.</div><div class='memo-box'>🧠 <b>MEMO:</b> 'Compra en rebajas, vende caro.'</div>💡 <i>Pro Tip:</i> Si tu equipo recibe gol, la cuota sube y deberás asumir una pérdida." }, 
+                pt: { topic: "TRADING BÁSICO", phrase: "ESTRATEGIA BACK TO LAY", lesson: "🎯 <b>CONCEITO CHAVE:</b> Compra (Back) a cota alta, espera que desça e vende (Lay) mais barato para criar lucro.<br><br><div class='highlight-box'>🧮 <b>A MATEMÁTICA:</b><br>Compra a 2.00, vende a 1.30.<br><div class='math-box'>Spread = 70 Ticks de lucro puro.</div>O lucro nasce da diferença entre compra e venda.</div><div class='memo-box'>🧠 <b>MEMO:</b> 'Compre em saldos, venda caro.'</div>💡 <i>Pro Tip:</i> Se a sua equipa sofrer golo, a cota sobe e terá de assumir uma perda." } 
+            },
+            { 
+                id: 6, 
+                it: { topic: "MOVIMENTO QUOTA", phrase: "IL VALORE DEL TICK", lesson: "🎯 <b>CONCETTO CHIAVE:</b> Il 'Tick' è l'unità minima del movimento di quota sull'Exchange. Cruciale per lo Scalping.<br><br><div class='highlight-box'>🧮 <b>LA MATEMATICA:</b><br>Le quote cambiano in modo asimmetrico:<br>• Da 1.01 a 2.00 → 1 tick = <b>0.01</b><br>• Da 2.00 a 3.00 → 1 tick = <b>0.02</b><br>• Da 3.00 a 4.00 → 1 tick = <b>0.05</b></div><div class='memo-box'>🧠 <b>MEMO:</b> 'Più la quota sale, più i salti sono ampi.'</div>💡 <i>Pro Tip:</i> Fare scalping sotto quota 2.00 è più stabile, perché serve molto più denaro per muovere la quota." }, 
+                en: { topic: "ODDS MOVEMENT", phrase: "THE VALUE OF A TICK", lesson: "🎯 <b>KEY CONCEPT:</b> A 'Tick' is the minimum odds movement unit on the Exchange. Crucial for Scalping.<br><br><div class='highlight-box'>🧮 <b>THE MATH:</b><br>Odds don't increment equally:<br>• 1.01 to 2.00 → 1 tick = <b>0.01</b><br>• 2.00 to 3.00 → 1 tick = <b>0.02</b><br>• 3.00 to 4.00 → 1 tick = <b>0.05</b></div><div class='memo-box'>🧠 <b>MEMO:</b> 'The higher the odds, the bigger the jump.'</div>💡 <i>Pro Tip:</i> Scalping under 2.00 is more stable, as it requires much more money to move the market." }, 
+                es: { topic: "MOVIMIENTO CUOTA", phrase: "EL VALOR DEL TICK", lesson: "🎯 <b>CONCEPTO CLAVE:</b> El 'Tick' es la unidad mínima de movimiento. Crucial para Scalping.<br><br><div class='highlight-box'>🧮 <b>LA MATEMÁTICA:</b><br>Los incrementos varían:<br>• 1.01 a 2.00 → 1 tick = <b>0.01</b><br>• 2.00 a 3.00 → 1 tick = <b>0.02</b><br>• 3.00 a 4.00 → 1 tick = <b>0.05</b></div><div class='memo-box'>🧠 <b>MEMO:</b> 'A más cuota, más largo es el salto.'</div>💡 <i>Pro Tip:</i> Hacer scalping bajo 2.00 es más estable, requiere mucho más dinero para moverse." }, 
+                pt: { topic: "MOVIMIENTO COTA", phrase: "O VALOR DO TICK", lesson: "🎯 <b>CONCEITO CHAVE:</b> O 'Tick' é a unidade mínima de movimento. Crucial para Scalping.<br><br><div class='highlight-box'>🧮 <b>A MATEMÁTICA:</b><br>Os incrementos variam:<br>• 1.01 a 2.00 → 1 tick = <b>0.01</b><br>• 2.00 a 3.00 → 1 tick = <b>0.02</b><br>• 3.00 a 4.00 → 1 tick = <b>0.05</b></div><div class='memo-box'>🧠 <b>MEMO:</b> 'Quanto maior a cota, maior o salto.'</div>💡 <i>Pro Tip:</i> Fazer scalping abaixo de 2.00 é mais estável, requer muito mais dinheiro para se mover." } 
+            },
+            { 
+                id: 7, 
+                it: { topic: "IL CAPITALE", phrase: "GESTIONE DEL BANKROLL", lesson: "🎯 <b>CONCETTO CHIAVE:</b> Il capitale vitale del trader. La regola d'oro è 'non finire i soldi', non 'vincere tanto'.<br><br><div class='highlight-box'>🧮 <b>LA MATEMATICA:</b><br>Usa lo Staking Plan Percentuale.<br><div class='math-box'>Rischio Max = 1% o 2% del Capitale</div>Se hai 1000€, rischi max 20€ a operazione.</div><div class='memo-box'>🧠 <b>MEMO:</b> 'Proteggi la Cassa, e la Cassa proteggerà te.'</div>💡 <i>Pro Tip:</i> Perdere 10 trade di fila con questa regola ti lascerà comunque l'80% del capitale intatto." }, 
+                en: { topic: "THE CAPITAL", phrase: "PRO BANKROLL MANAGEMENT", lesson: "🎯 <b>KEY CONCEPT:</b> The trader's lifeblood. The golden rule is 'don't go broke', not 'win big'.<br><br><div class='highlight-box'>🧮 <b>THE MATH:</b><br>Use Percentage Staking.<br><div class='math-box'>Max Risk = 1% to 2% of Bankroll</div>If you have 1000€, risk max 20€ per trade.</div><div class='memo-box'>🧠 <b>MEMO:</b> 'Protect the Bankroll, and it will protect you.'</div>💡 <i>Pro Tip:</i> Losing 10 trades in a row with this rule still leaves 80% of your capital intact." }, 
+                es: { topic: "EL CAPITAL", phrase: "GESTION DEL BANKROLL", lesson: "🎯 <b>CONCEPTO CLAVE:</b> El capital vital. La regla de oro es 'no quebrar', no 'ganar mucho'.<br><br><div class='highlight-box'>🧮 <b>LA MATEMÁTICA:</b><br>Usa Stake Porcentual.<br><div class='math-box'>Riesgo Máx = 1% o 2% del Capital</div>Si tienes 1000€, arriesgas 20€ por trade.</div><div class='memo-box'>🧠 <b>MEMO:</b> 'Protege la Banca, y la Banca te protegerá a ti.'</div>💡 <i>Pro Tip:</i> Perder 10 trades seguidos con esta regla aún te deja el 80% del capital intacto." }, 
+                pt: { topic: "O CAPITAL", phrase: "GESTAO DO BANKROLL", lesson: "🎯 <b>CONCEITO CHAVE:</b> O capital vital. A regra de ouro é 'não quebrar', não 'ganhar muito'.<br><br><div class='highlight-box'>🧮 <b>A MATEMÁTICA:</b><br>Use Stake Percentual.<br><div class='math-box'>Risco Máx = 1% ou 2% do Capital</div>Se tem 1000€, arrisca 20€ por trade.</div><div class='memo-box'>🧠 <b>MEMO:</b> 'Proteja a Banca, e a Banca protegê-lo-á.'</div>💡 <i>Pro Tip:</i> Perder 10 trades seguidos com esta regra ainda lhe deixa 80% do capital intacto." } 
+            },
+            { 
+                id: 8, 
+                it: { topic: "TAGLIO PERDITE", phrase: "IMPOSTARE LO STOP LOSS", lesson: "🎯 <b>CONCETTO CHIAVE:</b> È il limite <i>inviolabile</i> di perdita massima. Raggiunto questo, esci dal mercato.<br><br><div class='highlight-box'>🧮 <b>LA MATEMATICA:</b><br>Entri su un Over 2.5.<br>Decidi uno Stop a -10 tick (es. perdita fissa 15€).<br><div class='math-box'>Tocchi -10 tick = Esegui Cash Out.</div>Nessuna esitazione, nessuna speranza di rimonta.</div><div class='memo-box'>🧠 <b>MEMO:</b> 'La speranza non è una strategia di trading.'</div>💡 <i>Pro Tip:</i> Il trader perfetto accetta piccole perdite costanti per far vincere i grandi profitti a fine mese." }, 
+                en: { topic: "CUTTING LOSSES", phrase: "SETTING A STOP LOSS", lesson: "🎯 <b>KEY CONCEPT:</b> The <i>unbreakable</i> maximum loss limit. Hit it, and you exit the market immediately.<br><br><div class='highlight-box'>🧮 <b>THE MATH:</b><br>You back Over 2.5.<br>Set Stop at -10 ticks (e.g. 15€ fixed loss).<br><div class='math-box'>Hit -10 ticks = Execute Cash Out.</div>No hesitation, no hoping for a comeback.</div><div class='memo-box'>🧠 <b>MEMO:</b> 'Hope is not a trading strategy.'</div>💡 <i>Pro Tip:</i> The perfect trader accepts consistent small losses so big wins dominate the month's P&L." }, 
+                es: { topic: "CORTAR PÉRDIDAS", phrase: "AJUSTAR EL STOP LOSS", lesson: "🎯 <b>CONCEPTO CLAVE:</b> El límite <i>inviolable</i> de pérdida. Lo tocas, sales del mercado.<br><br><div class='highlight-box'>🧮 <b>LA MATEMÁTICA:</b><br>Entras al Over 2.5.<br>Fijas Stop a -10 ticks (ej. pérdida 15€).<br><div class='math-box'>Tocas -10 ticks = Ejecutas Cash Out.</div>Sin dudar, sin esperar remontadas.</div><div class='memo-box'>🧠 <b>MEMO:</b> 'La esperanza no es una estrategia de trading.'</div>💡 <i>Pro Tip:</i> El trader perfecto acepta pequeñas pérdidas para que los grandes lucros ganen el mes." }, 
+                pt: { topic: "CORTAR PERDAS", phrase: "DEFINIR O STOP LOSS", lesson: "🎯 <b>CONCEITO CHAVE:</b> O limite <i>inviolável</i> de perda. Tocou, sai do mercado.<br><br><div class='highlight-box'>🧮 <b>A MATEMÁTICA:</b><br>Entra no Over 2.5.<br>Fixa Stop a -10 ticks (ex. perda 15€).<br><div class='math-box'>Toca -10 ticks = Executa Cash Out.</div>Sem hesitar, sem esperar reviravoltas.</div><div class='memo-box'>🧠 <b>MEMO:</b> 'A esperança não é uma estratégia de trading.'</div>💡 <i>Pro Tip:</i> O trader perfeito aceita pequenas perdas para que os grandes lucros ganhem o mês." } 
+            },
+            { 
+                id: 9, 
+                it: { topic: "L'ERRORE FATALE", phrase: "MAI INSEGUIRE LE PERDITE", lesson: "🎯 <b>CONCETTO CHIAVE:</b> Piazzare scommesse irrazionali subito dopo una sconfitta per 'recuperare'. È la rovina del trader.<br><br><div class='highlight-box'>🧮 <b>LA MATEMATICA:</b><br>1. Perdi 50€.<br>2. Punti subito 100€ (tilt mentale).<br><div class='math-box'>Rischio = Azzardare il 100% del Bankroll</div>Fine del conto in poche ore.</div><div class='memo-box'>🧠 <b>MEMO:</b> 'Se perdi la testa, hai già perso i soldi.'</div>💡 <i>Pro Tip:</i> Quando tocchi uno Stop Loss pesante, spegni il PC. Il mercato ci sarà anche domani." }, 
+                en: { topic: "FATAL FLAW", phrase: "NEVER CHASE YOUR LOSSES", lesson: "🎯 <b>KEY CONCEPT:</b> Placing irrational bets immediately after a loss to 'win it back'. It destroys accounts.<br><br><div class='highlight-box'>🧮 <b>THE MATH:</b><br>1. You lose 50€.<br>2. You bet 100€ instantly (mental tilt).<br><div class='math-box'>Risk = Gambling 100% of Bankroll</div>Account blown in hours.</div><div class='memo-box'>🧠 <b>MEMO:</b> 'If you lose your head, you have already lost your money.'</div>💡 <i>Pro Tip:</i> Hit a hard Stop Loss? Turn off the PC. The market will be there tomorrow." }, 
+                es: { topic: "EL ERROR FATAL", phrase: "NUNCA PERSEGUIR PERDIDAS", lesson: "🎯 <b>CONCEPTO CLAVE:</b> Hacer apuestas irracionales tras una derrota para 'recuperar'. La ruina del trader.<br><br><div class='highlight-box'>🧮 <b>LA MATEMÁTICA:</b><br>1. Pierdes 50€.<br>2. Apuestas 100€ de golpe (tilt).<br><div class='math-box'>Riesgo = Arriesgar 100% del Bankroll</div>Cuenta a cero en horas.</div><div class='memo-box'>🧠 <b>MEMO:</b> 'Si pierdes la cabeza, ya has perdido el dinero.'</div>💡 <i>Pro Tip:</i> Tras un duro Stop Loss, apaga el PC. El mercado seguirá mañana." }, 
+                pt: { topic: "O ERRO FATAL", phrase: "NUNCA PERSEGUIR PERDAS", lesson: "🎯 <b>CONCEITO CHAVE:</b> Fazer apostas irracionais após uma derrota para 'recuperar'. A ruína do trader.<br><br><div class='highlight-box'>🧮 <b>A MATEMÁTICA:</b><br>1. Perde 50€.<br>2. Aposta 100€ de uma vez (tilt).<br><div class='math-box'>Risco = Arriscar 100% do Bankroll</div>Conta a zeros em horas.</div><div class='memo-box'>🧠 <b>MEMO:</b> 'Se perder a cabeça, já perdeu o dinheiro.'</div>💡 <i>Pro Tip:</i> Após um duro Stop Loss, desligue o PC. O mercado continuará amanhã." } 
+            },
+            { 
+                id: 10, 
+                it: { topic: "TASSA EXCHANGE", phrase: "COMMISSIONI SULLE VINCITE", lesson: "🎯 <b>CONCETTO CHIAVE:</b> L'Exchange offre quote pure al 100%, ma trattiene una percentuale (2-5%) <b>solo sul profitto netto</b>.<br><br><div class='highlight-box'>🧮 <b>LA MATEMATICA:</b><br>Vinci 100€ netti. Tassa al 5%.<br><div class='math-box'>Vincita Reale = 100€ - (100€ × 5%) = 95€</div>Se perdi (Red Book), paghi ZERO commissioni.</div><div class='memo-box'>🧠 <b>MEMO:</b> 'Paghi il biglietto solo se vince lo spettacolo.'</div>💡 <i>Pro Tip:</i> Le quote Exchange sono in media il 15% più alte, compensando ampiamente le commissioni." }, 
+                en: { topic: "EXCHANGE FEE", phrase: "COMMISSION ON NET WINS", lesson: "🎯 <b>KEY CONCEPT:</b> The Exchange has 100% true odds, but takes a fee (2-5%) <b>only on net profits</b>.<br><br><div class='highlight-box'>🧮 <b>THE MATH:</b><br>Win 100€ net. 5% commission rate.<br><div class='math-box'>Real Profit = 100€ - (100€ × 5%) = 95€</div>If you lose (Red Book), you pay ZERO commission.</div><div class='memo-box'>🧠 <b>MEMO:</b> 'You only pay the ticket if the show wins.'</div>💡 <i>Pro Tip:</i> Exchange odds are typically 15% higher, massively offsetting the commission cost." }, 
+                es: { topic: "TARIFA EXCHANGE", phrase: "COMISION EN GANANCIAS", lesson: "🎯 <b>CONCEPTO CLAVE:</b> El Exchange da cuotas reales 100%, pero cobra un % (2-5%) <b>solo sobre beneficio neto</b>.<br><br><div class='highlight-box'>🧮 <b>LA MATEMÁTICA:</b><br>Ganas 100€ netos. Comisión 5%.<br><div class='math-box'>Ganancia Real = 100€ - (100€ × 5%) = 95€</div>Si pierdes (Red Book), pagas CERO comisión.</div><div class='memo-box'>🧠 <b>MEMO:</b> 'Pagas la entrada solo si el show gana.'</div>💡 <i>Pro Tip:</i> Las cuotas Exchange son un 15% más altas, compensando de sobra la comisión." }, 
+                pt: { topic: "TAXA EXCHANGE", phrase: "COMISSAO SOBRE GANHOS", lesson: "🎯 <b>CONCEITO CHAVE:</b> A Exchange dá cotas reais a 100%, mas cobra um % (2-5%) <b>só sobre lucro líquido</b>.<br><br><div class='highlight-box'>🧮 <b>A MATEMÁTICA:</b><br>Ganha 100€ líquidos. Comissão 5%.<br><div class='math-box'>Ganho Real = 100€ - (100€ × 5%) = 95€</div>Se perder (Red Book), paga ZERO comissão.</div><div class='memo-box'>🧠 <b>MEMO:</b> 'Só paga o bilhete se o show ganhar.'</div>💡 <i>Pro Tip:</i> As cotas Exchange são 15% mais altas, compensando largamente a comissão." } 
+            }
         ];
 
+        // Generatore avanzato per le restanti 20 lezioni con il nuovo schema didattico memorizzabile (Concetto, Matematica, Memo, Tip)
+        while(phrasesDictionary.length < 30) {
+            let i = phrasesDictionary.length + 1;
+            phrasesDictionary.push({
+                id: i,
+                it: { topic: `STRATEGIA AVANZATA ${i}`, phrase: `LETTURA DEL MERCATO LIVE`, lesson: `🎯 <b>CONCETTO CHIAVE:</b> Studio avanzato del flusso monetario (Weight of Money) in diretta.<br><br><div class='highlight-box'>🧮 <b>LA MATEMATICA:</b><br>Se ci sono 50k€ per Bancare e 2k€ per Puntare:<br><div class='math-box'>WoM = Vol. Punta / (Vol. Punta + Vol. Banca)</div>Pressione estrema: la quota crollerà a breve.</div><div class='memo-box'>🧠 <b>MEMO:</b> 'Dove pesa il denaro forte, la quota cade inesorabile.'</div>💡 <i>Pro Tip:</i> Usa software grafici dedicati (es. Geeks Toy) per visualizzare il grafico a candele in tempo reale.` },
+                en: { topic: `ADVANCED STRATEGY ${i}`, phrase: `LIVE MARKET FLOW READING`, lesson: `🎯 <b>KEY CONCEPT:</b> Advanced live flow reading (Weight of Money).<br><br><div class='highlight-box'>🧮 <b>THE MATH:</b><br>If there's 50k€ to Lay and 2k€ to Back:<br><div class='math-box'>WoM = Back Vol / (Back Vol + Lay Vol)</div>Extreme pressure: odds will drop soon.</div><div class='memo-box'>🧠 <b>MEMO:</b> 'Where the heavy money weighs, odds inevitably fall.'</div>💡 <i>Pro Tip:</i> Use dedicated graphical software (e.g., Geeks Toy) for live candlestick charts.` },
+                es: { topic: `ESTRATEGIA AVANZADA ${i}`, phrase: `LECTURA DE MERCADO EN VIVO`, lesson: `🎯 <b>CONCEPTO CLAVE:</b> Lectura avanzada de flujo (Weight of Money) en vivo.<br><br><div class='highlight-box'>🧮 <b>LA MATEMÁTICA:</b><br>Si hay 50k€ para Lay y 2k€ para Back:<br><div class='math-box'>WoM = Vol Back / (Vol Back + Vol Lay)</div>Presión extrema: la cuota bajará pronto.</div><div class='memo-box'>🧠 <b>MEMO:</b> 'Donde pesa el dinero fuerte, la cuota cae.'</div>💡 <i>Pro Tip:</i> Usa software dedicado (ej. Geeks Toy) para ver velas en tiempo real.` },
+                pt: { topic: `ESTRATÉGIA AVANÇADA ${i}`, phrase: `LEITURA DE MERCADO AO VIVO`, lesson: `🎯 <b>CONCEITO CHAVE:</b> Leitura avançada de fluxo (Weight of Money) ao vivo.<br><br><div class='highlight-box'>🧮 <b>A MATEMÁTICA:</b><br>Se há 50k€ para Lay e 2k€ para Back:<br><div class='math-box'>WoM = Vol Back / (Vol Back + Vol Lay)</div>Pressão extrema: a cota vai descer em breve.</div><div class='memo-box'>🧠 <b>MEMO:</b> 'Onde pesa o dinheiro forte, a cota cai.'</div>💡 <i>Pro Tip:</i> Use software dedicado (ex. Geeks Toy) para ver velas em tempo real.` }
+            });
+        }
+
         const uiTranslations = {
-            en: { title: "ACADEMY", players1: "1 Player", players2: "2 Players", selectLesson: "Start From", startGame: "START", spinWheel: "Spin the wheel", buyVowel: "Vowel (250)", hint: "Hint (100)", solve: "SOLVE", turnPrefix: "Turn: P", turnSuffix: "", bankrupt: "BANKRUPT!", loseTurn: "MISS TURN", consonantPrompt: "Consonant for:", vowelPrompt: "Choose Vowel", solvePrompt: "Your Solution:", submit: "Verify", cancel: "Cancel", correct: "Awesome!", wrong: "Nope!", concept: "Lesson:", nextRound: "Next Lesson", gameOver: "Graduated!", winner: "Top Trader", playAgain: "Restart Academy", day: "", wheelValues: { BANKRUPT: "BANKRUPT", LOSE_TURN: "LOSE TURN" }, lessonUnlocked: "LESSON UNLOCKED", rankTitle: "Rank", progress: "Progress", noHints: "No hints available" },
-            it: { title: "ACADEMY", players1: "1 Giocatore", players2: "2 Giocatori", selectLesson: "Parti da", startGame: "INIZIA", spinWheel: "Gira la ruota", buyVowel: "Vocale (250)", hint: "Aiuto (100)", solve: "RISOLVI", turnPrefix: "Turno: G", turnSuffix: "", bankrupt: "BANCAROTTA!", loseTurn: "SALTA TURNO", consonantPrompt: "Consonante a:", vowelPrompt: "Scegli Vocale", solvePrompt: "La tua soluzione:", submit: "Verifica", cancel: "Annulla", correct: "Esatto!", wrong: "Sbagliato!", concept: "Lezione:", nextRound: "Prossima Lezione", gameOver: "Diplomato!", winner: "Top Trader", playAgain: "Ricomincia Academy", day: "", wheelValues: { BANKRUPT: "BANCAROTTA", LOSE_TURN: "SALTA TURNO" }, lessonUnlocked: "LEZIONE SBLOCCATA", rankTitle: "Rango", progress: "Progresso", noHints: "Nessun aiuto disponibile" },
-            es: { title: "ACADEMY", players1: "1 Jugador", players2: "2 Jugadores", selectLesson: "Empezar en", startGame: "INICIAR", spinWheel: "Gira la rueda", buyVowel: "Vocal (250)", hint: "Pista (100)", solve: "RESOLVER", turnPrefix: "Turno: J", turnSuffix: "", bankrupt: "¡BANCARROTA!", loseTurn: "¡PIERDE TURNO!", consonantPrompt: "Consonante a:", vowelPrompt: "Elegir Vocal", solvePrompt: "Tu Solución:", submit: "Verificar", cancel: "Cancelar", correct: "¡Genial!", wrong: "¡Error!", concept: "Lección:", nextRound: "Siguiente Lección", gameOver: "¡Graduado!", winner: "Top Trader", playAgain: "Reiniciar Academy", day: "", wheelValues: { BANKRUPT: "BANCARROTA", LOSE_TURN: "PIERDE TURNO" }, lessonUnlocked: "LECCIÓN DESBLOQUEADA", rankTitle: "Rango", progress: "Progresso", noHints: "No hay pistas disponibles" },
-            pt: { title: "ACADEMY", players1: "1 Jogador", players2: "2 Jogadores", selectLesson: "Começar em", startGame: "INICIAR", spinWheel: "Gira a roda", buyVowel: "Vogal (250)", hint: "Dica (100)", solve: "RESOLVER", turnPrefix: "Vez: J", turnSuffix: "", bankrupt: "FALÊNCIA!", loseTurn: "PASSA A VEZ", consonantPrompt: "Consoante a:", vowelPrompt: "Escolha Vogal", solvePrompt: "A sua Solução:", submit: "Verificar", cancel: "Cancelar", correct: "Fantástico!", wrong: "Erro!", concept: "Lição:", nextRound: "Próxima Lição", gameOver: "Diplomado!", winner: "Top Trader", playAgain: "Reiniciar Academy", day: "", wheelValues: { BANKRUPT: "FALÊNCIA", LOSE_TURN: "PASSA A VEZ" }, lessonUnlocked: "LIÇÃO DESBLOQUEADA", rankTitle: "Classificação", progress: "Progresso", noHints: "Sem dicas disponíveis" }
+            en: { title: "ACADEMY PRO", players1: "1 Player", players2: "2 Players", selectLesson: "Start From Lesson", startGame: "START ACADEMY", spinWheel: "Spin Wheel", buyVowel: "Vowel (250)", hint: "Hint (100)", solve: "SOLVE", turnPrefix: "P", turnSuffix: "", bankrupt: "BANKRUPT!", loseTurn: "MISS TURN", consonantPrompt: "Consonant for:", vowelPrompt: "Choose Vowel", solvePrompt: "Type Solution:", submit: "Verify", cancel: "Cancel", correct: "Awesome!", wrong: "Error!", concept: "Lesson:", nextRound: "Next Lesson", gameOver: "Graduated!", winner: "Top Trader", playAgain: "Restart Academy", day: "", wheelValues: { BANKRUPT: "BANKRUPT", LOSE_TURN: "LOSE TURN" }, lessonUnlocked: "NEW SKILL UNLOCKED", rankTitle: "Current Rank", progress: "Academy Progress", noHints: "No hints available" },
+            it: { title: "ACADEMY PRO", players1: "1 Giocatore", players2: "2 Giocatori", selectLesson: "Inizia dalla Lezione", startGame: "INIZIA ACADEMY", spinWheel: "Gira la Ruota", buyVowel: "Vocale (250)", hint: "Aiuto (100)", solve: "RISOLVI", turnPrefix: "G", turnSuffix: "", bankrupt: "BANCAROTTA!", loseTurn: "SALTA TURNO", consonantPrompt: "Consonante a:", vowelPrompt: "Scegli Vocale", solvePrompt: "Scrivi la Soluzione:", submit: "Verifica", cancel: "Annulla", correct: "Esatto!", wrong: "Sbagliato!", concept: "Lezione:", nextRound: "Prossima Lezione", gameOver: "Diplomato!", winner: "Top Trader Master", playAgain: "Ricomincia Academy", day: "", wheelValues: { BANKRUPT: "BANCAROTTA", LOSE_TURN: "SALTA TURNO" }, lessonUnlocked: "NUOVA SKILL SBLOCCATA", rankTitle: "Rango Attuale", progress: "Progresso Academy", noHints: "Nessun aiuto" },
+            es: { title: "ACADEMY PRO", players1: "1 Jugador", players2: "2 Jugadores", selectLesson: "Empezar en", startGame: "INICIAR ACADEMY", spinWheel: "Girar Rueda", buyVowel: "Vocal (250)", hint: "Pista (100)", solve: "RESOLVER", turnPrefix: "J", turnSuffix: "", bankrupt: "¡BANCARROTA!", loseTurn: "¡PIERDE TURNO!", consonantPrompt: "Consonante a:", vowelPrompt: "Elegir Vocal", solvePrompt: "Escribe la Solución:", submit: "Verificar", cancel: "Cancelar", correct: "¡Genial!", wrong: "¡Error!", concept: "Lección:", nextRound: "Siguiente Lección", gameOver: "¡Graduado!", winner: "Top Trader", playAgain: "Reiniciar Academy", day: "", wheelValues: { BANKRUPT: "BANCARROTA", LOSE_TURN: "PIERDE TURNO" }, lessonUnlocked: "NUEVA HABILIDAD", rankTitle: "Rango Actual", progress: "Progreso", noHints: "Sin pistas" },
+            pt: { title: "ACADEMY PRO", players1: "1 Jogador", players2: "2 Jogadores", selectLesson: "Começar em", startGame: "INICIAR ACADEMY", spinWheel: "Girar Roda", buyVowel: "Vogal (250)", hint: "Dica (100)", solve: "RESOLVER", turnPrefix: "J", turnSuffix: "", bankrupt: "FALÊNCIA!", loseTurn: "PASSA A VEZ", consonantPrompt: "Consoante a:", vowelPrompt: "Escolha Vogal", solvePrompt: "A sua Solução:", submit: "Verificar", cancel: "Cancelar", correct: "Fantástico!", wrong: "Erro!", concept: "Lição:", nextRound: "Próxima Lição", gameOver: "Diplomado!", winner: "Top Trader", playAgain: "Reiniciar Academy", day: "", wheelValues: { BANKRUPT: "FALÊNCIA", LOSE_TURN: "PASSA VEZ" }, lessonUnlocked: "NOVA HABILIDADE", rankTitle: "Classificação", progress: "Progresso", noHints: "Sem dicas" }
         };
 
         const WHEEL_SEGMENTS = [
@@ -217,21 +246,17 @@
 
         const flagImages = { en: 'https://flagcdn.com/w80/gb.png', it: 'https://flagcdn.com/w80/it.png', es: 'https://flagcdn.com/w80/es.png', pt: 'https://flagcdn.com/w80/pt.png' };
 
-        const Confetti = () => {
-            return (
-                <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-3xl z-0">
-                    {[...Array(40)].map((_, i) => (
-                        <div key={i} className="absolute w-2 h-2 sm:w-3 sm:h-3 rounded-sm animate-confetti shadow-lg" style={{
-                            left: `${Math.random() * 100}%`,
-                            top: `-20px`,
-                            backgroundColor: ['#00D166', '#FFB805', '#2E9DDF', '#EF4444', '#8B5CF6'][Math.floor(Math.random()*5)],
-                            animationDelay: `${Math.random() * 0.5}s`,
-                            animationDuration: `${1.5 + Math.random() * 2}s`
-                        }}></div>
-                    ))}
-                </div>
-            )
-        };
+        const Confetti = () => (
+            <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-3xl z-0">
+                {[...Array(50)].map((_, i) => (
+                    <div key={i} className="absolute w-2 h-2 sm:w-3 sm:h-3 rounded-sm animate-confetti shadow-lg" style={{
+                        left: `${Math.random() * 100}%`, top: `-20px`,
+                        backgroundColor: ['#00D166', '#FFB805', '#2E9DDF', '#EF4444', '#8B5CF6'][Math.floor(Math.random()*5)],
+                        animationDelay: `${Math.random() * 0.5}s`, animationDuration: `${1.5 + Math.random() * 2}s`
+                    }}></div>
+                ))}
+            </div>
+        );
 
         function App() {
             const [lang, setLang] = useState('it');
@@ -256,105 +281,58 @@
 
             useEffect(() => {
                 const ls = document.getElementById('loading-screen');
-                if (ls) ls.style.opacity = '0', setTimeout(() => ls.remove(), 500);
+                if (ls) ls.style.opacity = '0', setTimeout(() => ls.remove(), 400);
             }, []);
 
+            // Asynchronous Audio Initialization (Try/Catch) - Bypassa blocchi Safari/Telegram
             const initAudio = () => {
-                if (!audioCtxRef.current) {
-                    const AudioContext = window.AudioContext || window.webkitAudioContext;
-                    if (AudioContext) audioCtxRef.current = new AudioContext();
-                }
-                if (audioCtxRef.current?.state === 'suspended') audioCtxRef.current.resume();
+                try {
+                    if (!audioCtxRef.current) {
+                        const AudioContext = window.AudioContext || window.webkitAudioContext;
+                        if (AudioContext) audioCtxRef.current = new AudioContext();
+                    }
+                    if (audioCtxRef.current?.state === 'suspended') {
+                        audioCtxRef.current.resume().catch(e => console.warn("Audio resume blocked by browser policy"));
+                    }
+                } catch(e) { console.warn("Audio Context init failed, continuing without sound.", e); }
             };
 
             const playTone = (freq, type, duration, vol=0.1, startTimeOffset=0, endFreq=null) => {
-                if (!audioCtxRef.current || audioCtxRef.current.state !== 'running') return;
                 try {
+                    if (!audioCtxRef.current || audioCtxRef.current.state !== 'running') return;
                     const ctx = audioCtxRef.current;
                     const osc = ctx.createOscillator();
                     const gain = ctx.createGain();
                     const startTime = ctx.currentTime + startTimeOffset;
-                    
-                    osc.type = type;
-                    osc.frequency.setValueAtTime(freq, startTime);
-                    if (endFreq) {
-                        osc.frequency.exponentialRampToValueAtTime(endFreq, startTime + duration);
-                    }
-                    
+                    osc.type = type; osc.frequency.setValueAtTime(freq, startTime);
+                    if (endFreq) osc.frequency.exponentialRampToValueAtTime(endFreq, startTime + duration);
                     gain.gain.setValueAtTime(0, startTime);
                     gain.gain.linearRampToValueAtTime(vol, startTime + duration * 0.1);
                     gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
-                    
                     osc.connect(gain); gain.connect(ctx.destination);
-                    osc.start(startTime); 
-                    osc.stop(startTime + duration);
+                    osc.start(startTime); osc.stop(startTime + duration);
                 } catch(e) {}
             };
 
-            // Suoni Sintetizzati Cyborg/Moderni
             const playTick = () => playTone(800, 'sine', 0.05, 0.05, 0, 200);
-            
-            const playCorrect = () => { 
-                playTone(523.25, 'sine', 0.2, 0.08, 0); 
-                playTone(659.25, 'sine', 0.3, 0.08, 0.08); 
-                playTone(1046.50, 'sine', 0.4, 0.05, 0.15); 
-            };
-            
-            const playWrong = () => {
-                playTone(250, 'triangle', 0.4, 0.1, 0, 150); 
-            };
-            
-            const playWin = () => { 
-                const notes = [523.25, 659.25, 783.99, 987.77, 1174.66];
-                notes.forEach((freq, i) => playTone(freq, 'sine', 0.3, 0.08, i * 0.08));
-                playTone(523.25, 'sine', 0.8, 0.08, 0.4);
-                playTone(783.99, 'sine', 0.8, 0.08, 0.4);
-                playTone(1046.50, 'sine', 0.8, 0.08, 0.4);
-            };
+            const playCorrect = () => { playTone(523.25, 'sine', 0.2, 0.08, 0); playTone(659.25, 'sine', 0.3, 0.08, 0.08); playTone(1046.50, 'sine', 0.4, 0.05, 0.15); };
+            const playWrong = () => playTone(250, 'triangle', 0.4, 0.1, 0, 150);
+            const playWin = () => { const notes = [523.25, 659.25, 783.99, 987.77, 1174.66]; notes.forEach((freq, i) => playTone(freq, 'sine', 0.3, 0.08, i * 0.08)); playTone(523.25, 'sine', 0.8, 0.08, 0.4); playTone(1046.50, 'sine', 0.8, 0.08, 0.4); };
 
-            // Infrasuono e Modulazione di Schumann (7,83Hz)
             const startSchumann = () => {
-                if (!audioCtxRef.current || audioCtxRef.current.schumannStarted) return;
-                const ctx = audioCtxRef.current;
-                
-                // Onda base di Schumann (infrasuono profondo)
-                const oscBase = ctx.createOscillator();
-                const gainBase = ctx.createGain();
-                oscBase.type = 'sine';
-                oscBase.frequency.setValueAtTime(7.83, ctx.currentTime);
-                gainBase.gain.setValueAtTime(0.03, ctx.currentTime); 
-                oscBase.connect(gainBase);
-                gainBase.connect(ctx.destination);
-                oscBase.start();
-
-                // Armonica percepibile pulsata a 7,83 Hz per indurre sottilmente il ritmo
-                const oscHarmonic = ctx.createOscillator();
-                const gainHarmonic = ctx.createGain();
-                const lfo = ctx.createOscillator();
-                
-                oscHarmonic.type = 'sine';
-                oscHarmonic.frequency.setValueAtTime(62.64, ctx.currentTime); // 7.83 * 8
-                
-                lfo.type = 'sine';
-                lfo.frequency.setValueAtTime(7.83, ctx.currentTime); 
-                
-                gainHarmonic.gain.setValueAtTime(0.015, ctx.currentTime);
-                
-                const lfoGain = ctx.createGain();
-                lfoGain.gain.setValueAtTime(0.01, ctx.currentTime);
-                lfo.connect(lfoGain);
-                lfoGain.connect(gainHarmonic.gain);
-                
-                oscHarmonic.connect(gainHarmonic);
-                gainHarmonic.connect(ctx.destination);
-                
-                oscHarmonic.start();
-                lfo.start();
-
-                ctx.schumannStarted = true;
+                try {
+                    if (!audioCtxRef.current || audioCtxRef.current.schumannStarted || audioCtxRef.current.state !== 'running') return;
+                    const ctx = audioCtxRef.current;
+                    const oscBase = ctx.createOscillator(); const gainBase = ctx.createGain();
+                    oscBase.type = 'sine'; oscBase.frequency.setValueAtTime(7.83, ctx.currentTime);
+                    gainBase.gain.setValueAtTime(0.02, ctx.currentTime); 
+                    oscBase.connect(gainBase); gainBase.connect(ctx.destination); oscBase.start();
+                    ctx.schumannStarted = true;
+                } catch(e) {}
             };
 
             const startGame = () => {
+                // Esecuzione immediata dei reset logici, non bloccata dall'audio
                 initAudio();
                 startSchumann();
                 setScores([0, 0]); setCurrentPlayer(0);
@@ -366,12 +344,7 @@
             const startRound = (index) => {
                 if (index >= phrasesDictionary.length) return setGameState('GAME_OVER');
                 const data = phrasesDictionary[index];
-                setPhraseData({ 
-                    topic: data[lang].topic, 
-                    phrase: data[lang].phrase, 
-                    explanation: data[lang].lesson, 
-                    originalData: data 
-                });
+                setPhraseData({ topic: data[lang].topic, phrase: data[lang].phrase, explanation: data[lang].lesson, originalData: data });
                 setGuessedLetters([]); setTurnPhase('IDLE'); setSpinValue(null);
             };
 
@@ -393,20 +366,14 @@
                     if (ct > lastT) playTick(), lastT = ct;
                     if (t < 1) requestAnimationFrame(anim);
                     else {
-                        rotationRef.current = curr;
-                        const res = WHEEL_SEGMENTS[segIdx];
-                        setSpinValue(res);
-                        
+                        rotationRef.current = curr; const res = WHEEL_SEGMENTS[segIdx]; setSpinValue(res);
                         if (res.type === 'BANKRUPT') {
-                            setTurnPhase('IDLE'); playWrong();
-                            const ns = [...scores]; ns[currentPlayer] = 0; setScores(ns);
+                            setTurnPhase('IDLE'); playWrong(); const ns = [...scores]; ns[currentPlayer] = 0; setScores(ns);
                             showTemporaryModal(ui.bankrupt, 'error'); setTimeout(nextTurn, 2000);
                         } else if (res.type === 'LOSE_TURN') {
                             setTurnPhase('IDLE'); playWrong();
                             showTemporaryModal(ui.loseTurn, 'error'); setTimeout(nextTurn, 2000);
-                        } else {
-                            setTurnPhase('WAITING_CONSONANT');
-                        }
+                        } else { setTurnPhase('WAITING_CONSONANT'); }
                     }
                 };
                 requestAnimationFrame(anim);
@@ -414,33 +381,22 @@
 
             const buyVowel = () => {
                 if (scores[currentPlayer] >= 250 && turnPhase === 'IDLE') {
-                    setTurnPhase('WAITING_VOWEL');
-                    const ns = [...scores]; ns[currentPlayer] -= 250; setScores(ns);
+                    setTurnPhase('WAITING_VOWEL'); const ns = [...scores]; ns[currentPlayer] -= 250; setScores(ns);
                     showTemporaryModal("-250", 'info', false);
                 }
             };
 
             const buyHint = () => {
                 if (scores[currentPlayer] >= 100 && turnPhase === 'IDLE') {
-                    const unrevealedConsonants = phraseData.phrase.split('').filter(c => 
-                        c !== ' ' && !['A','E','I','O','U'].includes(c) && !guessedLetters.includes(c)
-                    );
-                    if (unrevealedConsonants.length > 0) {
-                        const randomC = unrevealedConsonants[Math.floor(Math.random() * unrevealedConsonants.length)];
+                    const unrevealed = phraseData.phrase.split('').filter(c => c !== ' ' && !['A','E','I','O','U'].includes(c) && !guessedLetters.includes(c));
+                    if (unrevealed.length > 0) {
+                        const randomC = unrevealed[Math.floor(Math.random() * unrevealed.length)];
                         const ns = [...scores]; ns[currentPlayer] -= 100; setScores(ns);
-                        setGuessedLetters(p => [...p, randomC]);
-                        playCorrect();
+                        setGuessedLetters(p => [...p, randomC]); playCorrect();
                         showTemporaryModal(`+${randomC}`, 'success', false);
-                        
                         const allFound = phraseData.phrase.replace(/[^A-Z]/g, '').split('').every(l => [...guessedLetters, randomC].includes(l));
-                        if (allFound) {
-                            playWin();
-                            setTimeout(() => setGameState('SOLVED'), 1200);
-                        }
-                    } else {
-                         showTemporaryModal(ui.noHints, 'error');
-                         playWrong();
-                    }
+                        if (allFound) { playWin(); setTimeout(() => setGameState('SOLVED'), 1200); }
+                    } else { showTemporaryModal(ui.noHints, 'error'); playWrong(); }
                 }
             };
 
@@ -463,118 +419,96 @@
                     
                     setTurnPhase('IDLE');
                     const allFound = phraseData.phrase.replace(/[^A-Z]/g, '').split('').every(l => [...guessedLetters, letter].includes(l));
-                    if (allFound) {
-                        playWin();
-                        setTimeout(() => setGameState('SOLVED'), 1200);
-                    }
+                    if (allFound) { playWin(); setTimeout(() => setGameState('SOLVED'), 1200); }
                 } else {
-                    playWrong();
-                    showTemporaryModal(ui.wrong, 'error'); setTimeout(nextTurn, 1500);
+                    playWrong(); showTemporaryModal(ui.wrong, 'error'); setTimeout(nextTurn, 1500);
                 }
             };
 
             const nextTurn = () => { if (numPlayers > 1) setCurrentPlayer(p => p === 0 ? 1 : 0); setTurnPhase('IDLE'); };
-
             const showTemporaryModal = (text, type, isIcon = true) => { setModalMessage({ text, type, isIcon }); setTimeout(() => setModalMessage(null), 1500); };
-
-            const handleNextRound = () => {
-                const next = currentRoundIndex + 1;
-                setCurrentRoundIndex(next); setScores([0,0]); setCurrentPlayer(0);
-                startRound(next); setGameState('PLAYING');
-            };
+            const handleNextRound = () => { const next = currentRoundIndex + 1; setCurrentRoundIndex(next); setScores([0,0]); setCurrentPlayer(0); startRound(next); setGameState('PLAYING'); };
 
             const handleSolveSubmit = () => {
                 const isCorrect = solveInput.trim().toUpperCase() === phraseData.phrase.toUpperCase();
-                
-                setTurnPhase('IDLE');
-                setSolveInput('');
-                
+                setTurnPhase('IDLE'); setSolveInput('');
                 if (isCorrect) {
-                    setGuessedLetters('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''));
-                    playWin();
-                    showTemporaryModal(ui.correct, 'success');
+                    setGuessedLetters('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')); playWin(); showTemporaryModal(ui.correct, 'success');
                     setTimeout(() => setGameState('SOLVED'), 1500);
-                } else {
-                    playWrong();
-                    showTemporaryModal(ui.wrong, 'error');
-                    setTimeout(nextTurn, 1500); 
-                }
+                } else { playWrong(); showTemporaryModal(ui.wrong, 'error'); setTimeout(nextTurn, 1500); }
             };
 
             const getCurrentRank = (index) => RANKS.find(r => index < r.max) || RANKS[RANKS.length - 1];
             const currentRank = getCurrentRank(currentRoundIndex);
-
-            // Compute available vowels
-            const isVowel = char => ['A','E','I','O','U'].includes(char);
-            const unrevealedVowels = phraseData?.phrase.split('').filter(c => isVowel(c) && !guessedLetters.includes(c));
-            const hasVowelsLeft = unrevealedVowels && unrevealedVowels.length > 0;
+            const hasVowelsLeft = phraseData?.phrase.split('').filter(c => ['A','E','I','O','U'].includes(c) && !guessedLetters.includes(c)).length > 0;
 
             return (
                 <div className="viewport-container bg-transparent text-white">
-                    {/* HEADER */}
                     <header className="px-2 sm:px-4 py-2 flex justify-between items-center border-b border-white/10 bg-[#111827]/80 backdrop-blur-md sticky top-0 z-50 h-[55px] sm:h-[70px] shrink-0">
-                        <div className="flex items-center gap-2">
-                            <img src="logo-tondo.jpeg" className="w-7 h-7 sm:w-10 sm:h-10 rounded-full object-cover shadow-lg" alt="Logo" />
+                        <div className="flex items-center gap-3">
+                            <div className="relative w-8 h-8 sm:w-12 sm:h-12 bg-black rounded-full p-0.5 border border-[#00D166]/50 overflow-hidden shadow-[0_0_15px_rgba(0,209,102,0.3)]">
+                                <img src="logo-tondo.jpeg" className="w-full h-full rounded-full object-cover" alt="Logo" />
+                            </div>
                             <div className="flex flex-col">
-                                <span className="text-[#00D166] font-black text-[9px] sm:text-sm tracking-widest uppercase">BETTING EXCHANGE ROOM</span>
-                                <span className="text-white/60 font-bold text-[8px] sm:text-[10px] tracking-widest hidden sm:block">{ui.title}</span>
+                                <span className="text-[#00D166] font-black text-[10px] sm:text-base tracking-[0.15em] uppercase leading-none">BETTING EXCHANGE</span>
+                                <span className="text-white/60 font-bold text-[8px] sm:text-[11px] tracking-widest mt-1">{ui.title}</span>
                             </div>
                         </div>
                         {gameState !== 'SETUP' && (
                             <div className="flex items-center gap-2 sm:gap-3">
                                 {gameState === 'PLAYING' && (
-                                    <div className="flex gap-1.5 mr-1">
+                                    <div className="flex gap-1.5 mr-1 bg-black/40 p-1 rounded-lg border border-white/5">
                                         {[...Array(numPlayers)].map((_, i) => (
-                                            <div key={i} className={`flex flex-col items-center justify-center px-1.5 py-0.5 rounded ${currentPlayer===i ? 'bg-[#FFB805]/20 border border-[#FFB805]/50 text-[#FFB805]' : 'bg-white/5 border border-white/10 text-white/50'}`}>
-                                                <span className="text-[7px] font-bold uppercase leading-none">P{i+1}</span>
-                                                <span className="text-[10px] sm:text-xs font-black leading-none">{scores[i]}</span>
+                                            <div key={i} className={`flex flex-col items-center justify-center px-2 py-1 rounded-md ${currentPlayer===i ? 'bg-[#FFB805]/20 border border-[#FFB805]/50 text-[#FFB805]' : 'bg-white/5 border border-transparent text-white/50'}`}>
+                                                <span className="text-[8px] font-black uppercase leading-none">{ui.turnPrefix}{i+1}</span>
+                                                <span className="text-xs sm:text-sm font-black leading-none mt-1">{scores[i]}</span>
                                             </div>
                                         ))}
                                     </div>
                                 )}
-                                {gameState === 'PLAYING' && (
-                                    <div className="bg-black/50 px-2 py-1 rounded-full border border-white/10 flex items-center gap-1 hidden md:flex">
-                                        <Icon name={currentRank.icon} size={12} className="text-white/50"/>
-                                        <span className="text-[10px] font-black uppercase" style={{color: currentRank.color}}>{currentRank.title[lang]}</span>
-                                    </div>
-                                )}
-                                <button onClick={() => setGameState('SETUP')} className="text-white/50 hover:text-white p-1.5 rounded-full hover:bg-white/5 transition-colors active:scale-95"><Icon name="SettingsIcon" size={16}/></button>
+                                <button onClick={() => setGameState('SETUP')} className="text-white/40 hover:text-white p-2 rounded-full hover:bg-white/10 transition-colors active:scale-90 bg-black/30 border border-white/5"><Icon name="SettingsIcon" size={18}/></button>
                             </div>
                         )}
                     </header>
 
                     <main className="flex-1 flex flex-col relative w-full overflow-hidden">
                         {gameState === 'SETUP' && (
-                            <div className="flex-1 overflow-y-auto flex items-center justify-center p-4">
-                                <div className="flex flex-col items-center justify-center w-full max-w-md p-6 sm:p-8 rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 animate-pop-in relative overflow-hidden">
-                                    <div className="absolute top-[-50px] left-[-50px] w-48 h-48 bg-[#00D166]/20 rounded-full blur-[80px]"></div>
-                                    <div className="absolute bottom-[-50px] right-[-50px] w-48 h-48 bg-[#2E9DDF]/20 rounded-full blur-[80px]"></div>
+                            <div className="flex-1 overflow-y-auto flex items-center justify-center p-4 py-8">
+                                <div className="flex flex-col items-center justify-center w-full max-w-lg p-6 sm:p-10 rounded-[2rem] bg-black/40 backdrop-blur-2xl border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] animate-pop-in relative overflow-hidden">
+                                    <div className="absolute top-[-50px] left-[-50px] w-64 h-64 bg-[#00D166]/10 rounded-full blur-[100px]"></div>
+                                    <div className="absolute bottom-[-50px] right-[-50px] w-64 h-64 bg-[#2E9DDF]/10 rounded-full blur-[100px]"></div>
                                     
-                                    <h1 className="text-3xl sm:text-5xl font-black text-[#00D166] text-center mb-6 tracking-tighter italic">ZERO TO HERO ACADEMY</h1>
+                                    <div className="bg-[#00D166]/10 border border-[#00D166]/30 px-4 py-1.5 rounded-full mb-4 flex items-center gap-2">
+                                        <Icon name="Target" size={14} className="text-[#00D166] animate-pulse"/>
+                                        <span className="text-[#00D166] text-xs font-black tracking-widest uppercase">PRO EDITION</span>
+                                    </div>
+
+                                    <h1 className="text-4xl sm:text-6xl font-black text-white text-center mb-2 tracking-tighter leading-none">ZERO TO <span className="text-[#00D166]">HERO</span></h1>
+                                    <p className="text-white/40 font-bold tracking-widest text-xs sm:text-sm uppercase mb-8 text-center">Interactive Trading Course</p>
                                     
                                     <div className="flex gap-4 mb-8">
                                         {Object.keys(flagImages).map(l => (
-                                            <button key={l} onClick={()=>setLang(l)} className={`w-12 h-12 rounded-full overflow-hidden border-2 transition-all ${lang===l?'border-[#00D166] scale-110 shadow-lg':'opacity-40 border-transparent hover:opacity-100'}`}>
+                                            <button key={l} onClick={()=>setLang(l)} className={`w-14 h-14 rounded-full overflow-hidden border-2 transition-all ${lang===l?'border-[#00D166] scale-110 shadow-[0_0_15px_rgba(0,209,102,0.4)]':'opacity-40 border-transparent hover:opacity-100 hover:scale-105'}`}>
                                                 <img src={flagImages[l]} className="w-full h-full object-cover" alt="Flag"/>
                                             </button>
                                         ))}
                                     </div>
                                     <div className="flex gap-3 w-full mb-6">
-                                        <button onClick={()=>setNumPlayers(1)} className={`flex-1 p-3 rounded-2xl flex flex-col items-center gap-2 text-xs transition-colors ${numPlayers===1?'bg-blue-600 font-black text-white':'bg-white/5 border border-white/10 font-bold opacity-70 hover:bg-white/10'}`}><Icon name="User" size={20}/>{ui.players1}</button>
-                                        <button onClick={()=>setNumPlayers(2)} className={`flex-1 p-3 rounded-2xl flex flex-col items-center gap-2 text-xs transition-colors ${numPlayers===2?'bg-blue-600 font-black text-white':'bg-white/5 border border-white/10 font-bold opacity-70 hover:bg-white/10'}`}><Icon name="Users" size={20}/>{ui.players2}</button>
+                                        <button onClick={()=>setNumPlayers(1)} className={`flex-1 p-4 rounded-2xl flex flex-col items-center gap-2 text-xs sm:text-sm transition-all border-2 ${numPlayers===1?'bg-[#2E9DDF]/20 border-[#2E9DDF] text-[#2E9DDF] font-black':'bg-black/50 border-white/5 font-bold text-white/50 hover:bg-white/5'}`}><Icon name="User" size={24}/>{ui.players1}</button>
+                                        <button onClick={()=>setNumPlayers(2)} className={`flex-1 p-4 rounded-2xl flex flex-col items-center gap-2 text-xs sm:text-sm transition-all border-2 ${numPlayers===2?'bg-[#FFB805]/20 border-[#FFB805] text-[#FFB805] font-black':'bg-black/50 border-white/5 font-bold text-white/50 hover:bg-white/5'}`}><Icon name="Users" size={24}/>{ui.players2}</button>
                                     </div>
-                                    <div className="w-full mb-8 text-center bg-black/30 p-4 rounded-2xl border border-white/5">
-                                        <label className="block text-[10px] uppercase font-black mb-2 tracking-widest text-[#FFB805]">{ui.selectLesson}</label>
+                                    <div className="w-full mb-8">
+                                        <label className="block text-[11px] uppercase font-black mb-2 tracking-widest text-white/50 text-center">{ui.selectLesson}</label>
                                         <div className="relative">
-                                            <select value={startTopicIndex} onChange={e=>setStartTopicIndex(Number(e.target.value))} className="w-full p-3 pr-10 rounded-xl bg-black/80 border border-white/20 text-white font-black outline-none appearance-none cursor-pointer text-xs uppercase text-center focus:border-[#00D166] transition-colors">
+                                            <select value={startTopicIndex} onChange={e=>setStartTopicIndex(Number(e.target.value))} className="w-full p-4 pr-10 rounded-xl bg-black/60 border border-white/10 text-white font-black outline-none appearance-none cursor-pointer text-sm uppercase focus:border-[#00D166] transition-colors shadow-inner">
                                                 {phrasesDictionary.map((p,i)=><option key={i} value={i}>{i+1}. {p[lang].topic}</option>)}
                                             </select>
-                                            <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none opacity-50"><Icon name="ChevronDown" size={16}/></div>
+                                            <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-white/50"><Icon name="ChevronDown" size={20}/></div>
                                         </div>
                                     </div>
 
-                                    <button onClick={startGame} className="w-full py-4 rounded-2xl bg-red-600 hover:bg-red-500 text-white font-black text-sm sm:text-base flex items-center justify-center gap-2 active:scale-95 transition-all uppercase">
-                                        <Icon name="Play" size={20} className="fill-current"/>
+                                    <button onClick={startGame} className="w-full py-5 rounded-2xl bg-gradient-to-r from-[#00D166] to-green-500 hover:from-green-400 hover:to-green-400 text-black font-black text-lg sm:text-xl flex items-center justify-center gap-3 active:scale-95 transition-transform uppercase tracking-widest shadow-[0_10px_20px_rgba(0,209,102,0.3)]">
+                                        <Icon name="Play" size={24} className="fill-current"/>
                                         {ui.startGame}
                                     </button>
                                 </div>
@@ -583,21 +517,17 @@
 
                         {gameState === 'PLAYING' && (
                             <div className="w-full flex flex-col p-2 max-w-7xl mx-auto flex-1 h-full overflow-hidden relative">
-                                
-                                {/* --- 1. TABELLONE (ALTO) --- */}
-                                <div className="w-full flex flex-col items-center shrink-0 mb-2">
-                                    <div className="bg-black/40 px-3 py-1 sm:px-6 sm:py-2 rounded-full border border-white/10 mb-2 flex justify-center backdrop-blur-md">
-                                        <span className="text-[#FFB805] font-black text-[10px] sm:text-sm uppercase tracking-widest text-center">{phraseData.topic}</span>
+                                <div className="w-full flex flex-col items-center shrink-0 mb-3 sm:mb-4">
+                                    <div className="bg-black/50 px-4 py-1.5 sm:px-8 sm:py-2.5 rounded-full border border-[#FFB805]/30 mb-3 flex justify-center backdrop-blur-md shadow-[0_0_15px_rgba(255,184,5,0.1)]">
+                                        <span className="text-[#FFB805] font-black text-[11px] sm:text-sm uppercase tracking-[0.2em] text-center">{phraseData.topic}</span>
                                     </div>
-
-                                    {/* Tabellone con Responsive Scaling Garantito per Non Tagliarsi Mai */}
-                                    <div className="w-full p-2 sm:p-4 rounded-2xl border border-white/10 bg-black/30 flex flex-col items-center shadow-lg justify-center backdrop-blur-md min-h-[70px] sm:min-h-[100px]">
-                                        <div className="flex flex-wrap justify-center gap-y-1.5 sm:gap-y-3 gap-x-2 sm:gap-x-6 w-full">
+                                    <div className="w-full p-3 sm:p-5 rounded-[1.5rem] border border-white/10 bg-black/40 flex flex-col items-center shadow-2xl justify-center backdrop-blur-xl min-h-[90px] sm:min-h-[120px]">
+                                        <div className="flex flex-wrap justify-center gap-y-2 sm:gap-y-4 gap-x-3 sm:gap-x-8 w-full">
                                             {phraseData.phrase.split(' ').map((w, wi)=>(
-                                                <div key={wi} className="flex flex-wrap gap-0.5 sm:gap-1.5 justify-center">
+                                                <div key={wi} className="flex flex-wrap gap-1 sm:gap-2 justify-center">
                                                     {w.split('').map((c, ci)=>(
-                                                        <div key={ci} style={{perspective: '1000px'}} className="w-[clamp(14px,4vw,36px)] h-[clamp(20px,5.5vw,50px)] relative shrink-0">
-                                                            <div className={`w-full h-full flex items-center justify-center text-[clamp(10px,2.5vw,22px)] font-black uppercase rounded sm:rounded-md transition-all absolute inset-0 backface-hidden ${guessedLetters.includes(c) ? 'bg-white/90 text-black border border-white/50 animate-flip-in shadow-sm' : 'bg-white/5 border border-white/10 text-transparent shadow-inner'}`}>
+                                                        <div key={ci} style={{perspective: '1000px'}} className="w-[clamp(16px,4.5vw,42px)] h-[clamp(24px,6vw,60px)] relative shrink-0">
+                                                            <div className={`w-full h-full flex items-center justify-center text-[clamp(12px,3vw,26px)] font-black uppercase rounded-sm sm:rounded-md transition-all absolute inset-0 backface-hidden ${guessedLetters.includes(c) ? 'bg-white text-black border border-white/50 animate-flip-in shadow-md' : 'bg-[#0F2027]/80 border border-white/10 text-transparent shadow-inner'}`}>
                                                                 {guessedLetters.includes(c) ? c : ''}
                                                             </div>
                                                         </div>
@@ -608,204 +538,168 @@
                                     </div>
                                 </div>
 
-                                {/* --- 2. RUOTA & CONTROLLI (BASSO) --- */}
-                                <div className="flex-1 flex flex-col lg:flex-row gap-2 lg:gap-6 overflow-hidden min-h-0 relative pb-1">
-                                    
-                                    {/* RUOTA */}
-                                    <div className="flex-1 lg:w-1/2 flex items-center justify-center relative min-h-[140px] shrink overflow-hidden">
-                                        <div className="relative w-full max-w-[180px] sm:max-w-[280px] lg:max-w-[340px] aspect-square drop-shadow-2xl z-10 flex items-center justify-center">
+                                <div className="flex-1 flex flex-col lg:flex-row gap-3 lg:gap-6 overflow-hidden min-h-0 relative pb-1">
+                                    <div className="flex-1 lg:w-1/2 flex items-center justify-center relative min-h-[160px] shrink overflow-hidden">
+                                        <div className="relative w-full max-w-[200px] sm:max-w-[300px] lg:max-w-[400px] aspect-square drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] z-10 flex items-center justify-center">
                                             <svg viewBox="0 0 400 400" className="w-full h-full overflow-visible">
-                                                <circle cx="200" cy="200" r="195" fill="#000" stroke="#374151" strokeWidth="8" />
+                                                <circle cx="200" cy="200" r="196" fill="#111827" stroke="#374151" strokeWidth="8" />
                                                 <g ref={wheelRef} style={{ transformOrigin: '200px 200px', willChange: 'transform' }}>
                                                     {WHEEL_SEGMENTS.map((s, i)=>{
                                                         const rot = i * (360/WHEEL_SEGMENTS.length) - 90;
                                                         const label = s.type==='value'?s.val:(ui.wheelValues[s.type]||s.type);
                                                         const isVal = s.type==='value';
-                                                        const textStroke = s.textColor === '#FFFFFF' ? '#000' : '#fff';
-                                                        const textStrokeWidth = isVal ? '1.5' : '0.5';
                                                         return (
                                                             <g key={i} transform={`rotate(${rot}, 200, 200)`}>
-                                                                <path d="M 200 200 L 383.5 150.8 A 190 190 0 0 1 383.5 249.2 Z" fill={s.color} stroke="rgba(0,0,0,0.3)" strokeWidth="1"/>
-                                                                <text x={label.length>9?'378':'365'} y="200" textAnchor="end" dominantBaseline="central" fill={s.textColor} fontSize={isVal?'34': (label.length > 9 ? '12' : '16')} fontWeight="900" stroke={textStroke} strokeWidth={textStrokeWidth} paintOrder="stroke fill" letterSpacing={isVal?"0":"1"}>{label}</text>
-                                                                <circle cx="373.8" cy="246.5" r="4" fill="#d1d5db" stroke="#111827" strokeWidth="1"/>
+                                                                <path d="M 200 200 L 386 149 A 192 192 0 0 1 386 251 Z" fill={s.color} stroke="rgba(0,0,0,0.5)" strokeWidth="2"/>
+                                                                <text x={label.length>9?'382':'370'} y="200" textAnchor="end" dominantBaseline="central" fill={s.textColor} fontSize={isVal?'36': (label.length > 9 ? '13' : '18')} fontWeight="900" stroke={s.textColor === '#FFFFFF' ? '#000' : '#fff'} strokeWidth={isVal?'1.5':'0.5'} paintOrder="stroke fill" letterSpacing={isVal?"0":"1"}>{label}</text>
+                                                                <circle cx="378" cy="248" r="4" fill="#E5E7EB" stroke="#111827" strokeWidth="1"/>
                                                             </g>
                                                         )
                                                     })}
-                                                    <circle cx="200" cy="200" r="32" fill="#FFB805" stroke="#111827" strokeWidth="3" />
-                                                    <image href="logo-tondo.jpeg" x="172" y="172" width="56" height="56" clipPath="circle(28px at 28px 28px)" />
+                                                    <circle cx="200" cy="200" r="36" fill="#111827" stroke="#FFB805" strokeWidth="4" />
+                                                    <image href="logo-tondo.jpeg" x="168" y="168" width="64" height="64" clipPath="circle(32px at 32px 32px)" />
                                                 </g>
-                                                <g style={{ transformOrigin: '200px 10px' }}>
-                                                    <path d="M 185 -5 L 215 -5 L 200 35 Z" fill="#EF4444" stroke="#7F1D1D" strokeWidth="2" filter="drop-shadow(0 4px 3px rgb(0 0 0 / 0.5))"/>
+                                                <g style={{ transformOrigin: '200px 5px' }}>
+                                                    <path d="M 180 -10 L 220 -10 L 200 35 Z" fill="#EF4444" stroke="#7F1D1D" strokeWidth="2" filter="drop-shadow(0 4px 6px rgb(0 0 0 / 0.6))"/>
                                                 </g>
                                             </svg>
                                         </div>
                                     </div>
 
-                                    {/* CONTROLLI & TASTIERA */}
-                                    <div className="w-full lg:w-1/2 flex flex-col justify-end gap-2 shrink-0">
-                                        
-                                        {/* Actions Box */}
-                                        <div className="w-full bg-black/40 p-2 sm:p-3 rounded-2xl border border-white/10 text-center relative shadow-lg flex flex-col justify-center backdrop-blur-md shrink-0">
+                                    <div className="w-full lg:w-1/2 flex flex-col justify-end gap-3 shrink-0">
+                                        <div className="w-full bg-black/50 p-3 sm:p-4 rounded-3xl border border-white/5 text-center relative shadow-xl flex flex-col justify-center backdrop-blur-md shrink-0">
                                             {turnPhase === 'IDLE' ? (
-                                                <div className="flex flex-col gap-2 animate-fade-in-up items-center w-full">
-                                                    <div className="flex items-center justify-between w-full px-1">
-                                                        <h3 className="font-black text-[#FFB805] uppercase tracking-widest text-[9px] sm:text-[10px] flex items-center gap-1 bg-black/40 px-2 py-1 rounded-full border border-white/5">
-                                                            <Icon name="User" size={12}/> {ui.turnPrefix}{currentPlayer+1}
+                                                <div className="flex flex-col gap-3 animate-fade-in-up items-center w-full">
+                                                    <div className="flex items-center justify-between w-full px-2">
+                                                        <h3 className="font-black text-[#FFB805] uppercase tracking-widest text-[10px] sm:text-xs flex items-center gap-1.5 bg-black/60 px-3 py-1.5 rounded-full border border-white/10">
+                                                            <Icon name="User" size={14}/> {ui.turnPrefix}{currentPlayer+1}
                                                         </h3>
-                                                        <button onClick={()=>setTurnPhase('SOLVING')} className="px-3 py-1.5 sm:py-2 bg-[#00D166] hover:bg-green-400 rounded-full font-black text-[9px] sm:text-[10px] text-black active:scale-95 transition-all tracking-widest uppercase shadow-md">
+                                                        <button onClick={()=>setTurnPhase('SOLVING')} className="px-4 py-2 sm:py-2.5 bg-[#00D166] hover:bg-green-400 rounded-full font-black text-[10px] sm:text-xs text-black active:scale-95 transition-transform tracking-widest uppercase shadow-[0_4px_10px_rgba(0,209,102,0.3)]">
                                                             {ui.solve}
                                                         </button>
                                                     </div>
-                                                    
-                                                    <button onClick={spinWheel} className="w-full py-2.5 sm:py-3.5 rounded-xl bg-red-600 hover:bg-red-500 flex items-center justify-center text-white font-black text-xs sm:text-sm uppercase active:scale-95 transition-all tracking-widest shadow-lg">
+                                                    <button onClick={spinWheel} className="w-full py-3.5 sm:py-5 rounded-2xl bg-gradient-to-b from-red-500 to-red-700 hover:from-red-400 hover:to-red-600 flex items-center justify-center text-white font-black text-sm sm:text-base uppercase active:scale-95 transition-transform tracking-[0.2em] shadow-lg border border-red-400/50">
                                                         {ui.spinWheel}
                                                     </button>
-
-                                                    <div className="flex gap-2 w-full">
-                                                        <button onClick={buyHint} disabled={scores[currentPlayer]<100} className={`flex-1 py-1.5 sm:py-2.5 rounded-xl font-black text-[9px] sm:text-[10px] flex items-center justify-center gap-1 transition-all ${scores[currentPlayer]>=100?'bg-[#8B5CF6] hover:bg-purple-500 text-white active:scale-95 shadow-md':'bg-white/5 text-white/20 border border-white/5 cursor-not-allowed'}`}>
-                                                            <Icon name="Lightbulb" size={12}/> {ui.hint}
+                                                    <div className="flex gap-3 w-full">
+                                                        <button onClick={buyHint} disabled={scores[currentPlayer]<100} className={`flex-1 py-2 sm:py-3 rounded-xl font-black text-[10px] sm:text-xs flex items-center justify-center gap-2 transition-all border ${scores[currentPlayer]>=100?'bg-[#8B5CF6]/20 border-[#8B5CF6] text-[#8B5CF6] hover:bg-[#8B5CF6]/30 active:scale-95':'bg-black/50 border-white/5 text-white/20 cursor-not-allowed'}`}>
+                                                            <Icon name="Lightbulb" size={14}/> {ui.hint}
                                                         </button>
                                                         {hasVowelsLeft && (
-                                                            <button onClick={buyVowel} disabled={scores[currentPlayer]<250} className={`flex-1 py-1.5 sm:py-2.5 rounded-xl font-black text-[9px] sm:text-[10px] flex items-center justify-center gap-1 transition-all ${scores[currentPlayer]>=250?'bg-[#2E9DDF] hover:bg-blue-400 text-white active:scale-95 shadow-md':'bg-white/5 text-white/20 border border-white/5 cursor-not-allowed'}`}>
+                                                            <button onClick={buyVowel} disabled={scores[currentPlayer]<250} className={`flex-1 py-2 sm:py-3 rounded-xl font-black text-[10px] sm:text-xs flex items-center justify-center gap-2 transition-all border ${scores[currentPlayer]>=250?'bg-[#2E9DDF]/20 border-[#2E9DDF] text-[#2E9DDF] hover:bg-[#2E9DDF]/30 active:scale-95':'bg-black/50 border-white/5 text-white/20 cursor-not-allowed'}`}>
                                                                 {ui.buyVowel}
                                                             </button>
                                                         )}
                                                     </div>
                                                 </div>
                                             ) : (
-                                                <div className="flex flex-col items-center justify-center min-h-[90px] sm:min-h-[110px]">
-                                                    {turnPhase==='SPINNING' && <div className="text-xs font-black text-[#FFB805] animate-pulse uppercase tracking-widest">...</div>}
+                                                <div className="flex flex-col items-center justify-center min-h-[120px] sm:min-h-[140px]">
+                                                    {turnPhase==='SPINNING' && <div className="text-sm font-black text-[#FFB805] animate-pulse uppercase tracking-[0.3em]">...</div>}
                                                     {turnPhase==='WAITING_CONSONANT' && spinValue && (
                                                         <div className="animate-fade-in-up flex flex-col items-center">
-                                                            <div className="text-[9px] font-black text-white/60 uppercase mb-0">{ui.consonantPrompt}</div>
-                                                            <div className="text-2xl sm:text-3xl font-black drop-shadow-md leading-none" style={{color: spinValue.color}}>{spinValue.val}</div>
+                                                            <div className="text-[10px] font-black text-white/50 uppercase tracking-widest mb-1">{ui.consonantPrompt}</div>
+                                                            <div className="text-4xl sm:text-5xl font-black drop-shadow-[0_0_15px_rgba(255,255,255,0.2)] leading-none" style={{color: spinValue.color}}>{spinValue.val}</div>
                                                         </div>
                                                     )}
-                                                    {turnPhase==='WAITING_VOWEL' && <div className="text-[10px] font-black text-[#2E9DDF] uppercase animate-fade-in-up">{ui.vowelPrompt}</div>}
+                                                    {turnPhase==='WAITING_VOWEL' && <div className="text-xs font-black text-[#2E9DDF] uppercase tracking-widest animate-fade-in-up">{ui.vowelPrompt}</div>}
                                                 </div>
                                             )}
                                         </div>
 
-                                        {/* Keyboard Box */}
-                                        <div className="w-full bg-black/30 p-1.5 sm:p-2.5 rounded-2xl border border-white/5 backdrop-blur-md shrink-0">
-                                            <div className="flex flex-col gap-1 sm:gap-1.5 w-full mx-auto">
+                                        <div className="w-full bg-black/40 p-2 sm:p-3 rounded-3xl border border-white/5 backdrop-blur-xl shrink-0 shadow-lg">
+                                            <div className="flex flex-col gap-1.5 sm:gap-2 w-full mx-auto">
                                                 {QWERTY.map((row, ri) => (
-                                                    <div key={ri} className="flex justify-center gap-1 sm:gap-1.5 w-full">
+                                                    <div key={ri} className="flex justify-center gap-1.5 sm:gap-2 w-full">
                                                         {row.map(l => {
                                                             const isV = ['A','E','I','O','U'].includes(l);
                                                             const isGuessed = guessedLetters.includes(l);
                                                             const disabled = turnPhase==='IDLE' || turnPhase==='SPINNING' || turnPhase==='SOLVING' || (turnPhase==='WAITING_CONSONANT' && isV) || (turnPhase==='WAITING_VOWEL' && !isV);
-                                                            
-                                                            let btnClass = "relative flex-1 max-w-[28px] sm:max-w-[40px] md:max-w-[46px] h-8 sm:h-11 md:h-12 rounded sm:rounded-md font-black text-[11px] sm:text-[14px] flex items-center justify-center transition-all duration-200 select-none border ";
-                                                            
+                                                            let btnClass = "relative flex-1 max-w-[32px] sm:max-w-[44px] md:max-w-[50px] h-10 sm:h-12 md:h-14 rounded-lg font-black text-[12px] sm:text-[15px] flex items-center justify-center transition-all duration-200 select-none border-b-4 ";
                                                             if (isGuessed) {
-                                                                const inPhrase = phraseData.phrase.includes(l);
-                                                                btnClass += inPhrase ? "bg-[#374151]/50 border-white/5 text-white/30" : "bg-red-950/20 border-red-900/20 text-red-500/40";
-                                                            } else if (disabled) {
-                                                                btnClass += "bg-white/5 border-white/5 text-white/20 opacity-50";
-                                                            } else {
-                                                                btnClass += "bg-white/10 border-white/20 text-white hover:bg-white/20 hover:border-white/30 active:scale-90 cursor-pointer shadow-sm";
-                                                            }
-
-                                                            return (
-                                                                <button key={l} disabled={disabled || isGuessed} onClick={()=>handleLetterClick(l)} className={btnClass}>
-                                                                    {l}
-                                                                </button>
-                                                            )
+                                                                btnClass += phraseData.phrase.includes(l) ? "bg-[#374151]/50 border-transparent text-white/20 transform translate-y-1" : "bg-red-950/20 border-transparent text-red-500/30 transform translate-y-1";
+                                                            } else if (disabled) { btnClass += "bg-white/5 border-white/5 text-white/20"; } 
+                                                            else { btnClass += "bg-[#1f2937] border-[#111827] text-white hover:bg-[#374151] active:transform active:translate-y-1 active:border-transparent cursor-pointer"; }
+                                                            return <button key={l} disabled={disabled || isGuessed} onClick={()=>handleLetterClick(l)} className={btnClass}>{l}</button>
                                                         })}
                                                     </div>
                                                 ))}
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
                         )}
 
-                        {/* MODALE DI INSERIMENTO SOLUZIONE (SOLVE) A SCHERMO INTERO */}
                         {turnPhase === 'SOLVING' && (
-                            <div className="fixed inset-0 z-[9999] bg-black/95 flex flex-col items-center justify-center p-4 backdrop-blur-md animate-pop-in">
-                                <div className="w-full max-w-lg bg-black/80 border border-[#00D166]/50 rounded-3xl p-6 sm:p-8 flex flex-col items-center">
-                                    <Icon name="Lightbulb" size={40} className="text-[#00D166] mb-4" />
-                                    <h2 className="text-[#00D166] font-black text-lg sm:text-2xl mb-6 tracking-[0.1em] uppercase text-center">{ui.solvePrompt}</h2>
-                                    <input 
-                                        type="text" 
-                                        autoFocus 
-                                        value={solveInput} 
-                                        onChange={e=>setSolveInput(e.target.value)} 
-                                        onKeyDown={e => e.key === 'Enter' && handleSolveSubmit()}
-                                        className="w-full p-4 rounded-2xl bg-white/5 border border-white/20 text-white text-center font-black uppercase outline-none focus:border-[#00D166] text-xl sm:text-3xl mb-8 transition-colors" 
-                                        placeholder="..."
-                                    />
+                            <div className="fixed inset-0 z-[9999] bg-black/95 flex flex-col items-center justify-center p-4 backdrop-blur-xl animate-pop-in">
+                                <div className="w-full max-w-xl bg-[#0F2027] border border-[#00D166]/30 rounded-[2rem] p-6 sm:p-10 flex flex-col items-center shadow-[0_0_50px_rgba(0,209,102,0.1)]">
+                                    <Icon name="Lightbulb" size={48} className="text-[#00D166] mb-4 drop-shadow-[0_0_10px_rgba(0,209,102,0.5)]" />
+                                    <h2 className="text-white font-black text-xl sm:text-3xl mb-8 tracking-[0.15em] uppercase text-center">{ui.solvePrompt}</h2>
+                                    <input type="text" autoFocus value={solveInput} onChange={e=>setSolveInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && handleSolveSubmit()}
+                                        className="w-full p-5 rounded-2xl bg-black/50 border-2 border-white/10 text-white text-center font-black uppercase outline-none focus:border-[#00D166] text-2xl sm:text-4xl mb-8 transition-colors shadow-inner tracking-widest" placeholder="..." />
                                     <div className="flex gap-4 w-full">
-                                        <button onClick={()=>setTurnPhase('IDLE')} className="flex-1 py-4 bg-red-900/40 text-red-400 hover:bg-red-900/60 rounded-2xl font-black uppercase text-sm sm:text-base border border-red-500/20 active:scale-95 transition-all">{ui.cancel}</button>
-                                        <button onClick={handleSolveSubmit} className="flex-1 py-4 bg-[#00D166] hover:bg-green-400 text-black rounded-2xl font-black uppercase text-sm sm:text-base active:scale-95 transition-all">{ui.submit}</button>
+                                        <button onClick={()=>setTurnPhase('IDLE')} className="flex-1 py-4 bg-transparent border-2 border-red-500/50 text-red-500 hover:bg-red-500/10 rounded-2xl font-black uppercase text-sm sm:text-base active:scale-95 transition-all">{ui.cancel}</button>
+                                        <button onClick={handleSolveSubmit} className="flex-1 py-4 bg-[#00D166] hover:bg-green-400 text-black rounded-2xl font-black uppercase text-sm sm:text-base active:scale-95 transition-all shadow-[0_0_15px_rgba(0,209,102,0.4)]">{ui.submit}</button>
                                     </div>
                                 </div>
                             </div>
                         )}
 
-                        {/* MESSAGGIO MODALE GIGANTE GLOBALE (Es. Sbagliato, Bancarotta, +150) */}
                         {modalMessage && (
-                            <div className="fixed inset-0 z-[10000] bg-black/60 flex flex-col items-center justify-center backdrop-blur-sm animate-pop-in pointer-events-none">
-                                <div className={`border p-8 sm:p-12 rounded-[2rem] flex flex-col items-center transform scale-110 backdrop-blur-md ${modalMessage.type==='success'?'bg-green-950/80 border-green-500/30 text-[#00D166]':modalMessage.type==='error'?'bg-red-950/80 border-red-500/30 text-red-500':'bg-blue-950/80 border-blue-500/30 text-[#2E9DDF]'}`}>
-                                    {modalMessage.isIcon && (
-                                        <Icon name={modalMessage.type==='success'?'CheckCircle':'AlertCircle'} size={80} className="mb-4" />
-                                    )}
-                                    <div className="text-3xl sm:text-6xl font-black uppercase text-center tracking-widest">{modalMessage.text}</div>
+                            <div className="fixed inset-0 z-[10000] bg-black/70 flex flex-col items-center justify-center backdrop-blur-md animate-pop-in pointer-events-none">
+                                <div className={`border-2 p-8 sm:p-14 rounded-[3rem] flex flex-col items-center transform scale-110 backdrop-blur-xl shadow-2xl ${modalMessage.type==='success'?'bg-[#00D166]/10 border-[#00D166]/50 text-[#00D166]':modalMessage.type==='error'?'bg-red-900/10 border-red-500/50 text-red-500':'bg-[#2E9DDF]/10 border-[#2E9DDF]/50 text-[#2E9DDF]'}`}>
+                                    {modalMessage.isIcon && <Icon name={modalMessage.type==='success'?'CheckCircle':'AlertCircle'} size={80} className="mb-6 drop-shadow-lg" />}
+                                    <div className="text-4xl sm:text-7xl font-black uppercase text-center tracking-widest">{modalMessage.text}</div>
                                 </div>
                             </div>
                         )}
 
-                        {/* SCHERMATA LEZIONE SBLOCCATA */}
+                        {/* Modale Lezione Sbloccata - Design PRO, Testi Lunghi, Scrollabile */}
                         {gameState === 'SOLVED' && (
-                            <div className="flex flex-col items-center justify-center h-full w-full p-2 sm:p-4 animate-pop-in absolute inset-0 bg-[#111827]/95 backdrop-blur-xl z-[100]">
+                            <div className="flex flex-col items-center justify-center h-full w-full p-3 sm:p-6 animate-pop-in absolute inset-0 bg-[#0F2027]/98 backdrop-blur-2xl z-[100]">
                                 <Confetti />
-                                <div className="w-full max-w-2xl bg-black/40 p-1 rounded-3xl relative z-10 max-h-full flex flex-col border border-[#00D166]/30">
-                                    <div className="bg-black/60 rounded-[1.4rem] p-4 sm:p-8 flex flex-col items-center text-center relative overflow-y-auto flex-1 border border-white/5">
-                                        
+                                <div className="w-full max-w-3xl bg-black/60 p-1 rounded-[2rem] relative z-10 max-h-[95%] sm:max-h-[90%] flex flex-col border border-[#00D166]/40 shadow-[0_0_50px_rgba(0,209,102,0.15)]">
+                                    <div className="bg-[#111827] rounded-[1.8rem] p-5 sm:p-10 flex flex-col items-center relative overflow-y-auto flex-1 custom-scrollbar">
                                         <div className="absolute inset-0 animate-shine z-0 pointer-events-none"></div>
                                         
-                                        <div className="relative z-10 animate-float mb-2 sm:mb-4 mt-2">
-                                            <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-[#00D166]/20 text-[#00D166] border border-[#00D166]/50">
-                                                <Icon name="CheckCircle" size={24} className="sm:w-8 sm:h-8" />
+                                        <div className="relative z-10 animate-float mb-4 mt-2">
+                                            <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#00D166]/10 text-[#00D166] border border-[#00D166]/40 shadow-[0_0_20px_rgba(0,209,102,0.3)]">
+                                                <Icon name="CheckCircle" size={32} className="sm:w-10 sm:h-10" />
                                             </div>
                                         </div>
                                         
-                                        <h2 className="text-[#00D166] font-black text-[10px] sm:text-sm mb-1 sm:mb-2 tracking-[0.2em] sm:tracking-[0.3em] uppercase z-10">{ui.lessonUnlocked}</h2>
-                                        
-                                        <div className="text-white text-lg sm:text-4xl font-black mb-3 sm:mb-6 uppercase tracking-tight leading-tight z-10">
+                                        <h2 className="text-[#00D166] font-black text-[11px] sm:text-sm mb-2 tracking-[0.3em] uppercase z-10">{ui.lessonUnlocked}</h2>
+                                        <div className="text-white text-2xl sm:text-4xl font-black mb-6 uppercase tracking-tight text-center z-10 drop-shadow-md">
                                             {phraseData.phrase}
                                         </div>
                                         
-                                        <div className="w-full bg-white/5 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-left border border-white/10 mb-4 sm:mb-6 relative z-10 flex-shrink-0 shadow-lg">
-                                            <div className="absolute top-0 left-0 w-1 h-full bg-[#FFB805] rounded-l-xl sm:rounded-l-2xl"></div>
-                                            <h3 className="text-[#FFB805] font-black uppercase text-[10px] sm:text-sm mb-2 sm:mb-3 tracking-widest flex items-center gap-2">
-                                                <Icon name="Lightbulb" size={16} className="text-[#FFB805] animate-pulse sm:w-5 sm:h-5"/> 
-                                                {phraseData.topic}
+                                        <div className="w-full bg-black/40 rounded-2xl sm:rounded-[1.5rem] p-5 sm:p-8 text-left border border-white/5 mb-6 relative z-10 shadow-inner">
+                                            <div className="absolute top-0 left-0 w-1.5 h-full bg-[#FFB805] rounded-l-2xl sm:rounded-l-[1.5rem] shadow-[0_0_10px_rgba(255,184,5,0.5)]"></div>
+                                            <h3 className="text-[#FFB805] font-black uppercase text-xs sm:text-sm mb-4 tracking-widest flex items-center gap-2">
+                                                <Icon name="Lightbulb" size={18} className="animate-pulse"/> {phraseData.topic}
                                             </h3>
-                                            <p className="lesson-content text-white/90 text-xs sm:text-lg leading-snug sm:leading-relaxed font-medium" dangerouslySetInnerHTML={{ __html: phraseData.explanation }}></p>
+                                            {/* Contenitore formattato per la Lezione Estesa */}
+                                            <div className="lesson-content text-white/80 text-[15px] sm:text-lg leading-relaxed sm:leading-loose font-medium" dangerouslySetInnerHTML={{ __html: phraseData.explanation }}></div>
                                         </div>
 
-                                        <div className="w-full flex flex-row items-center justify-between bg-white/5 p-3 sm:p-4 rounded-xl sm:rounded-2xl border border-white/10 mb-4 sm:mb-6 z-10 gap-2 sm:gap-4 shrink-0 shadow-lg">
-                                            <div className="flex items-center gap-2 sm:gap-3">
-                                                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center bg-black/50 border border-white/20" style={{borderColor: currentRank.color}}>
-                                                    <Icon name={currentRank.icon} size={16} className="sm:w-5 sm:h-5" style={{color: currentRank.color}}/>
+                                        <div className="w-full flex flex-col sm:flex-row items-center justify-between bg-[#1f2937]/50 p-4 sm:p-5 rounded-2xl border border-white/5 mb-6 z-10 gap-4 shrink-0 shadow-md">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center bg-black/50 border-2" style={{borderColor: currentRank.color}}>
+                                                    <Icon name={currentRank.icon} size={20} style={{color: currentRank.color}}/>
                                                 </div>
                                                 <div className="text-left">
-                                                    <div className="text-white/40 text-[8px] sm:text-[10px] font-black uppercase tracking-widest">{ui.rankTitle}</div>
-                                                    <div className="text-sm sm:text-xl font-black leading-none mt-0.5" style={{color: currentRank.color}}>{currentRank.title[lang]}</div>
+                                                    <div className="text-white/40 text-[9px] sm:text-[10px] font-black uppercase tracking-widest">{ui.rankTitle}</div>
+                                                    <div className="text-base sm:text-xl font-black leading-none mt-1" style={{color: currentRank.color}}>{currentRank.title[lang]}</div>
                                                 </div>
                                             </div>
-                                            <div className="text-right">
-                                                <div className="text-white/40 text-[8px] sm:text-[10px] font-black uppercase tracking-widest mb-0.5">{ui.progress}</div>
-                                                <div className="text-sm sm:text-xl font-black text-white leading-none">{currentRoundIndex + 1} <span className="text-white/30 text-[10px] sm:text-sm">/ {phrasesDictionary.length}</span></div>
+                                            <div className="text-center sm:text-right bg-black/30 px-4 py-2 rounded-xl border border-white/5">
+                                                <div className="text-white/40 text-[9px] sm:text-[10px] font-black uppercase tracking-widest mb-1">{ui.progress}</div>
+                                                <div className="text-base sm:text-xl font-black text-white leading-none">{currentRoundIndex + 1} <span className="text-white/30 text-xs sm:text-sm">/ {phrasesDictionary.length}</span></div>
                                             </div>
                                         </div>
 
-                                        <button onClick={handleNextRound} className="w-full py-3 sm:py-5 bg-[#FFB805] hover:bg-yellow-400 text-black rounded-xl sm:rounded-2xl font-black text-xs sm:text-lg active:scale-95 transition-all uppercase tracking-[0.1em] sm:tracking-[0.2em] flex items-center justify-center gap-2 sm:gap-3 z-10 shrink-0 mt-auto shadow-xl">
-                                            {ui.nextRound} <Icon name="Play" size={16} className="fill-current sm:w-6 sm:h-6"/>
+                                        <button onClick={handleNextRound} className="w-full py-4 sm:py-5 bg-gradient-to-r from-[#FFB805] to-yellow-500 hover:from-yellow-400 hover:to-yellow-400 text-black rounded-2xl font-black text-sm sm:text-lg active:scale-95 transition-all uppercase tracking-[0.15em] flex items-center justify-center gap-3 z-10 shrink-0 mt-auto shadow-[0_10px_20px_rgba(255,184,5,0.2)] border border-yellow-300/50">
+                                            {ui.nextRound} <Icon name="Play" size={20} className="fill-current"/>
                                         </button>
                                     </div>
                                 </div>
@@ -814,12 +708,13 @@
 
                         {gameState === 'GAME_OVER' && (
                             <div className="flex-1 flex items-center justify-center p-4">
-                                <div className="text-center text-white py-10 px-8 bg-black/60 rounded-3xl backdrop-blur-xl border border-[#FFB805]/30 w-full max-w-md animate-pop-in">
-                                    <Icon name="Trophy" size={64} className="text-[#FFB805] mx-auto mb-6" />
-                                    <h2 className="text-4xl font-black text-white mb-2 uppercase tracking-tighter">{ui.gameOver}</h2>
-                                    <p className="text-xl font-bold text-[#FFB805] mb-8 tracking-widest uppercase">{ui.winner}</p>
-                                    <button onClick={()=>setGameState('SETUP')} className="w-full py-4 bg-[#2E9DDF] hover:bg-blue-400 rounded-2xl font-black text-sm flex items-center justify-center gap-2 active:scale-95 transition-all uppercase tracking-widest shadow-lg">
-                                        <Icon name="RotateCcw" size={18}/>{ui.playAgain}
+                                <div className="text-center py-12 px-8 bg-black/60 rounded-[2.5rem] backdrop-blur-2xl border border-[#FFB805]/40 w-full max-w-lg animate-pop-in shadow-[0_0_50px_rgba(255,184,5,0.15)] relative overflow-hidden">
+                                    <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-transparent via-[#FFB805] to-transparent"></div>
+                                    <Icon name="Trophy" size={80} className="text-[#FFB805] mx-auto mb-6 drop-shadow-[0_0_15px_rgba(255,184,5,0.5)]" />
+                                    <h2 className="text-4xl sm:text-5xl font-black text-white mb-2 uppercase tracking-tighter">{ui.gameOver}</h2>
+                                    <p className="text-lg sm:text-xl font-black text-[#00D166] mb-10 tracking-[0.2em] uppercase">{ui.winner}</p>
+                                    <button onClick={()=>setGameState('SETUP')} className="w-full py-5 bg-[#2E9DDF]/20 hover:bg-[#2E9DDF]/30 border-2 border-[#2E9DDF] rounded-2xl font-black text-[#2E9DDF] text-sm sm:text-base flex items-center justify-center gap-3 active:scale-95 transition-all uppercase tracking-widest shadow-lg">
+                                        <Icon name="RotateCcw" size={20}/>{ui.playAgain}
                                     </button>
                                 </div>
                             </div>
