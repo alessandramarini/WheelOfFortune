@@ -9,13 +9,13 @@
     
     <link rel="icon" type="image/jpeg" href="logo-tondo.jpeg">
     
-    <!-- Ottimizzazioni di Rete Estreme -->
+    <!-- Ottimizzazioni di Rete -->
     <link rel="preconnect" href="https://unpkg.com" crossorigin>
     <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
     <link rel="preconnect" href="https://flagcdn.com" crossorigin>
 
     <style>
-        /* CSS Nativo per caricamento istantaneo (Prima che React si avvii) */
+        /* CSS Nativo per caricamento istantaneo */
         body { 
             background-color: #111827; 
             background-image: radial-gradient(circle at 50% 0%, #1f2937 0%, #111827 70%);
@@ -39,42 +39,41 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes popIn { 0% { opacity: 0; transform: scale(0.9); } 60% { transform: scale(1.02); } 100% { opacity: 1; transform: scale(1); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes popIn { 0% { opacity: 0; transform: scale(0.95); } 100% { opacity: 1; transform: scale(1); } }
         @keyframes flipIn { 0% { transform: rotateY(90deg) scale(1.1); opacity: 0; } 100% { transform: rotateY(0deg) scale(1); opacity: 1; } }
         @keyframes confettiFall { 0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; } 100% { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
 
-        .animate-fade-in-up { animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        .animate-pop-in { animation: popIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        .animate-flip-in { animation: flipIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        .animate-fade-in-up { animation: fadeInUp 0.3s ease-out forwards; }
+        .animate-pop-in { animation: popIn 0.3s ease-out forwards; }
+        .animate-flip-in { animation: flipIn 0.4s ease-out forwards; }
         .animate-confetti { animation: confettiFall linear forwards; }
         
-        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-5px); } }
         .animate-float { animation: float 3.5s ease-in-out infinite; }
-        
-        @keyframes shine { 0% { background-position: 200% center; } 100% { background-position: -200% center; } }
-        .animate-shine { 
-            background: linear-gradient(120deg, transparent 20%, rgba(255,255,255,0.05) 40%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.05) 60%, transparent 80%); 
-            background-size: 200% auto; 
-            animation: shine 3s linear infinite; 
-        }
 
-        /* Stili per la formattazione avanzata delle lezioni */
+        /* Formattazione chiara ed esaustiva per le Lezioni */
+        .lesson-content {
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            line-height: 1.6;
+            color: #E5E7EB;
+        }
         .lesson-content b { color: #FFB805; font-weight: 900; }
         .lesson-content i { color: #00D166; font-style: normal; font-weight: 900; }
         .lesson-content .highlight-box {
-            background: rgba(255,255,255,0.05); border-left: 3px solid #00D166;
-            padding: 10px; margin: 12px 0; border-radius: 4px; font-size: 0.95em;
+            background: rgba(0, 0, 0, 0.3); border-left: 4px solid #00D166;
+            padding: 12px 16px; margin: 16px 0; border-radius: 0 8px 8px 0; font-size: 0.95em;
         }
         .lesson-content .math-box {
-            background: rgba(46, 157, 223, 0.1); border: 1px solid rgba(46, 157, 223, 0.3);
-            padding: 10px; margin: 12px 0; border-radius: 6px; font-family: monospace; font-size: 1.1em; color: #2E9DDF;
+            background: rgba(46, 157, 223, 0.15); border: 1px solid rgba(46, 157, 223, 0.4);
+            padding: 10px; margin: 12px 0; border-radius: 6px; font-family: monospace; font-size: 1.05em; color: #60A5FA;
+            text-align: center; font-weight: bold;
         }
         .lesson-content .memo-box {
-            background: rgba(255, 184, 5, 0.1); border-left: 3px solid #FFB805;
-            padding: 10px; margin: 12px 0; border-radius: 4px; font-style: italic; font-weight: 500;
+            background: rgba(255, 184, 5, 0.1); border-left: 4px solid #FFB805;
+            padding: 12px 16px; margin: 16px 0; border-radius: 0 8px 8px 0; font-style: italic; font-weight: 500;
         }
-        .lesson-content hr { border-color: rgba(255,255,255,0.1); margin: 15px 0; }
+        .lesson-content hr { border-color: rgba(255,255,255,0.1); margin: 20px 0; }
         
         .backface-hidden { -webkit-backface-visibility: hidden; backface-visibility: hidden; transform: translateZ(0); }
         input[type="text"] { font-size: 16px !important; }
@@ -94,7 +93,6 @@
 
     <div id="root"></div>
 
-    <!-- Scripts caricati alla fine per non bloccare il rendering della pagina nelle Webview (Telegram) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -103,7 +101,7 @@
     <script type="text/babel">
         const { useState, useEffect, useRef, Fragment } = React;
 
-        const Icon = ({ name, size = 24, className = "" }) => {
+        const Icon = ({ name, size = 24, className = "", style = {} }) => {
             const icons = {
                 SettingsIcon: <Fragment><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22-.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.1a2 2 0 0 1-1-1.72v-.51a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V2Z" /><circle cx="12" cy="12" r="3" /></Fragment>,
                 Play: <path d="m7 4 12 8-12 8V4z" />,
@@ -118,7 +116,7 @@
                 Target: <Fragment><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></Fragment>
             };
             return (
-                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} style={style}>
                     {icons[name] || null}
                 </svg>
             );
@@ -351,10 +349,10 @@
         ];
 
         const uiTranslations = {
-            en: { title: "ACADEMY PRO", players1: "1 Player", players2: "2 Players", selectLesson: "Start From Lesson", startGame: "START ACADEMY", spinWheel: "Spin Wheel", buyVowel: "Vowel (250)", hint: "Hint (100)", solve: "SOLVE", turnPrefix: "P", turnSuffix: "", bankrupt: "BANKRUPT!", loseTurn: "MISS TURN", consonantPrompt: "Consonant for:", vowelPrompt: "Choose Vowel", solvePrompt: "Type Solution:", submit: "Verify", cancel: "Cancel", correct: "Awesome!", wrong: "Error!", concept: "Lesson:", nextRound: "Next Lesson", gameOver: "Graduated!", winner: "Top Trader", playAgain: "Restart Academy", day: "", wheelValues: { BANKRUPT: "BANKRUPT", LOSE_TURN: "LOSE TURN" }, lessonUnlocked: "NEW SKILL UNLOCKED", rankTitle: "Current Rank", progress: "Academy Progress", noHints: "No hints available" },
-            it: { title: "ACADEMY PRO", players1: "1 Giocatore", players2: "2 Giocatori", selectLesson: "Inizia dalla Lezione", startGame: "INIZIA ACADEMY", spinWheel: "Gira la Ruota", buyVowel: "Vocale (250)", hint: "Aiuto (100)", solve: "RISOLVI", turnPrefix: "G", turnSuffix: "", bankrupt: "BANCAROTTA!", loseTurn: "SALTA TURNO", consonantPrompt: "Consonante a:", vowelPrompt: "Scegli Vocale", solvePrompt: "Scrivi la Soluzione:", submit: "Verifica", cancel: "Annulla", correct: "Esatto!", wrong: "Sbagliato!", concept: "Lezione:", nextRound: "Prossima Lezione", gameOver: "Diplomato!", winner: "Top Trader Master", playAgain: "Ricomincia Academy", day: "", wheelValues: { BANKRUPT: "BANCAROTTA", LOSE_TURN: "SALTA TURNO" }, lessonUnlocked: "NUOVA SKILL SBLOCCATA", rankTitle: "Rango Attuale", progress: "Progresso Academy", noHints: "Nessun aiuto" },
-            es: { title: "ACADEMY PRO", players1: "1 Jugador", players2: "2 Jugadores", selectLesson: "Empezar en", startGame: "INICIAR ACADEMY", spinWheel: "Girar Rueda", buyVowel: "Vocal (250)", hint: "Pista (100)", solve: "RESOLVER", turnPrefix: "J", turnSuffix: "", bankrupt: "¡BANCARROTA!", loseTurn: "¡PIERDE TURNO!", consonantPrompt: "Consonante a:", vowelPrompt: "Elegir Vocal", solvePrompt: "Escribe la Solución:", submit: "Verificar", cancel: "Cancelar", correct: "¡Genial!", wrong: "¡Error!", concept: "Lección:", nextRound: "Siguiente Lección", gameOver: "¡Graduado!", winner: "Top Trader", playAgain: "Reiniciar Academy", day: "", wheelValues: { BANKRUPT: "BANCARROTA", LOSE_TURN: "PIERDE TURNO" }, lessonUnlocked: "NUEVA HABILIDAD", rankTitle: "Rango Actual", progress: "Progreso", noHints: "Sin pistas" },
-            pt: { title: "ACADEMY PRO", players1: "1 Jogador", players2: "2 Jogadores", selectLesson: "Começar em", startGame: "INICIAR ACADEMY", spinWheel: "Girar Roda", buyVowel: "Vogal (250)", hint: "Dica (100)", solve: "RESOLVER", turnPrefix: "J", turnSuffix: "", bankrupt: "FALÊNCIA!", loseTurn: "PASSA A VEZ", consonantPrompt: "Consoante a:", vowelPrompt: "Escolha Vogal", solvePrompt: "A sua Solução:", submit: "Verificar", cancel: "Cancelar", correct: "Fantástico!", wrong: "Erro!", concept: "Lição:", nextRound: "Próxima Lição", gameOver: "Diplomado!", winner: "Top Trader", playAgain: "Reiniciar Academy", day: "", wheelValues: { BANKRUPT: "FALÊNCIA", LOSE_TURN: "PASSA VEZ" }, lessonUnlocked: "NOVA HABILIDADE", rankTitle: "Classificação", progress: "Progresso", noHints: "Sem dicas" }
+            en: { title: "ACADEMY PRO", players1: "1 Player", players2: "2 Players", selectLesson: "Start From Lesson", startGame: "START ACADEMY", spinWheel: "Spin Wheel", buyVowel: "Vowel (250)", hint: "Hint (100)", solve: "SOLVE", turnPrefix: "P", bankrupt: "BANKRUPT!", loseTurn: "MISS TURN", consonantPrompt: "Consonant for:", vowelPrompt: "Choose Vowel", solvePrompt: "Type Solution:", submit: "Verify", cancel: "Cancel", correct: "Awesome!", wrong: "Error!", lessonUnlocked: "NEW SKILL UNLOCKED", rankTitle: "Current Rank", progress: "Academy Progress", noHints: "No hints available", wheelValues: { BANKRUPT: "BANKRUPT", LOSE_TURN: "LOSE TURN" }, gameOver: "Graduated!", winner: "Top Trader", playAgain: "Restart Academy" },
+            it: { title: "ACADEMY PRO", players1: "1 Giocatore", players2: "2 Giocatori", selectLesson: "Inizia dalla Lezione", startGame: "INIZIA ACADEMY", spinWheel: "Gira la Ruota", buyVowel: "Vocale (250)", hint: "Aiuto (100)", solve: "RISOLVI", turnPrefix: "G", bankrupt: "BANCAROTTA!", loseTurn: "SALTA TURNO", consonantPrompt: "Consonante a:", vowelPrompt: "Scegli Vocale", solvePrompt: "Scrivi la Soluzione:", submit: "Verifica", cancel: "Annulla", correct: "Esatto!", wrong: "Sbagliato!", lessonUnlocked: "NUOVA SKILL SBLOCCATA", rankTitle: "Rango Attuale", progress: "Progresso Academy", noHints: "Nessun aiuto", wheelValues: { BANKRUPT: "BANCAROTTA", LOSE_TURN: "SALTA TURNO" }, gameOver: "Diplomato!", winner: "Top Trader Master", playAgain: "Ricomincia Academy" },
+            es: { title: "ACADEMY PRO", players1: "1 Jugador", players2: "2 Jugadores", selectLesson: "Empezar en", startGame: "INICIAR ACADEMY", spinWheel: "Girar Rueda", buyVowel: "Vocal (250)", hint: "Pista (100)", solve: "RESOLVER", turnPrefix: "J", bankrupt: "¡BANCARROTA!", loseTurn: "¡PIERDE TURNO!", consonantPrompt: "Consonante a:", vowelPrompt: "Elegir Vocal", solvePrompt: "Escribe la Solución:", submit: "Verificar", cancel: "Cancelar", correct: "¡Genial!", wrong: "¡Error!", lessonUnlocked: "NUEVA HABILIDAD", rankTitle: "Rango Actual", progress: "Progreso", noHints: "Sin pistas", wheelValues: { BANKRUPT: "BANCARROTA", LOSE_TURN: "PIERDE TURNO" }, gameOver: "¡Graduado!", winner: "Top Trader", playAgain: "Reiniciar Academy" },
+            pt: { title: "ACADEMY PRO", players1: "1 Jogador", players2: "2 Jogadores", selectLesson: "Começar em", startGame: "INICIAR ACADEMY", spinWheel: "Girar Roda", buyVowel: "Vogal (250)", hint: "Dica (100)", solve: "RESOLVER", turnPrefix: "J", bankrupt: "FALÊNCIA!", loseTurn: "PASSA A VEZ", consonantPrompt: "Consoante a:", vowelPrompt: "Escolha Vogal", solvePrompt: "A sua Solução:", submit: "Verificar", cancel: "Cancelar", correct: "Fantástico!", wrong: "Erro!", lessonUnlocked: "NOVA HABILIDADE", rankTitle: "Classificação", progress: "Progresso", noHints: "Sem dicas", wheelValues: { BANKRUPT: "FALÊNCIA", LOSE_TURN: "PASSA VEZ" }, gameOver: "Diplomado!", winner: "Top Trader", playAgain: "Reiniciar Academy" }
         };
 
         const WHEEL_SEGMENTS = [
@@ -372,12 +370,13 @@
             { type: 'value', val: '6.00', multiplier: 600, color: COLORS.layPink, textColor: '#000000' }
         ];
 
-        const flagImages = { en: 'https://flagcdn.com/w80/gb.png', it: 'https://flagcdn.com/w80/it.png', es: 'https://flagcdn.com/w80/es.png', pt: 'https://flagcdn.com/w80/pt.png' };
+        // Migliorata qualità bandiere
+        const flagImages = { en: 'https://flagcdn.com/w160/gb.png', it: 'https://flagcdn.com/w160/it.png', es: 'https://flagcdn.com/w160/es.png', pt: 'https://flagcdn.com/w160/pt.png' };
 
         const Confetti = () => (
-            <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-3xl z-0">
-                {[...Array(50)].map((_, i) => (
-                    <div key={i} className="absolute w-2 h-2 sm:w-3 sm:h-3 rounded-sm animate-confetti shadow-lg" style={{
+            <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-[2rem] z-0">
+                {[...Array(60)].map((_, i) => (
+                    <div key={i} className="absolute w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 rounded-sm animate-confetti shadow-lg" style={{
                         left: `${Math.random() * 100}%`, top: `-20px`,
                         backgroundColor: ['#00D166', '#FFB805', '#2E9DDF', '#EF4444', '#8B5CF6'][Math.floor(Math.random()*5)],
                         animationDelay: `${Math.random() * 0.5}s`, animationDuration: `${1.5 + Math.random() * 2}s`
@@ -412,7 +411,6 @@
                 if (ls) ls.style.opacity = '0', setTimeout(() => ls.remove(), 400);
             }, []);
 
-            // Asynchronous Audio Initialization (Try/Catch) - Bypassa blocchi Safari/Telegram
             const initAudio = () => {
                 try {
                     if (!audioCtxRef.current) {
@@ -420,9 +418,9 @@
                         if (AudioContext) audioCtxRef.current = new AudioContext();
                     }
                     if (audioCtxRef.current?.state === 'suspended') {
-                        audioCtxRef.current.resume().catch(e => console.warn("Audio resume blocked by browser policy"));
+                        audioCtxRef.current.resume().catch(() => {});
                     }
-                } catch(e) { console.warn("Audio Context init failed, continuing without sound.", e); }
+                } catch(e) {}
             };
 
             const playTone = (freq, type, duration, vol=0.1, startTimeOffset=0, endFreq=null) => {
@@ -460,7 +458,6 @@
             };
 
             const startGame = () => {
-                // Esecuzione immediata dei reset logici, non bloccata dall'audio
                 initAudio();
                 startSchumann();
                 setScores([0, 0]); setCurrentPlayer(0);
@@ -572,23 +569,24 @@
 
             return (
                 <div className="viewport-container bg-transparent text-white">
-                    <header className="px-2 sm:px-4 py-2 flex justify-between items-center border-b border-white/10 bg-[#111827]/80 backdrop-blur-md sticky top-0 z-50 h-[55px] sm:h-[70px] shrink-0">
+                    {/* Header Nav */}
+                    <header className="px-3 sm:px-5 py-2 flex justify-between items-center border-b border-white/10 bg-[#111827]/90 backdrop-blur-md sticky top-0 z-50 h-[50px] sm:h-[60px] shrink-0 shadow-lg">
                         <div className="flex items-center gap-3">
-                            <div className="relative w-8 h-8 sm:w-12 sm:h-12 bg-black rounded-full p-0.5 border border-[#00D166]/50 overflow-hidden shadow-[0_0_15px_rgba(0,209,102,0.3)]">
+                            <div className="relative w-8 h-8 sm:w-10 sm:h-10 bg-black rounded-full p-0.5 border border-[#00D166]/50 overflow-hidden shadow-[0_0_10px_rgba(0,209,102,0.3)]">
                                 <img src="logo-tondo.jpeg" className="w-full h-full rounded-full object-cover" alt="Logo" />
                             </div>
                             <div className="flex flex-col">
-                                <span className="text-[#00D166] font-black text-[10px] sm:text-base tracking-[0.15em] uppercase leading-none">BETTING EXCHANGE</span>
-                                <span className="text-white/60 font-bold text-[8px] sm:text-[11px] tracking-widest mt-1">{ui.title}</span>
+                                <span className="text-[#00D166] font-black text-[10px] sm:text-sm tracking-[0.1em] uppercase leading-none">BETTING EXCHANGE</span>
+                                <span className="text-white/60 font-bold text-[8px] sm:text-[10px] tracking-widest mt-0.5">{ui.title}</span>
                             </div>
                         </div>
                         {gameState !== 'SETUP' && (
-                            <div className="flex items-center gap-2 sm:gap-3">
+                            <div className="flex items-center gap-2 sm:gap-4">
                                 {gameState === 'PLAYING' && (
-                                    <div className="flex gap-1.5 mr-1 bg-black/40 p-1 rounded-lg border border-white/5">
+                                    <div className="flex gap-1.5 bg-black/40 p-1 rounded-lg border border-white/5 shadow-inner">
                                         {[...Array(numPlayers)].map((_, i) => (
-                                            <div key={i} className={`flex flex-col items-center justify-center px-2 py-1 rounded-md ${currentPlayer===i ? 'bg-[#FFB805]/20 border border-[#FFB805]/50 text-[#FFB805]' : 'bg-white/5 border border-transparent text-white/50'}`}>
-                                                <span className="text-[8px] font-black uppercase leading-none">{ui.turnPrefix}{i+1}</span>
+                                            <div key={i} className={`flex flex-col items-center justify-center px-3 py-1 rounded-md transition-colors ${currentPlayer===i ? 'bg-[#FFB805]/20 border border-[#FFB805]/50 text-[#FFB805]' : 'bg-white/5 border border-transparent text-white/50'}`}>
+                                                <span className="text-[9px] font-black uppercase leading-none">{ui.turnPrefix}{i+1}</span>
                                                 <span className="text-xs sm:text-sm font-black leading-none mt-1">{scores[i]}</span>
                                             </div>
                                         ))}
@@ -601,31 +599,34 @@
 
                     <main className="flex-1 flex flex-col relative w-full overflow-hidden">
                         {gameState === 'SETUP' && (
-                            <div className="flex-1 overflow-y-auto flex items-center justify-center p-4 py-8">
-                                <div className="flex flex-col items-center justify-center w-full max-w-lg p-6 sm:p-10 rounded-[2rem] bg-black/40 backdrop-blur-2xl border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] animate-pop-in relative overflow-hidden">
-                                    <div className="absolute top-[-50px] left-[-50px] w-64 h-64 bg-[#00D166]/10 rounded-full blur-[100px]"></div>
-                                    <div className="absolute bottom-[-50px] right-[-50px] w-64 h-64 bg-[#2E9DDF]/10 rounded-full blur-[100px]"></div>
+                            <div className="flex-1 overflow-y-auto flex items-center justify-center p-4">
+                                <div className="flex flex-col items-center justify-center w-full max-w-lg p-6 sm:p-10 rounded-[2rem] bg-black/50 backdrop-blur-2xl border border-white/10 shadow-[0_0_40px_rgba(0,0,0,0.5)] animate-pop-in relative overflow-hidden">
+                                    <div className="absolute top-[-50px] left-[-50px] w-64 h-64 bg-[#00D166]/10 rounded-full blur-[80px]"></div>
+                                    <div className="absolute bottom-[-50px] right-[-50px] w-64 h-64 bg-[#2E9DDF]/10 rounded-full blur-[80px]"></div>
                                     
-                                    <div className="bg-[#00D166]/10 border border-[#00D166]/30 px-4 py-1.5 rounded-full mb-4 flex items-center gap-2">
+                                    <div className="bg-[#00D166]/10 border border-[#00D166]/30 px-4 py-1.5 rounded-full mb-4 flex items-center gap-2 z-10">
                                         <Icon name="Target" size={14} className="text-[#00D166] animate-pulse"/>
                                         <span className="text-[#00D166] text-xs font-black tracking-widest uppercase">PRO EDITION</span>
                                     </div>
 
-                                    <h1 className="text-4xl sm:text-6xl font-black text-white text-center mb-2 tracking-tighter leading-none">ZERO TO <span className="text-[#00D166]">HERO</span></h1>
-                                    <p className="text-white/40 font-bold tracking-widest text-xs sm:text-sm uppercase mb-8 text-center">Interactive Trading Course</p>
+                                    <h1 className="text-4xl sm:text-6xl font-black text-white text-center mb-2 tracking-tighter leading-none z-10">ZERO TO <span className="text-[#00D166]">HERO</span></h1>
+                                    <p className="text-white/40 font-bold tracking-widest text-xs sm:text-sm uppercase mb-8 text-center z-10">Interactive Trading Course</p>
                                     
-                                    <div className="flex gap-4 mb-8">
+                                    {/* Bandiere rettangolari come pulsanti con migliore aspect ratio */}
+                                    <div className="flex justify-center gap-4 mb-8 z-10">
                                         {Object.keys(flagImages).map(l => (
-                                            <button key={l} onClick={()=>setLang(l)} className={`w-14 h-14 rounded-full overflow-hidden border-2 transition-all ${lang===l?'border-[#00D166] scale-110 shadow-[0_0_15px_rgba(0,209,102,0.4)]':'opacity-40 border-transparent hover:opacity-100 hover:scale-105'}`}>
+                                            <button key={l} onClick={()=>setLang(l)} className={`w-16 h-12 sm:w-20 sm:h-14 rounded-lg overflow-hidden border-2 transition-all shadow-md ${lang===l?'border-[#00D166] scale-110 shadow-[0_0_15px_rgba(0,209,102,0.4)]':'opacity-40 border-transparent hover:opacity-100 hover:scale-105'}`}>
                                                 <img src={flagImages[l]} className="w-full h-full object-cover" alt="Flag"/>
                                             </button>
                                         ))}
                                     </div>
-                                    <div className="flex gap-3 w-full mb-6">
-                                        <button onClick={()=>setNumPlayers(1)} className={`flex-1 p-4 rounded-2xl flex flex-col items-center gap-2 text-xs sm:text-sm transition-all border-2 ${numPlayers===1?'bg-[#2E9DDF]/20 border-[#2E9DDF] text-[#2E9DDF] font-black':'bg-black/50 border-white/5 font-bold text-white/50 hover:bg-white/5'}`}><Icon name="User" size={24}/>{ui.players1}</button>
-                                        <button onClick={()=>setNumPlayers(2)} className={`flex-1 p-4 rounded-2xl flex flex-col items-center gap-2 text-xs sm:text-sm transition-all border-2 ${numPlayers===2?'bg-[#FFB805]/20 border-[#FFB805] text-[#FFB805] font-black':'bg-black/50 border-white/5 font-bold text-white/50 hover:bg-white/5'}`}><Icon name="Users" size={24}/>{ui.players2}</button>
+
+                                    <div className="flex gap-3 w-full mb-6 z-10">
+                                        <button onClick={()=>setNumPlayers(1)} className={`flex-1 py-4 px-2 rounded-2xl flex flex-col items-center gap-2 text-xs sm:text-sm transition-all border-2 ${numPlayers===1?'bg-[#2E9DDF]/20 border-[#2E9DDF] text-[#2E9DDF] font-black shadow-[0_0_15px_rgba(46,157,223,0.2)]':'bg-black/50 border-white/5 font-bold text-white/50 hover:bg-white/5'}`}><Icon name="User" size={24}/>{ui.players1}</button>
+                                        <button onClick={()=>setNumPlayers(2)} className={`flex-1 py-4 px-2 rounded-2xl flex flex-col items-center gap-2 text-xs sm:text-sm transition-all border-2 ${numPlayers===2?'bg-[#FFB805]/20 border-[#FFB805] text-[#FFB805] font-black shadow-[0_0_15px_rgba(255,184,5,0.2)]':'bg-black/50 border-white/5 font-bold text-white/50 hover:bg-white/5'}`}><Icon name="Users" size={24}/>{ui.players2}</button>
                                     </div>
-                                    <div className="w-full mb-8">
+
+                                    <div className="w-full mb-8 z-10">
                                         <label className="block text-[11px] uppercase font-black mb-2 tracking-widest text-white/50 text-center">{ui.selectLesson}</label>
                                         <div className="relative">
                                             <select value={startTopicIndex} onChange={e=>setStartTopicIndex(Number(e.target.value))} className="w-full p-4 pr-10 rounded-xl bg-black/60 border border-white/10 text-white font-bold outline-none appearance-none cursor-pointer text-sm focus:border-[#00D166] transition-colors shadow-inner">
@@ -635,27 +636,33 @@
                                         </div>
                                     </div>
 
-                                    <button onClick={startGame} className="w-full py-5 rounded-2xl bg-gradient-to-r from-[#00D166] to-green-500 hover:from-green-400 hover:to-green-400 text-black font-black text-lg sm:text-xl flex items-center justify-center gap-3 active:scale-95 transition-transform uppercase tracking-widest shadow-[0_10px_20px_rgba(0,209,102,0.3)]">
-                                        <Icon name="Play" size={24} className="fill-current"/>
-                                        {ui.startGame}
+                                    {/* Pulsante Start Academy corretto (area cliccabile 100%) */}
+                                    <button onClick={startGame} className="relative block w-full py-5 rounded-2xl bg-gradient-to-r from-[#00D166] to-green-500 hover:from-green-400 hover:to-green-400 text-black font-black text-lg sm:text-xl active:scale-95 transition-transform shadow-[0_10px_20px_rgba(0,209,102,0.3)] z-10">
+                                        <span className="pointer-events-none flex items-center justify-center gap-3 uppercase tracking-widest">
+                                            <Icon name="Play" size={24} className="fill-current"/>
+                                            {ui.startGame}
+                                        </span>
                                     </button>
                                 </div>
                             </div>
                         )}
 
                         {gameState === 'PLAYING' && (
-                            <div className="w-full flex flex-col p-2 max-w-7xl mx-auto flex-1 h-full overflow-hidden relative">
-                                <div className="w-full flex flex-col items-center shrink-0 mb-3 sm:mb-4">
-                                    <div className="bg-black/50 px-4 py-1.5 sm:px-8 sm:py-2.5 rounded-full border border-[#FFB805]/30 mb-3 flex justify-center backdrop-blur-md shadow-[0_0_15px_rgba(255,184,5,0.1)]">
-                                        <span className="text-[#FFB805] font-black text-[11px] sm:text-sm uppercase tracking-[0.2em] text-center">{phraseData.topic}</span>
+                            <div className="w-full flex flex-col p-2 sm:p-4 max-w-6xl mx-auto flex-1 overflow-hidden relative">
+                                {/* Header Argomento */}
+                                <div className="w-full flex flex-col items-center shrink-0 mb-2 sm:mb-4">
+                                    <div className="bg-black/50 px-4 py-1.5 sm:px-6 sm:py-2 rounded-full border border-[#FFB805]/30 mb-2 flex justify-center backdrop-blur-md shadow-[0_0_10px_rgba(255,184,5,0.1)]">
+                                        <span className="text-[#FFB805] font-black text-[11px] sm:text-sm uppercase tracking-[0.15em] text-center">{phraseData.topic}</span>
                                     </div>
-                                    <div className="w-full p-3 sm:p-5 rounded-[1.5rem] border border-white/10 bg-black/40 flex flex-col items-center shadow-2xl justify-center backdrop-blur-xl min-h-[90px] sm:min-h-[120px]">
-                                        <div className="flex flex-wrap justify-center gap-y-2 sm:gap-y-4 gap-x-3 sm:gap-x-8 w-full">
+                                    
+                                    {/* Tabellone Frase */}
+                                    <div className="w-full p-2 sm:p-5 rounded-2xl border border-white/10 bg-black/40 flex flex-col items-center shadow-xl justify-center backdrop-blur-lg min-h-[70px] sm:min-h-[100px]">
+                                        <div className="flex flex-wrap justify-center gap-y-2 sm:gap-y-3 gap-x-3 sm:gap-x-6 w-full">
                                             {phraseData.phrase.split(' ').map((w, wi)=>(
-                                                <div key={wi} className="flex flex-wrap gap-1 sm:gap-2 justify-center">
+                                                <div key={wi} className="flex flex-wrap gap-1 sm:gap-1.5 justify-center">
                                                     {w.split('').map((c, ci)=>(
-                                                        <div key={ci} style={{perspective: '1000px'}} className="w-[clamp(16px,4.5vw,42px)] h-[clamp(24px,6vw,60px)] relative shrink-0">
-                                                            <div className={`w-full h-full flex items-center justify-center text-[clamp(12px,3vw,26px)] font-black uppercase rounded-sm sm:rounded-md transition-all absolute inset-0 backface-hidden ${guessedLetters.includes(c) ? 'bg-white text-black border border-white/50 animate-flip-in shadow-md' : 'bg-[#0F2027]/80 border border-white/10 text-transparent shadow-inner'}`}>
+                                                        <div key={ci} style={{perspective: '1000px'}} className="w-[clamp(14px,3.5vw,36px)] h-[clamp(20px,5vw,48px)] relative shrink-0">
+                                                            <div className={`w-full h-full flex items-center justify-center text-[clamp(11px,2.5vw,22px)] font-black uppercase rounded-[4px] sm:rounded-md transition-all absolute inset-0 backface-hidden ${guessedLetters.includes(c) ? 'bg-white text-black border border-white/50 animate-flip-in shadow-md' : 'bg-[#0F2027]/80 border border-white/10 text-transparent shadow-inner'}`}>
                                                                 {guessedLetters.includes(c) ? c : ''}
                                                             </div>
                                                         </div>
@@ -666,10 +673,13 @@
                                     </div>
                                 </div>
 
-                                <div className="flex-1 flex flex-col lg:flex-row gap-3 lg:gap-6 overflow-hidden min-h-0 relative pb-1">
-                                    <div className="flex-1 lg:w-[55%] flex items-center justify-center relative min-h-[180px] sm:min-h-[220px] shrink overflow-hidden">
-                                        <div className="relative w-full max-w-[240px] sm:max-w-[340px] lg:max-w-[420px] aspect-square drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] z-10 flex items-center justify-center">
-                                            <svg viewBox="0 0 400 400" className="w-full h-full overflow-visible">
+                                {/* Layout Flessibile: Ruota e Controlli */}
+                                <div className="flex-1 flex flex-col lg:flex-row gap-3 lg:gap-6 min-h-0 overflow-hidden w-full relative">
+                                    
+                                    {/* Ruota (Shrinkable) */}
+                                    <div className="flex-1 lg:w-[50%] flex items-center justify-center min-h-0 relative">
+                                        <div className="w-full max-w-[220px] sm:max-w-[320px] lg:max-w-[400px] aspect-square drop-shadow-[0_15px_30px_rgba(0,0,0,0.5)] flex items-center justify-center">
+                                            <svg viewBox="0 0 400 400" className="w-full h-full max-h-full overflow-visible">
                                                 <circle cx="200" cy="200" r="196" fill="#111827" stroke="#374151" strokeWidth="8" />
                                                 <g ref={wheelRef} style={{ transformOrigin: '200px 200px', willChange: 'transform' }}>
                                                     {WHEEL_SEGMENTS.map((s, i)=>{
@@ -679,8 +689,11 @@
                                                         return (
                                                             <g key={i} transform={`rotate(${rot}, 200, 200)`}>
                                                                 <path d="M 200 200 L 386 149 A 192 192 0 0 1 386 251 Z" fill={s.color} stroke="rgba(0,0,0,0.5)" strokeWidth="2"/>
-                                                                <text x={label.length>9?'382':'370'} y="200" textAnchor="end" dominantBaseline="central" fill={s.textColor} fontSize={isVal?'36': (label.length > 9 ? '13' : '18')} fontWeight="900" stroke={s.textColor === '#FFFFFF' ? '#000' : '#fff'} strokeWidth={isVal?'1.5':'0.5'} paintOrder="stroke fill" letterSpacing={isVal?"0":"1"}>{label}</text>
-                                                                <circle cx="378" cy="248" r="4" fill="#E5E7EB" stroke="#111827" strokeWidth="1"/>
+                                                                {/* textLength per costringere anche BANCAROTTA a stare nello spicchio */}
+                                                                <text x="382" y="200" textAnchor="end" dominantBaseline="central" fill={s.textColor} fontSize={isVal?'36':'15'} fontWeight="900" letterSpacing={isVal?"0":"0.5"} stroke={s.textColor === '#FFFFFF' ? '#000' : 'none'} strokeWidth={isVal?'1.5':'0'} paintOrder="stroke fill" textLength={!isVal && label.length > 7 ? "130" : undefined} lengthAdjust={!isVal && label.length > 7 ? "spacingAndGlyphs" : undefined}>
+                                                                    {label}
+                                                                </text>
+                                                                <circle cx="376" cy="246" r="4" fill="#E5E7EB" stroke="#111827" strokeWidth="1"/>
                                                             </g>
                                                         )
                                                     })}
@@ -694,34 +707,39 @@
                                         </div>
                                     </div>
 
-                                    <div className="w-full lg:w-[45%] flex flex-col justify-end gap-3 shrink-0">
-                                        <div className="w-full bg-black/50 p-3 sm:p-4 rounded-3xl border border-white/5 text-center relative shadow-xl flex flex-col justify-center backdrop-blur-md shrink-0">
+                                    {/* Controlli: Azioni e Tastiera */}
+                                    <div className="w-full lg:w-[50%] flex flex-col justify-end gap-2 sm:gap-4 shrink-0">
+                                        
+                                        {/* Status Turno e Pulsanti Azione */}
+                                        <div className="w-full bg-black/40 p-2 sm:p-4 rounded-2xl sm:rounded-3xl border border-white/5 shadow-xl flex flex-col justify-center backdrop-blur-md shrink-0">
                                             {turnPhase === 'IDLE' ? (
-                                                <div className="flex flex-col gap-3 animate-fade-in-up items-center w-full">
-                                                    <div className="flex items-center justify-between w-full px-2">
-                                                        <h3 className="font-black text-[#FFB805] uppercase tracking-widest text-[10px] sm:text-xs flex items-center gap-1.5 bg-black/60 px-3 py-1.5 rounded-full border border-white/10">
+                                                <div className="flex flex-col gap-2 sm:gap-3 animate-fade-in-up w-full">
+                                                    <div className="flex items-center justify-between px-1">
+                                                        <div className="font-black text-[#FFB805] uppercase tracking-widest text-[11px] sm:text-xs flex items-center gap-1.5 bg-black/60 px-3 py-1.5 rounded-full border border-white/10">
                                                             <Icon name="User" size={14}/> {ui.turnPrefix}{currentPlayer+1}
-                                                        </h3>
-                                                        <button onClick={()=>setTurnPhase('SOLVING')} className="px-4 py-2 sm:py-2.5 bg-[#00D166] hover:bg-green-400 rounded-full font-black text-[10px] sm:text-xs text-black active:scale-95 transition-transform tracking-widest uppercase shadow-[0_4px_10px_rgba(0,209,102,0.3)]">
+                                                        </div>
+                                                        <button onClick={()=>setTurnPhase('SOLVING')} className="px-4 py-2 bg-[#00D166] hover:bg-green-400 rounded-full font-black text-[10px] sm:text-xs text-black active:scale-95 transition-transform tracking-widest uppercase shadow-[0_4px_10px_rgba(0,209,102,0.3)]">
                                                             {ui.solve}
                                                         </button>
                                                     </div>
-                                                    <button onClick={spinWheel} className="w-full py-3.5 sm:py-5 rounded-2xl bg-gradient-to-b from-red-500 to-red-700 hover:from-red-400 hover:to-red-600 flex items-center justify-center text-white font-black text-sm sm:text-base uppercase active:scale-95 transition-transform tracking-[0.2em] shadow-lg border border-red-400/50">
-                                                        {ui.spinWheel}
-                                                    </button>
-                                                    <div className="flex gap-3 w-full">
-                                                        <button onClick={buyHint} disabled={scores[currentPlayer]<100} className={`flex-1 py-2 sm:py-3 rounded-xl font-black text-[10px] sm:text-xs flex items-center justify-center gap-2 transition-all border ${scores[currentPlayer]>=100?'bg-[#8B5CF6]/20 border-[#8B5CF6] text-[#8B5CF6] hover:bg-[#8B5CF6]/30 active:scale-95':'bg-black/50 border-white/5 text-white/20 cursor-not-allowed'}`}>
-                                                            <Icon name="Lightbulb" size={14}/> {ui.hint}
+                                                    
+                                                    {/* Pulsanti su UN'UNICA RIGA come richiesto */}
+                                                    <div className="flex flex-row gap-1.5 sm:gap-2 w-full mt-1">
+                                                        <button onClick={spinWheel} className="flex-[2] py-2 sm:py-3.5 rounded-xl bg-gradient-to-b from-red-500 to-red-700 hover:from-red-400 hover:to-red-600 flex items-center justify-center text-white font-black text-[10px] sm:text-[13px] uppercase active:scale-95 transition-transform tracking-widest shadow-lg border border-red-400/50">
+                                                            {ui.spinWheel}
+                                                        </button>
+                                                        <button onClick={buyHint} disabled={scores[currentPlayer]<100} className={`flex-1 py-2 sm:py-3.5 rounded-xl font-black text-[9px] sm:text-xs flex items-center justify-center gap-1 sm:gap-1.5 transition-all border px-1 ${scores[currentPlayer]>=100?'bg-[#8B5CF6]/20 border-[#8B5CF6] text-[#8B5CF6] hover:bg-[#8B5CF6]/30 active:scale-95':'bg-black/50 border-white/5 text-white/20 cursor-not-allowed'}`}>
+                                                            <Icon name="Lightbulb" size={12}/> {ui.hint}
                                                         </button>
                                                         {hasVowelsLeft && (
-                                                            <button onClick={buyVowel} disabled={scores[currentPlayer]<250} className={`flex-1 py-2 sm:py-3 rounded-xl font-black text-[10px] sm:text-xs flex items-center justify-center gap-2 transition-all border ${scores[currentPlayer]>=250?'bg-[#2E9DDF]/20 border-[#2E9DDF] text-[#2E9DDF] hover:bg-[#2E9DDF]/30 active:scale-95':'bg-black/50 border-white/5 text-white/20 cursor-not-allowed'}`}>
+                                                            <button onClick={buyVowel} disabled={scores[currentPlayer]<250} className={`flex-1 py-2 sm:py-3.5 rounded-xl font-black text-[9px] sm:text-xs flex items-center justify-center gap-1 sm:gap-1.5 transition-all border px-1 ${scores[currentPlayer]>=250?'bg-[#2E9DDF]/20 border-[#2E9DDF] text-[#2E9DDF] hover:bg-[#2E9DDF]/30 active:scale-95':'bg-black/50 border-white/5 text-white/20 cursor-not-allowed'}`}>
                                                                 {ui.buyVowel}
                                                             </button>
                                                         )}
                                                     </div>
                                                 </div>
                                             ) : (
-                                                <div className="flex flex-col items-center justify-center min-h-[70px] sm:min-h-[90px]">
+                                                <div className="flex flex-col items-center justify-center min-h-[75px] sm:min-h-[100px]">
                                                     {turnPhase==='SPINNING' && <div className="text-sm font-black text-[#FFB805] animate-pulse uppercase tracking-[0.3em]">...</div>}
                                                     {turnPhase==='WAITING_CONSONANT' && spinValue && (
                                                         <div className="animate-fade-in-up flex flex-row items-center justify-center gap-4 bg-black/40 px-6 py-2.5 rounded-2xl border border-white/5 shadow-inner">
@@ -738,15 +756,16 @@
                                             )}
                                         </div>
 
-                                        <div className="w-full bg-black/40 p-2 sm:p-3 rounded-3xl border border-white/5 backdrop-blur-xl shrink-0 shadow-lg">
-                                            <div className="flex flex-col gap-1.5 sm:gap-2 w-full mx-auto">
+                                        {/* Tastiera QWERTY */}
+                                        <div className="w-full bg-black/40 p-1.5 sm:p-3 rounded-2xl sm:rounded-3xl border border-white/5 backdrop-blur-xl shrink-0 shadow-lg">
+                                            <div className="flex flex-col gap-1 sm:gap-2 w-full mx-auto">
                                                 {QWERTY.map((row, ri) => (
-                                                    <div key={ri} className="flex justify-center gap-1.5 sm:gap-2 w-full">
+                                                    <div key={ri} className="flex justify-center gap-1 sm:gap-2 w-full">
                                                         {row.map(l => {
                                                             const isV = ['A','E','I','O','U'].includes(l);
                                                             const isGuessed = guessedLetters.includes(l);
                                                             const disabled = turnPhase==='IDLE' || turnPhase==='SPINNING' || turnPhase==='SOLVING' || (turnPhase==='WAITING_CONSONANT' && isV) || (turnPhase==='WAITING_VOWEL' && !isV);
-                                                            let btnClass = "relative flex-1 max-w-[32px] sm:max-w-[44px] md:max-w-[50px] h-8 sm:h-10 md:h-12 rounded-lg font-black text-[12px] sm:text-[15px] flex items-center justify-center transition-all duration-200 select-none border-b-4 ";
+                                                            let btnClass = "relative flex-1 max-w-[30px] sm:max-w-[40px] md:max-w-[48px] h-7 sm:h-10 rounded-md sm:rounded-lg font-black text-[11px] sm:text-[14px] flex items-center justify-center transition-all duration-200 select-none border-b-[3px] sm:border-b-4 ";
                                                             if (isGuessed) {
                                                                 btnClass += phraseData.phrase.includes(l) ? "bg-[#374151]/50 border-transparent text-white/20 transform translate-y-1" : "bg-red-950/20 border-transparent text-red-500/30 transform translate-y-1";
                                                             } else if (disabled) { btnClass += "bg-white/5 border-white/5 text-white/20"; } 
@@ -768,7 +787,7 @@
                                     <Icon name="Lightbulb" size={48} className="text-[#00D166] mb-4 drop-shadow-[0_0_10px_rgba(0,209,102,0.5)]" />
                                     <h2 className="text-white font-black text-xl sm:text-3xl mb-8 tracking-[0.15em] uppercase text-center">{ui.solvePrompt}</h2>
                                     <input type="text" autoFocus value={solveInput} onChange={e=>setSolveInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && handleSolveSubmit()}
-                                        className="w-full p-5 rounded-2xl bg-black/50 border-2 border-white/10 text-white text-center font-black uppercase outline-none focus:border-[#00D166] text-2xl sm:text-4xl mb-8 transition-colors shadow-inner tracking-widest" placeholder="..." />
+                                        className="w-full p-4 sm:p-5 rounded-2xl bg-black/50 border-2 border-white/10 text-white text-center font-black uppercase outline-none focus:border-[#00D166] text-xl sm:text-4xl mb-8 transition-colors shadow-inner tracking-widest" placeholder="..." />
                                     <div className="flex gap-4 w-full">
                                         <button onClick={()=>setTurnPhase('IDLE')} className="flex-1 py-4 bg-transparent border-2 border-red-500/50 text-red-500 hover:bg-red-500/10 rounded-2xl font-black uppercase text-sm sm:text-base active:scale-95 transition-all">{ui.cancel}</button>
                                         <button onClick={handleSolveSubmit} className="flex-1 py-4 bg-[#00D166] hover:bg-green-400 text-black rounded-2xl font-black uppercase text-sm sm:text-base active:scale-95 transition-all shadow-[0_0_15px_rgba(0,209,102,0.4)]">{ui.submit}</button>
@@ -778,60 +797,61 @@
                         )}
 
                         {modalMessage && (
-                            <div className="fixed inset-0 z-[10000] bg-black/70 flex flex-col items-center justify-center backdrop-blur-md animate-pop-in pointer-events-none">
-                                <div className={`border-2 p-8 sm:p-14 rounded-[3rem] flex flex-col items-center transform scale-110 backdrop-blur-xl shadow-2xl ${modalMessage.type==='success'?'bg-[#00D166]/10 border-[#00D166]/50 text-[#00D166]':modalMessage.type==='error'?'bg-red-900/10 border-red-500/50 text-red-500':'bg-[#2E9DDF]/10 border-[#2E9DDF]/50 text-[#2E9DDF]'}`}>
-                                    {modalMessage.isIcon && <Icon name={modalMessage.type==='success'?'CheckCircle':'AlertCircle'} size={80} className="mb-6 drop-shadow-lg" />}
-                                    <div className="text-4xl sm:text-7xl font-black uppercase text-center tracking-widest">{modalMessage.text}</div>
+                            <div className="fixed inset-0 z-[10000] bg-black/70 flex flex-col items-center justify-center backdrop-blur-md animate-pop-in pointer-events-none p-4">
+                                <div className={`border-2 p-8 sm:p-12 rounded-[2.5rem] flex flex-col items-center transform scale-105 backdrop-blur-xl shadow-2xl max-w-md w-full text-center ${modalMessage.type==='success'?'bg-[#00D166]/10 border-[#00D166]/50 text-[#00D166]':modalMessage.type==='error'?'bg-red-900/10 border-red-500/50 text-red-500':'bg-[#2E9DDF]/10 border-[#2E9DDF]/50 text-[#2E9DDF]'}`}>
+                                    {modalMessage.isIcon && <Icon name={modalMessage.type==='success'?'CheckCircle':'AlertCircle'} size={60} className="mb-4 drop-shadow-lg" />}
+                                    <div className="text-3xl sm:text-5xl font-black uppercase tracking-widest leading-tight">{modalMessage.text}</div>
                                 </div>
                             </div>
                         )}
 
-                        {/* Modale Lezione Sbloccata - Design PRO, Testi Lunghi, Scrollabile */}
+                        {/* Modale Lezione Sbloccata - Design PRO, Testi Puliti, Niente Luccichio Fastidioso */}
                         {gameState === 'SOLVED' && (
-                            <div className="flex flex-col items-center justify-center h-full w-full p-3 sm:p-6 animate-pop-in absolute inset-0 bg-[#0F2027]/98 backdrop-blur-2xl z-[100]">
+                            <div className="flex flex-col items-center justify-center h-full w-full p-2 sm:p-6 animate-pop-in absolute inset-0 bg-[#0F2027]/98 backdrop-blur-xl z-[100]">
                                 <Confetti />
-                                <div className="w-full max-w-3xl bg-black/60 p-1 rounded-[2rem] relative z-10 max-h-[95%] sm:max-h-[90%] flex flex-col border border-[#00D166]/40 shadow-[0_0_50px_rgba(0,209,102,0.15)]">
-                                    <div className="bg-[#111827] rounded-[1.8rem] p-5 sm:p-10 flex flex-col items-center relative overflow-y-auto flex-1 custom-scrollbar">
-                                        <div className="absolute inset-0 animate-shine z-0 pointer-events-none"></div>
+                                <div className="w-full max-w-3xl bg-[#111827] rounded-[1.5rem] sm:rounded-[2.5rem] p-4 sm:p-8 flex flex-col relative overflow-hidden flex-1 sm:max-h-[90%] border border-[#00D166]/30 shadow-[0_0_40px_rgba(0,209,102,0.1)]">
+                                    <div className="relative z-10 flex flex-col items-center overflow-y-auto flex-1 custom-scrollbar pr-1 sm:pr-3">
                                         
-                                        <div className="relative z-10 animate-float mb-4 mt-2">
-                                            <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#00D166]/10 text-[#00D166] border border-[#00D166]/40 shadow-[0_0_20px_rgba(0,209,102,0.3)]">
+                                        <div className="animate-float mb-3 mt-2">
+                                            <div className="inline-flex items-center justify-center w-14 h-14 sm:w-20 sm:h-20 rounded-full bg-[#00D166]/10 text-[#00D166] border border-[#00D166]/40">
                                                 <Icon name="CheckCircle" size={32} className="sm:w-10 sm:h-10" />
                                             </div>
                                         </div>
                                         
-                                        <h2 className="text-[#00D166] font-black text-[11px] sm:text-sm mb-2 tracking-[0.3em] uppercase z-10">{ui.lessonUnlocked}</h2>
-                                        <div className="text-white text-2xl sm:text-4xl font-black mb-6 uppercase tracking-tight text-center z-10 drop-shadow-md">
+                                        <h2 className="text-[#00D166] font-black text-[10px] sm:text-sm mb-2 tracking-[0.2em] uppercase">{ui.lessonUnlocked}</h2>
+                                        <div className="text-white text-xl sm:text-3xl font-black mb-6 uppercase tracking-tight text-center px-2">
                                             {phraseData.phrase}
                                         </div>
                                         
-                                        <div className="w-full bg-black/40 rounded-2xl sm:rounded-[1.5rem] p-5 sm:p-8 text-left border border-white/5 mb-6 relative z-10 shadow-inner">
-                                            <div className="absolute top-0 left-0 w-1.5 h-full bg-[#FFB805] rounded-l-2xl sm:rounded-l-[1.5rem] shadow-[0_0_10px_rgba(255,184,5,0.5)]"></div>
-                                            <h3 className="text-[#FFB805] font-black uppercase text-xs sm:text-sm mb-4 tracking-widest flex items-center gap-2">
-                                                <Icon name="Lightbulb" size={18} className="animate-pulse"/> {phraseData.topic}
+                                        <div className="w-full bg-black/40 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-left border border-white/5 mb-6 relative">
+                                            <div className="absolute top-0 left-0 w-1 h-full bg-[#FFB805] rounded-l-xl sm:rounded-l-2xl"></div>
+                                            <h3 className="text-[#FFB805] font-black uppercase text-xs sm:text-sm mb-3 tracking-widest flex items-center gap-2">
+                                                <Icon name="Lightbulb" size={16}/> {phraseData.topic}
                                             </h3>
-                                            {/* Contenitore formattato per la Lezione Estesa */}
-                                            <div className="lesson-content text-white/80 text-[15px] sm:text-lg leading-relaxed sm:leading-loose font-medium" dangerouslySetInnerHTML={{ __html: phraseData.explanation }}></div>
+                                            {/* Contenitore formattato chiaro ed esaustivo */}
+                                            <div className="lesson-content" dangerouslySetInnerHTML={{ __html: phraseData.explanation }}></div>
                                         </div>
 
-                                        <div className="w-full flex flex-col sm:flex-row items-center justify-between bg-[#1f2937]/50 p-4 sm:p-5 rounded-2xl border border-white/5 mb-6 z-10 gap-4 shrink-0 shadow-md">
+                                        <div className="w-full flex flex-col sm:flex-row items-center justify-between bg-[#1f2937]/50 p-4 rounded-xl border border-white/5 mb-6 gap-4 shrink-0 shadow-sm">
                                             <div className="flex items-center gap-3">
-                                                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center bg-black/50 border-2" style={{borderColor: currentRank.color}}>
+                                                <div className="w-10 h-10 rounded-full flex items-center justify-center bg-black/50 border-2" style={{borderColor: currentRank.color}}>
                                                     <Icon name={currentRank.icon} size={20} style={{color: currentRank.color}}/>
                                                 </div>
                                                 <div className="text-left">
-                                                    <div className="text-white/40 text-[9px] sm:text-[10px] font-black uppercase tracking-widest">{ui.rankTitle}</div>
-                                                    <div className="text-base sm:text-xl font-black leading-none mt-1" style={{color: currentRank.color}}>{currentRank.title[lang]}</div>
+                                                    <div className="text-white/40 text-[9px] font-black uppercase tracking-widest">{ui.rankTitle}</div>
+                                                    <div className="text-sm sm:text-lg font-black leading-none mt-1" style={{color: currentRank.color}}>{currentRank.title[lang]}</div>
                                                 </div>
                                             </div>
-                                            <div className="text-center sm:text-right bg-black/30 px-4 py-2 rounded-xl border border-white/5">
-                                                <div className="text-white/40 text-[9px] sm:text-[10px] font-black uppercase tracking-widest mb-1">{ui.progress}</div>
-                                                <div className="text-base sm:text-xl font-black text-white leading-none">{currentRoundIndex + 1} <span className="text-white/30 text-xs sm:text-sm">/ {phrasesDictionary.length}</span></div>
+                                            <div className="text-center sm:text-right bg-black/30 px-4 py-2 rounded-lg border border-white/5">
+                                                <div className="text-white/40 text-[9px] font-black uppercase tracking-widest mb-1">{ui.progress}</div>
+                                                <div className="text-sm sm:text-lg font-black text-white leading-none">{currentRoundIndex + 1} <span className="text-white/30 text-xs">/ {phrasesDictionary.length}</span></div>
                                             </div>
                                         </div>
-
-                                        <button onClick={handleNextRound} className="w-full py-4 sm:py-5 bg-gradient-to-r from-[#FFB805] to-yellow-500 hover:from-yellow-400 hover:to-yellow-400 text-black rounded-2xl font-black text-sm sm:text-lg active:scale-95 transition-all uppercase tracking-[0.15em] flex items-center justify-center gap-3 z-10 shrink-0 mt-auto shadow-[0_10px_20px_rgba(255,184,5,0.2)] border border-yellow-300/50">
-                                            {ui.nextRound} <Icon name="Play" size={20} className="fill-current"/>
+                                    </div>
+                                    
+                                    <div className="pt-4 shrink-0 border-t border-white/10 mt-2">
+                                        <button onClick={handleNextRound} className="w-full py-4 bg-gradient-to-r from-[#FFB805] to-yellow-500 hover:from-yellow-400 hover:to-yellow-400 text-black rounded-xl font-black text-sm sm:text-base active:scale-95 transition-all uppercase tracking-[0.1em] flex items-center justify-center gap-2 shadow-[0_5px_15px_rgba(255,184,5,0.2)]">
+                                            {ui.nextRound} <Icon name="Play" size={18} className="fill-current"/>
                                         </button>
                                     </div>
                                 </div>
@@ -840,13 +860,13 @@
 
                         {gameState === 'GAME_OVER' && (
                             <div className="flex-1 flex items-center justify-center p-4">
-                                <div className="text-center py-12 px-8 bg-black/60 rounded-[2.5rem] backdrop-blur-2xl border border-[#FFB805]/40 w-full max-w-lg animate-pop-in shadow-[0_0_50px_rgba(255,184,5,0.15)] relative overflow-hidden">
-                                    <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-transparent via-[#FFB805] to-transparent"></div>
-                                    <Icon name="Trophy" size={80} className="text-[#FFB805] mx-auto mb-6 drop-shadow-[0_0_15px_rgba(255,184,5,0.5)]" />
-                                    <h2 className="text-4xl sm:text-5xl font-black text-white mb-2 uppercase tracking-tighter">{ui.gameOver}</h2>
-                                    <p className="text-lg sm:text-xl font-black text-[#00D166] mb-10 tracking-[0.2em] uppercase">{ui.winner}</p>
-                                    <button onClick={()=>setGameState('SETUP')} className="w-full py-5 bg-[#2E9DDF]/20 hover:bg-[#2E9DDF]/30 border-2 border-[#2E9DDF] rounded-2xl font-black text-[#2E9DDF] text-sm sm:text-base flex items-center justify-center gap-3 active:scale-95 transition-all uppercase tracking-widest shadow-lg">
-                                        <Icon name="RotateCcw" size={20}/>{ui.playAgain}
+                                <div className="text-center py-10 px-6 sm:py-12 sm:px-8 bg-black/60 rounded-[2.5rem] backdrop-blur-xl border border-[#FFB805]/40 w-full max-w-lg animate-pop-in shadow-[0_0_40px_rgba(255,184,5,0.15)] relative overflow-hidden">
+                                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#FFB805] to-transparent"></div>
+                                    <Icon name="Trophy" size={70} className="text-[#FFB805] mx-auto mb-5 drop-shadow-[0_0_15px_rgba(255,184,5,0.5)]" />
+                                    <h2 className="text-3xl sm:text-5xl font-black text-white mb-2 uppercase tracking-tighter">{ui.gameOver}</h2>
+                                    <p className="text-sm sm:text-xl font-black text-[#00D166] mb-8 tracking-[0.15em] uppercase">{ui.winner}</p>
+                                    <button onClick={()=>setGameState('SETUP')} className="w-full py-4 bg-[#2E9DDF]/20 hover:bg-[#2E9DDF]/30 border-2 border-[#2E9DDF] rounded-xl font-black text-[#2E9DDF] text-sm sm:text-base flex items-center justify-center gap-2 active:scale-95 transition-all uppercase tracking-widest">
+                                        <Icon name="RotateCcw" size={18}/>{ui.playAgain}
                                     </button>
                                 </div>
                             </div>
